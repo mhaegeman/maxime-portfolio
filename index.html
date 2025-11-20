@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maxime Haegeman | Data Scientist</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CORE VARIABLES --- */
+        :root {
+            --bg-color: #0a0a0a;
+            --surface-color: #121212;
+            --text-primary: #e0e0e0;
+            --text-secondary: #888888;
+            --accent-color: #00ff41; /* Terminal Green */
+            --accent-hover: #00cc33;
+            --border-color: #333333;
+            --font-main: 'Fira Code', monospace;
+            --spacing-unit: 24px;
+        }
+
+        /* --- RESET & BASE --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            padding: 0;
+            margin: 0;
+        }
+
+        a { text-decoration: none; color: var(--text-primary); transition: 0.2s; }
+        a:hover { color: var(--accent-color); }
+        ul { list-style: none; }
+
+        /* --- LAYOUT UTILITIES --- */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-unit);
+        }
+        
+        .section {
+            padding: 80px 0;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(5px);
+            z-index: 100;
+        }
+
+        .logo { font-weight: 700; color: var(--accent-color); }
+        .nav-links { display: flex; gap: 20px; font-size: 0.9rem; }
+        
+        /* --- HERO SECTION (TERMINAL STYLE) --- */
+        .hero {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .terminal-window {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 30px;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .terminal-header {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
+
+        .command-line {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+        
+        .prompt { color: var(--accent-color); margin-right: 10px; }
+        
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2em;
+            background-color: var(--accent-color);
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .output-data {
+            color: var(--text-secondary);
+            margin-top: 20px;
+            font-size: 0.95rem;
+        }
+
+        .json-key { color: #bd93f9; } /* Dracula Purple for keys */
+        .json-string { color: #f1fa8c; } /* Yellow for strings */
+        .json-bracket { color: var(--text-primary); }
+
+        /* --- PROJECTS GRID (DATA CARDS) --- */
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title::before {
+            content: "## ";
+            color: var(--accent-color);
+            margin-right: 10px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            padding: 25px;
+            transition: transform 0.2s, border-color 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+        }
+
+        .card-header {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .card-tags {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .card-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .btn-link {
+            display: inline-block;
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--accent-color);
+            padding-bottom: 2px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 40px 0;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .status-bar {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #1a1a1a;
+            padding: 5px 15px;
+            border-radius: 20px;
+            border: 1px solid #333;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            box-shadow: 0 0 5px var(--accent-color);
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .terminal-window { padding: 15px; }
+            .nav-links { display: none; } /* Simplified for mobile */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <nav>
+            <a href="#" class="logo">~/maxime_haegeman</a>
+            <div class="nav-links">
+                <a href="#about">_about</a>
+                <a href="#projects">_projects</a>
+                <a href="#contact">_contact</a>
+            </div>
+        </nav>
+
+        <header class="hero" id="about">
+            <div class="terminal-window">
+                <div class="terminal-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+                
+                <div class="terminal-body">
+                    <div class="command-line">
+                        <span class="prompt">user@maxime:~$</span>
+                        <span id="typewriter"></span><span class="cursor"></span>
+                    </div>
+                    
+                    <div class="output-data">
+                        <span class="json-bracket">{</span><br>
+                        &nbsp;&nbsp;<span class="json-key">"role"</span>: <span class="json-string">["Data Scientist", "Engineer"]</span>,<br>
+                        &nbsp;&nbsp;<span class="json-key">"location"</span>: <span class="json-string">"Copenhagen, DK"</span>,<br>
+                        &nbsp;&nbsp;<span class="json-key">"stack"</span>: <span class="json-string">["Python", "SQL", "ML", "Cloud"]</span>,<br>
+                        &nbsp;&nbsp;<span class="json-key">"mission"</span>: <span class="json-string">"Unleashing the power of data."</span><br>
+                        <span class="json-bracket">}</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="section" id="projects">
+            <h2 class="section-title">Selected_Projects</h2>
+            <div class="grid">
+                
+                <article class="card">
+                    <div>
+                        <h3 class="card-header">data_processing_pipeline.py</h3>
+                        <div class="card-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Airflow</span>
+                        </div>
+                        <p class="card-desc">
+                            Automated ETL pipeline processing 1TB+ of daily logs. Optimized for low latency and high availability.
+                        </p>
+                    </div>
+                    <a href="#" class="btn-link">view_source -></a>
+                </article>
+
+                <article class="card">
+                    <div>
+                        <h3 class="card-header">prediction_model_v2.ipynb</h3>
+                        <div class="card-tags">
+                            <span class="tag">Scikit-Learn</span>
+                            <span class="tag">Pandas</span>
+                        </div>
+                        <p class="card-desc">
+                            Customer churn prediction model improving retention rates by 15%. Utilizes Random Forest algorithms.
+                        </p>
+                    </div>
+                    <a href="#" class="btn-link">view_notebook -></a>
+                </article>
+
+                <article class="card">
+                    <div>
+                        <h3 class="card-header">visualizer_dashboard.js</h3>
+                        <div class="card-tags">
+                            <span class="tag">D3.js</span>
+                            <span class="tag">React</span>
+                        </div>
+                        <p class="card-desc">
+                            Interactive frontend for real-time data monitoring. Visualizes complex datasets for non-technical stakeholders.
+                        </p>
+                    </div>
+                    <a href="#" class="btn-link">launch_demo -></a>
+                </article>
+
+            </div>
+        </section>
+
+        <section class="section" id="contact">
+            <h2 class="section-title">Initialize_Handshake</h2>
+            <div class="terminal-window" style="padding: 20px;">
+                <p style="margin-bottom: 20px; color: var(--text-secondary);">
+                    // Interested in collaboration? Execute the command below.
+                </p>
+                <a href="mailto:maximehaegeman@gmail.com" style="font-size: 1.2rem; color: var(--accent-color);">
+                    > mailto:maximehaegeman@gmail.com
+                </a>
+                <div style="margin-top: 20px; display: flex; gap: 20px;">
+                    <a href="https://linkedin.com/in/maximehaegeman" target="_blank">LinkedIn</a>
+                    <a href="https://github.com" target="_blank">GitHub</a>
+                    <a href="https://medium.com" target="_blank">Medium</a>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="status-bar">
+                <span class="status-indicator"></span>
+                <span>System Status: Online</span>
+                <span>|</span>
+                <span>Copenhagen: 13:31 UTC+1</span>
+            </div>
+            <div style="margin-top: 15px; opacity: 0.5;">
+                &copy; 2025 Maxime Haegeman. Built with code.
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Simple Typewriter Effect
+        const text = "whoami";
+        const typeWriterElement = document.getElementById('typewriter');
+        let i = 0;
+
+        function typeWriter() {
+            if (i < text.length) {
+                typeWriterElement.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 150);
+            }
+        }
+        
+        // Start typing when page loads
+        window.onload = typeWriter;
+    </script>
+
+</body>
+</html>
