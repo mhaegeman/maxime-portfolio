@@ -1,0 +1,51 @@
+[
+    {
+        "period": "2024 - Present",
+        "role": "Data Engineer",
+        "company": "Massive Entertainment - A Ubisoft Studio",
+        "description": "Leading the data engineering efforts for live game analytics and ML pipelines.",
+        "achievements": [
+            "Data ingestion and preprocessing for ML projects. ",
+            "Provide tools and templates for the developers in the Game Intelligence department.",
+            "Applying big data optimisation practices (pyspark/SQL).",
+            "Lead a storage and compute data migration from legacy tool to Databricks."
+        ]
+    },
+    {
+        "period": "2023 - 2024",
+        "role": "Data Scientist / ML Engineer",
+        "company": "MvH Media - Online marketing bureau",
+        "description": "Active python developer in the data team, building data products for clients in online marketing.",
+        "achievements": [
+            "Built ETL pipelines for data collection and preprocessing using Airflow and Pandas.",
+            "Creation of data warehouses using BigQuery and Google Cloud Storage (GCS), enabling efficient storage and retrieval of large-scale marketing data.",
+            "API integration for data collection from various marketing platforms (Google Ads, Facebook Ads, etc.).",
+            "Developed sentiment analysis models to analyze customer feedback using NLP techniques.",
+            "Implementation of a Category and Product description text generator app on Streamlit with a fine-tuned LLM."
+        ]
+    },
+    {
+        "period": "2022 - 2023",
+        "role": "Data Scientist",
+        "company": "BNZSA",
+        "description": "Member of the Decision Science team, focusing on building data-driven solutions for business challenges.",
+        "achievements": [
+            "Creation of a global data pipeline to collect, structure, validate, and clean data from our CRM and ERP systems using Python and SQL.",
+            "Creation of propensity score models to identify high-value customers for targeted marketing campaigns.",
+            "Fine-tuning of a Transformer model trained to classify postal addresses by country. The model was able to predict from our 21 most common countries with an 83% success rate.",
+            "Developed a speech-to-text analisis tool to extract insights from customer service calls using NLP techniques."
+        ]
+    },
+    {
+        "period": "2020 - 2022",
+        "role": "Junior Data Scientist",
+        "company": "BECQUET",
+        "description": "Part of the Online Marketing team, responsible for client scoring, data analysis and reporting.",
+        "achievements": [
+            "Development of a customer scoring model and segmentation for marketing campaign targeting with the objective to reduce marketing communication costs by 10%.",
+            "Conducted exploratory data analysis and data visualization to identify patterns and trends in customer data, leading to the identification of a new target market segment.",
+            "Customer and sales performance dashboard update from an SQL Server database.",
+            "Ad-hoc analysis and reporting to support marketing strategies and decision-making."
+        ]
+    }
+]

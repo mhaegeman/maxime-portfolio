@@ -1,0 +1,53 @@
+/* --- CV TIMELINE STYLES --- */
+.timeline {
+    border-left: 2px solid var(--border-color);
+    margin-left: 20px;
+    padding-left: 40px;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 50px;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -47px; /* Aligns dot with line */
+    top: 5px;
+    width: 12px;
+    height: 12px;
+    background: var(--bg-color);
+    border: 2px solid var(--accent-color);
+    border-radius: 50%;
+}
+
+.job-date {
+    color: var(--accent-color);
+    font-size: 0.85rem;
+    margin-bottom: 5px;
+    display: inline-block;
+    border: 1px solid var(--accent-color);
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+/* --- BLOG LIST STYLES --- */
+.blog-entry {
+    border-left: 3px solid transparent;
+    padding: 20px;
+    margin-bottom: 20px;
+    background: rgba(255,255,255,0.02);
+    transition: 0.2s;
+}
+
+.blog-entry:hover {
+    border-left: 3px solid var(--accent-color);
+    background: rgba(255,255,255,0.05);
+}
+
+.blog-meta {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 10px;
+}
