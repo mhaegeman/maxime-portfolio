@@ -10,18 +10,25 @@ const CONFIG = {
 // --- GITHUB FETCHER ---
 async function loadRepos() {
     const container = document.getElementById('repo-grid');
-    if (!container) return; 
+    if (!container) return; // Stop if we aren't on the projects page
 
     try {
-        // CHANGED: sort=stars to show most popular repos first
-        const response = await fetch(`https://api.github.com/users/${CONFIG.githubUser}/repos?sort=stars&direction=desc`);
-        const data = await response.json();
+        // 1. Fetch repos (we get up to 100 to ensure we find the most starred ones)
+        // We cannot sort by stars in the API url, so we just fetch the list.
+        const response = await fetch(`https://api.github.com/users/${CONFIG.githubUser}/repos?per_page=100&type=owner`);
+        let data = await response.json();
+
+        // 2. Manually sort by stars (Descending: High -> Low)
+        data.sort((a, b) => b.stargazers_count - a.stargazers_count);
 
         // Clear the "Loading..." text
         container.innerHTML = '';
 
-        // Slice to limit number of repos
+        // 3. Slice to limit number of repos
         data.slice(0, CONFIG.maxRepos).forEach(repo => {
+            // Skip forked repos if you want only your own work
+            // if (repo.fork) return; 
+
             const card = document.createElement('article');
             card.className = 'card';
             
