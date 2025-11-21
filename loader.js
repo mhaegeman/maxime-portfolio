@@ -128,7 +128,7 @@ async function loadExperience() {
     if (!container) return; // Stop if we aren't on the CV page
 
     try {
-        const response = await fetch('experience.json');
+        const response = await fetch('content/experience.json');
         const data = await response.json();
 
         container.innerHTML = '';
