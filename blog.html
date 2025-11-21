@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maxime | Blog</title>
+    <title>Maxime | System Logs</title>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -20,22 +20,25 @@
         </nav>
 
         <section class="section">
-            <h2 class="section-title">/var/log/articles</h2>
-            
-            <div class="blog-list">
-                
-                <h2 class="section-title">/var/log/articles</h2>
+            <h2 class="section-title">/var/log/medium_articles</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 20px; font-family: var(--font-code);">
+                > tail -n 10 -f /var/log/medium.log
+            </p>
 
-                <div class="blog-list" id="blog-list">
-                    <p style="color: var(--accent-color);">_tailing_medium_logs...</p>
+            <div class="terminal-window" style="padding: 20px; border: 1px solid rgba(255,255,255,0.1); background: #0d1117; border-radius: 5px;">
+                <div id="blog-list" style="font-family: 'Fira Code', monospace; font-size: 0.9rem;">
+                    <p style="color: var(--accent-color);">_establishing_connection_to_rss_feed...</p>
                 </div>
-
-                <script src="loader.js"></script>
-                </body>
-
             </div>
         </section>
         
-        </div>
+        <footer>
+            <div style="margin-top: 50px; opacity: 0.5; text-align: center;">
+                &copy; 2025 Maxime Haegeman. Built with code.
+            </div>
+        </footer>
+    </div>
+
+    <script src="loader.js"></script>
 </body>
 </html>
