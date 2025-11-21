@@ -1,53 +1,136 @@
-/* --- CV TIMELINE STYLES --- */
-.timeline {
-    border-left: 2px solid var(--border-color);
+/* --- VARIABLES: Easy to tweak colors --- */
+:root {
+    --bg-color: #0a0a0a;       /* Deep Black */
+    --surface-color: #161b22;  /* Slightly lighter for cards */
+    --text-primary: #e6edf3;   /* Bright White/Grey */
+    --text-secondary: #8b949e; /* Muted Grey */
+    
+    /* The "Python" Neon Accent */
+    --accent-color: #00ff9d;   /* Cyberpunk Green */
+    --accent-glow: rgba(0, 255, 157, 0.2);
+    
+    --font-code: 'Fira Code', monospace;
+    --font-body: 'Inter', sans-serif;
+}
+
+/* --- GLOBAL RESET & BASE --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* --- TYPOGRAPHY --- */
+h1, h2, h3, h4 {
+    font-family: var(--font-code);
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+h1 {
+    font-size: 3rem;
+    text-shadow: 0 0 10px var(--accent-glow);
+}
+
+a {
+    color: var(--text-primary);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent-color);
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    box-shadow: 0 0 15px var(--accent-color);
+}
+
+/* --- LAYOUT UTILITIES --- */
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+section {
+    padding: 80px 0;
+    border-left: 1px solid rgba(255, 255, 255, 0.1); /* Adds a subtle guide line */
     margin-left: 20px;
     padding-left: 40px;
 }
 
-.timeline-item {
-    position: relative;
-    margin-bottom: 50px;
-}
-
-.timeline-item::before {
-    content: '';
-    position: absolute;
-    left: -47px; /* Aligns dot with line */
-    top: 5px;
-    width: 12px;
-    height: 12px;
-    background: var(--bg-color);
-    border: 2px solid var(--accent-color);
-    border-radius: 50%;
-}
-
-.job-date {
-    color: var(--accent-color);
-    font-size: 0.85rem;
-    margin-bottom: 5px;
-    display: inline-block;
-    border: 1px solid var(--accent-color);
-    padding: 2px 8px;
+/* --- COMPONENTS: The "Card" Look --- */
+.card, .project-item, .skill-box {
+    background: var(--surface-color);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2rem;
     border-radius: 4px;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
-/* --- BLOG LIST STYLES --- */
-.blog-entry {
-    border-left: 3px solid transparent;
-    padding: 20px;
-    margin-bottom: 20px;
-    background: rgba(255,255,255,0.02);
-    transition: 0.2s;
+/* Futuristic Hover Effect */
+.card:hover, .project-item:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-color);
+    box-shadow: 0 10px 30px -10px var(--accent-glow);
 }
 
-.blog-entry:hover {
-    border-left: 3px solid var(--accent-color);
-    background: rgba(255,255,255,0.05);
+/* Add a fake "terminal header" to cards */
+.card::before, .project-item::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-color), transparent);
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.3s;
 }
 
-.blog-meta {
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-    margin-top: 10px;
+.card:hover::before, .project-item:hover::before {
+    opacity: 1;
+}
+
+/* --- BUTTONS: Neon Style --- */
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    font-family: var(--font-code);
+    font-weight: bold;
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn:hover {
+    background: var(--accent-color);
+    color: var(--bg-color);
+    box-shadow: 0 0 20px var(--accent-glow);
+}
+
+/* --- NAVIGATION --- */
+nav {
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    background: rgba(10, 10, 10, 0.9);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
 }

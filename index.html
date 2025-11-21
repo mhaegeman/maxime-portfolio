@@ -6,7 +6,7 @@
     <title>Maxime Haegeman | Data Scientist</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -21,31 +21,42 @@
                 <a href="cv.html">_sys_profile</a> </div>
         </nav>
 
-        <header class="hero" id="about">
-            <div class="terminal-window">
-                <div class="terminal-header">
-                    <div class="dot red"></div>
-                    <div class="dot yellow"></div>
-                    <div class="dot green"></div>
-                </div>
-                
-                <div class="terminal-body">
-                    <div class="command-line">
-                        <span class="prompt">user@maxime:~$</span>
-                        <span id="typewriter"></span><span class="cursor"></span>
-                    </div>
+        <section id="hero" style="height: 90vh; display: flex; align-items: center;">
+            <div class="container">
+                <div class="terminal-window" style="font-family: 'Fira Code', monospace;">
+                    <p style="color: var(--text-secondary); margin-bottom: 10px;">
+                        <span style="color: #ff7b72;">import</span> portfolio
+                    </p>
+                    <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                        <span style="color: #79c0ff;">class</span> <span style="color: #d2a8ff;">Maxime</span>(Developer):
+                    </p>
                     
-                    <div class="output-data">
-                        <span class="json-bracket">{</span><br>
-                        &nbsp;&nbsp;<span class="json-key">"role"</span>: <span class="json-string">["Data Scientist", "Engineer"]</span>,<br>
-                        &nbsp;&nbsp;<span class="json-key">"location"</span>: <span class="json-string">"Copenhagen, DK"</span>,<br>
-                        &nbsp;&nbsp;<span class="json-key">"stack"</span>: <span class="json-string">["Python", "SQL", "ML", "Cloud"]</span>,<br>
-                        &nbsp;&nbsp;<span class="json-key">"mission"</span>: <span class="json-string">"Unleashing the power of data."</span><br>
-                        <span class="json-bracket">}</span>
+                    <h1 style="font-size: 2.5rem; margin-left: 20px;">
+                        <span style="color: var(--accent-color); margin-right: 10px;">>>></span>
+                        <span id="typewriter"></span><span class="cursor">_</span>
+                    </h1>
+                    
+                    <p style="margin-left: 20px; color: var(--text-secondary); max-width: 600px; margin-top: 20px;">
+                        I build scalable backend systems, automate workflows, and create clean Python code.
+                    </p>
+
+                    <div style="margin-top: 40px; margin-left: 20px;">
+                        <a href="#projects" class="btn">View_Projects()</a>
                     </div>
                 </div>
             </div>
-        </header>
+        </section>
+
+        <style>
+            /* Blinking Cursor Animation */
+            .cursor {
+                animation: blink 1s infinite;
+            }
+            @keyframes blink {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0; }
+            }
+        </style>
 
         <section class="section" id="projects">
             <h2 class="section-title">Selected_Projects</h2>
@@ -127,20 +138,19 @@
     </div>
 
     <script>
-        // Simple Typewriter Effect
-        const text = "whoami";
-        const typeWriterElement = document.getElementById('typewriter');
+        const text = "Hello, I'm Maxime."; // Change this text to whatever you want
+        const speed = 100; // Speed in milliseconds
         let i = 0;
 
         function typeWriter() {
             if (i < text.length) {
-                typeWriterElement.innerHTML += text.charAt(i);
+                document.getElementById("typewriter").innerHTML += text.charAt(i);
                 i++;
-                setTimeout(typeWriter, 150);
+                setTimeout(typeWriter, speed);
             }
         }
-        
-        // Start typing when page loads
+
+        // Start the animation when the page loads
         window.onload = typeWriter;
     </script>
 
