@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maxime | Anomaly Detector</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Custom CSS for the Game Window and Leaderboard -->
+    <style>
+        /* --- GAME STYLES --- */
+        .game-layout {
+            display: flex;
+            flex-wrap: wrap; /* Allows wrapping on smaller screens */
+            gap: 3rem;
+            align-items: flex-start;
+            margin-top: 2rem;
+        }
+
+        .game-window {
+            flex: 2;
+            min-width: 300px;
+            background: var(--surface-color);
+            border: 1px solid var(--accent-color);
+            padding: 1rem;
+            height: 400px;
+            overflow-y: scroll;
+            font-family: var(--font-code);
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            line-height: 1.2;
+            box-shadow: 0 0 10px var(--accent-glow);
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .game-scoreboard {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        /* Game Status Boxes */
+        .status-box {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            border: 1px solid var(--text-secondary);
+            border-radius: 4px;
+            font-family: var(--font-code);
+        }
+
+        /* Styling for the Anomaly text */
+        .anomaly {
+            color: #ff5f56; /* Red error color */
+            font-weight: bold;
+            animation: flash 0.2s 3;
+        }
+
+        /* Animation when an anomaly appears */
+        @keyframes flash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
+        }
+
+        /* Leaderboard styling */
+        .leaderboard-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .leaderboard-list li {
+            padding: 10px;
+            margin-bottom: 5px;
+            background: var(--surface-color);
+            border-left: 3px solid var(--accent-color);
+            font-family: var(--font-code);
+            border-radius: 2px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .leaderboard-list li:first-child {
+            font-weight: bold;
+            border-left-width: 5px;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .game-layout {
+                flex-direction: column;
+            }
+            .game-window {
+                height: 300px;
+            }
+            .game-scoreboard {
+                order: -1; /* Move score to top on mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <nav>
+            <div class="nav-links">
+                <a href="index.html">_home</a>
+                <a href="projects.html">_git_repos</a>
+                <a href="blog.html">_medium_logs</a>
+                <a href="cv.html">_sys_profile</a>
+                <a href="game.html" class="active">_anomaly_detector</a> 
+            </div>
+            <button id="theme-toggle" title="Switch Theme">☀</button> 
+        </nav>
+
+        <section class="section">
+            <h2 class="section-title">Data_Stream_Anomaly_Detection</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 30px; font-family: var(--font-code);">
+                // INSTRUCTION: Detect the data anomaly (red text) and press the SPACEBAR quickly. Three strikes and you're out.
+            </p>
+
+            <div class="game-layout">
+                
+                <!-- Game Scoreboard and Status -->
+                <div class="game-scoreboard">
+                    <h3 style="margin-top: 0; color: var(--accent-color);">Status_Panel</h3>
+                    <div class="status-box">
+                        <span>SCORE:</span>
+                        <span id="score" style="color: var(--accent-color);">0</span>
+                    </div>
+                    <div class="status-box">
+                        <span>STRIKES:</span>
+                        <span id="strikes" style="color: #ff5f56;">0 / 3</span>
+                    </div>
+                    
+                    <button id="start-button" class="btn" style="width: 100%; margin-top: 20px;">[ START_GAME ]</button>
+
+                    <h3 style="margin-top: 40px; color: var(--accent-color);">Local_Leaderboard (Top 5)</h3>
+                    <ul class="leaderboard-list" id="leaderboard-list">
+                        <p style="color: var(--text-secondary);">Loading scores...</p>
+                    </ul>
+                </div>
+
+                <!-- Game Terminal Output -->
+                <div class="game-window" id="game-output">
+                    <p style="color: var(--text-secondary);">
+                        <span style="color: var(--accent-color);">></span> System_Ready.<br>
+                        <span style="color: var(--accent-color);">></span> Press_[ START_GAME ]_to_begin_data_stream.
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <div style="margin-top: 50px; opacity: 0.5; text-align: center;">
+                &copy; 2025 Maxime Haegeman. Built with code.
+            </div>
+        </footer>
+    </div>
+
+    <!-- Centralized Logic -->
+    <script src="loader.js"></script> 
+
+    <!-- Game Logic -->
+    <script>
+        // --- Game Setup Variables ---
+        const OUTPUT = document.getElementById('game-output');
+        const SCORE_EL = document.getElementById('score');
+        const STRIKES_EL = document.getElementById('strikes');
+        const START_BTN = document.getElementById('start-button');
+        
+        let score = 0;
+        let strikes = 0;
+        let gameInterval = null;
+        let isAnomalyPresent = false;
+        let gameRunning = false;
+        
+        const LEADERBOARD_KEY = 'anomaly_leaderboard';
+        const MAX_SCORES = 5;
+        const BASE_DELAY = 200; // Time between data points (ms)
+        const ANOMALY_CHANCE = 0.10; // 10% chance for an anomaly
+
+        // --- Leaderboard Functions ---
+
+        function loadLeaderboard() {
+            const scores = localStorage.getItem(LEADERBOARD_KEY);
+            return scores ? JSON.parse(scores) : [];
+        }
+
+        function saveScore(newScore) {
+            let scores = loadLeaderboard();
+            
+            // Generate a simple identifier (or ask user for initials in a real game)
+            const name = `P${Math.floor(Math.random() * 1000)}`; 
+            
+            scores.push({ name: name, score: newScore, date: new Date().toLocaleDateString() });
+            
+            // Sort by score (descending)
+            scores.sort((a, b) => b.score - a.score);
+            
+            // Keep only the top 5
+            scores = scores.slice(0, MAX_SCORES);
+            
+            localStorage.setItem(LEADERBOARD_KEY, JSON.stringify(scores));
+            
+            displayLeaderboard(scores);
+        }
+
+        function displayLeaderboard(scores = loadLeaderboard()) {
+            const list = document.getElementById('leaderboard-list');
+            if (!list) return;
+
+            list.innerHTML = '';
+            
+            if (scores.length === 0) {
+                list.innerHTML = `<li style="color: var(--text-secondary); border-left-width: 3px;">No scores recorded yet. Time to play!</li>`;
+                return;
+            }
+
+            scores.forEach((entry, index) => {
+                const item = document.createElement('li');
+                item.innerHTML = `
+                    <span style="color: var(--accent-color); font-weight: bold;">[${index + 1}]</span> 
+                    ${entry.name}: 
+                    <span style="float: right;">${entry.score} pts</span>
+                `;
+                list.appendChild(item);
+            });
+        }
+        
+        // --- Game Logic Functions ---
+
+        function updateDisplay() {
+            SCORE_EL.textContent = score;
+            STRIKES_EL.textContent = `${strikes} / 3`;
+            
+            // Highlight strike count if strikes > 0
+            if (strikes > 0) {
+                STRIKES_EL.style.color = '#ff5f56';
+            } else {
+                STRIKES_EL.style.color = 'var(--accent-color)';
+            }
+        }
+
+        function generateDataPoint() {
+            let logEntry = '';
+            const timestamp = new Date().toLocaleTimeString('en-GB');
+
+            // 10% chance to generate an anomaly
+            if (Math.random() < ANOMALY_CHANCE && !isAnomalyPresent) {
+                isAnomalyPresent = true;
+                const anomalyValue = (Math.random() * 5000 + 5000).toFixed(2); // Large, obvious number
+                logEntry = `<span class="anomaly">[${timestamp}] ERROR: ANOMALY_DETECTED value=${anomalyValue}</span><br>`;
+            } else {
+                // Normal data point: 3-digit float
+                const normalValue = (Math.random() * 100 + 10).toFixed(3);
+                logEntry = `<span style="color: var(--text-secondary);">[${timestamp}] INFO: data_point=${normalValue}</span><br>`;
+            }
+
+            // Add the new line to the terminal
+            OUTPUT.innerHTML += logEntry;
+
+            // Scroll to the bottom
+            OUTPUT.scrollTop = OUTPUT.scrollHeight;
+        }
+
+        function endGame(message) {
+            clearInterval(gameInterval);
+            gameRunning = false;
+            
+            // Output final message
+            OUTPUT.innerHTML += `<br><span style="color: #ff5f56; font-weight: bold;">[SYSTEM ALERT] GAME OVER: ${message}</span><br>`;
+            OUTPUT.innerHTML += `<span style="color: var(--accent-color); font-weight: bold;">Final Score: ${score} pts</span><br>`;
+            OUTPUT.scrollTop = OUTPUT.scrollHeight;
+
+            // Save the score if it's high enough to be recorded
+            if (score > 0) {
+                 saveScore(score);
+            }
+            
+            START_BTN.textContent = '[ RESTART_GAME ]';
+            START_BTN.disabled = false;
+            document.removeEventListener('keydown', handleKeyPress);
+        }
+
+        // --- Event Handlers ---
+
+        function handleKeyPress(event) {
+            if (!gameRunning) return;
+
+            // Check for Spacebar (keyCode 32 or key ' ')
+            if (event.key === ' ' || event.keyCode === 32) {
+                event.preventDefault(); // Prevent accidental scrolling
+                
+                if (isAnomalyPresent) {
+                    // Correct Detection
+                    score += 100;
+                    isAnomalyPresent = false;
+                    OUTPUT.innerHTML += `<span style="color: var(--accent-color); font-weight: bold;">[SUCCESS] Anomaly neutralized! (+100)</span><br>`;
+                } else {
+                    // False Alarm
+                    strikes++;
+                    OUTPUT.innerHTML += `<span style="color: #ff5f56;">[WARNING] False positive! (-1 Strike)</span><br>`;
+                }
+                
+                updateDisplay();
+
+                if (strikes >= 3) {
+                    endGame("Too many false alarms detected.");
+                }
+            }
+        }
+        
+        function startGame() {
+            score = 0;
+            strikes = 0;
+            isAnomalyPresent = false;
+            gameRunning = true;
+            updateDisplay();
+            
+            OUTPUT.innerHTML = `<span style="color: var(--accent-color);">> Data_stream_initiated...</span><br>`;
+            OUTPUT.scrollTop = OUTPUT.scrollHeight;
+
+            START_BTN.textContent = '[ RUNNING ]';
+            START_BTN.disabled = true;
+
+            // Clear any existing interval
+            if (gameInterval) clearInterval(gameInterval);
+            
+            // Start the main game loop
+            gameInterval = setInterval(generateDataPoint, BASE_DELAY);
+
+            // Add key listener only when game starts
+            document.addEventListener('keydown', handleKeyPress);
+        }
+
+        // --- Initialization ---
+
+        document.addEventListener('DOMContentLoaded', () => {
+            displayLeaderboard();
+            START_BTN.addEventListener('click', startGame);
+
+            // Add cleanup for anomaly status when the output scrolls past
+            OUTPUT.addEventListener('scroll', () => {
+                // Simple check: if the scroll is near the bottom, assume the anomaly is visible.
+                // If the scroll is far above the bottom, the anomaly might have passed unseen.
+                if (isAnomalyPresent && OUTPUT.scrollTop < (OUTPUT.scrollHeight - OUTPUT.clientHeight - 50)) {
+                    // Missed Anomaly
+                    strikes++;
+                    isAnomalyPresent = false;
+                    OUTPUT.innerHTML += `<span style="color: #ff5f56; font-weight: bold;">[CRITICAL] Anomaly missed! Data integrity compromised! (-1 Strike)</span><br>`;
+                    updateDisplay();
+
+                    if (strikes >= 3) {
+                        endGame("Critical anomalies were missed.");
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
