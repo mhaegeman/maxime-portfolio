@@ -11,7 +11,6 @@
     
     <!-- Custom CSS for the Game Window and Leaderboard is now included in style.css -->
     <style>
-        /* This style block ensures the custom game styles are present even if style.css is not immediately updated */
         /* --- GAME STYLES --- */
         .game-layout {
             display: flex;
@@ -53,13 +52,22 @@
             font-family: var(--font-code);
         }
 
-        /* Styling for the Anomaly text (now subtle, based on style.css update) */
+        /* Styling for the Anomaly text (subtle, pre-detection) */
         .anomaly {
             color: var(--text-secondary); 
             font-weight: bold;
             font-size: 1.1em;
             opacity: 0.8;
+            /* Keep the visual flash to signal it's a critical moment */
             animation: flash 0.2s 3; 
+        }
+
+        /* NEW: Styling for a successfully detected anomaly */
+        .detected-anomaly {
+            color: var(--accent-color) !important; /* Green/Teal accent color */
+            opacity: 1;
+            background-color: rgba(0, 150, 136, 0.1); /* Subtle background highlight */
+            transition: color 0.3s, background-color 0.3s;
         }
 
         /* Animation when an anomaly appears */
@@ -197,12 +205,13 @@
         let gameInterval = null;
         let isAnomalyPresent = false;
         let gameRunning = false;
+        let currentAnomalyElement = null; // Store the element containing the current anomaly
         
         const LEADERBOARD_KEY = 'anomaly_leaderboard';
         const MAX_SCORES = 5;
-        const BASE_DELAY = 200; // Time between data points (ms)
-        const ANOMALY_CHANCE = 0.12; // Increased chance for subtlety
-        const NORMAL_RANGE = { min: 10, max: 100 };
+        const BASE_DELAY = 180; // Decreased delay for faster speed (180ms)
+        const ANOMALY_CHANCE = 0.12; // 12% chance for subtlety
+        const NORMAL_RANGE = { min: 50, max: 150 }; // Narrowed normal range
         
         // --- Leaderboard Functions ---
 
@@ -272,38 +281,46 @@
         }
 
         function generateDataPoint() {
-            let logEntry = '';
             const timestamp = new Date().toLocaleTimeString('en-GB');
             
             // 1. Determine if it's an anomaly
             const shouldBeAnomaly = Math.random() < ANOMALY_CHANCE && !isAnomalyPresent;
             
+            // Create a new div wrapper for the log line
+            const logElement = document.createElement('div');
+            logElement.style.marginBottom = '2px';
+            
             if (shouldBeAnomaly) {
                 isAnomalyPresent = true;
                 
-                // Anomaly is a value far outside the normal range (e.g., > 1000)
-                // or a non-standard string format.
+                // Anomaly is a value just outside the normal range (e.g., small float)
                 if (Math.random() < 0.5) {
-                    // Type 1 Anomaly: Grossly out-of-range number
-                    const anomalyValue = (Math.random() * 5000 + 5000).toFixed(3); 
-                    logEntry = `<span class="anomaly">[${timestamp}] DATA: data_point=${anomalyValue}</span><br>`;
+                    // Type 1 Anomaly: Narrowly out-of-range number (e.g., < 10 or > 150)
+                    const anomalyValue = Math.random() < 0.5 ? 
+                        (Math.random() * 5 + 1).toFixed(3) : // 1.000 to 6.000 (below normal)
+                        (Math.random() * 50 + 150).toFixed(3); // 150.000 to 200.000 (above normal)
+                        
+                    logElement.innerHTML = `<span class="anomaly">[${timestamp}] DATA: data_point=${anomalyValue}</span>`;
                 } else {
-                    // Type 2 Anomaly: Unexpected data type/format (e.g., a hash or timestamp)
-                    const anomalyValue = Math.random().toString(36).substring(2, 10).toUpperCase();
-                    logEntry = `<span class="anomaly">[${timestamp}] DATA: hash_point=${anomalyValue}</span><br>`;
+                    // Type 2 Anomaly: Unexpected data type/format (a mixed-case, slightly longer hash)
+                    const anomalyValue = Math.random().toString(36).substring(2, 12);
+                    logElement.innerHTML = `<span class="anomaly">[${timestamp}] DATA: hash_point=${anomalyValue}</span>`;
                 }
 
+                currentAnomalyElement = logElement; // Store the reference
             } else {
-                // Normal data point: 3-digit float within NORMAL_RANGE
+                // Normal data point: float within NORMAL_RANGE
                 const normalValue = (Math.random() * (NORMAL_RANGE.max - NORMAL_RANGE.min) + NORMAL_RANGE.min).toFixed(3);
-                logEntry = `<span style="color: var(--text-secondary);">[${timestamp}] INFO: data_point=${normalValue}</span><br>`;
+                logElement.innerHTML = `<span style="color: var(--text-secondary);">[${timestamp}] INFO: data_point=${normalValue}</span>`;
             }
 
             // Add the new line to the terminal
-            OUTPUT.innerHTML += logEntry;
+            OUTPUT.appendChild(logElement);
 
-            // Scroll to the bottom
-            OUTPUT.scrollTop = OUTPUT.scrollHeight;
+            // Scroll to the bottom (use setTimeout to ensure DOM render before scroll)
+            setTimeout(() => {
+                OUTPUT.scrollTop = OUTPUT.scrollHeight;
+            }, 0);
         }
 
         function endGame(message) {
@@ -311,8 +328,11 @@
             gameRunning = false;
             
             // Output final message
-            OUTPUT.innerHTML += `<br><span style="color: #ff5f56; font-weight: bold;">[SYSTEM ALERT] GAME OVER: ${message}</span><br>`;
-            OUTPUT.innerHTML += `<span style="color: var(--accent-color); font-weight: bold;">Final Score: ${score} pts</span><br>`;
+            const endMsg = document.createElement('div');
+            endMsg.innerHTML = `<br><span style="color: #ff5f56; font-weight: bold;">[SYSTEM ALERT] GAME OVER: ${message}</span><br>` +
+                               `<span style="color: var(--accent-color); font-weight: bold;">Final Score: ${score} pts</span><br>`;
+            OUTPUT.appendChild(endMsg);
+            
             OUTPUT.scrollTop = OUTPUT.scrollHeight;
 
             // Save the score if it's high enough to be recorded
@@ -339,14 +359,31 @@
                     // Correct Detection
                     score += 100;
                     isAnomalyPresent = false;
-                    OUTPUT.innerHTML += `<span style="color: var(--accent-color); font-weight: bold;">[SUCCESS] Anomaly neutralized! (+100)</span><br>`;
+                    
+                    // Highlight the anomaly in green and remove flash animation
+                    if (currentAnomalyElement) {
+                        currentAnomalyElement.querySelector('.anomaly').classList.add('detected-anomaly');
+                        currentAnomalyElement.querySelector('.anomaly').style.animation = 'none';
+                    }
+
+                    // Add success message
+                    const successMsg = document.createElement('div');
+                    successMsg.innerHTML = `<span style="color: var(--accent-color); font-weight: bold;">[SUCCESS] Anomaly neutralized! (+100)</span><br>`;
+                    OUTPUT.appendChild(successMsg);
+                    
+                    currentAnomalyElement = null; // Clear reference
+
                 } else {
                     // False Alarm
                     strikes++;
-                    OUTPUT.innerHTML += `<span style="color: #ff5f56;">[WARNING] False positive! (-1 Strike)</span><br>`;
+                    
+                    const warningMsg = document.createElement('div');
+                    warningMsg.innerHTML = `<span style="color: #ff5f56;">[WARNING] False positive! (-1 Strike)</span><br>`;
+                    OUTPUT.appendChild(warningMsg);
                 }
                 
                 updateDisplay();
+                OUTPUT.scrollTop = OUTPUT.scrollHeight;
 
                 if (strikes >= 3) {
                     endGame("Too many false alarms detected.");
@@ -357,7 +394,9 @@
         function startGame() {
             // Check if name is entered
             if (!NAME_INPUT.value.trim()) {
-                 OUTPUT.innerHTML += `<span style="color: #ff5f56; font-weight: bold;">[ERROR] Player_ID_Required.</span><br>`;
+                 const errorMsg = document.createElement('div');
+                 errorMsg.innerHTML = `<span style="color: #ff5f56; font-weight: bold;">[ERROR] Player_ID_Required.</span><br>`;
+                 OUTPUT.appendChild(errorMsg);
                  OUTPUT.scrollTop = OUTPUT.scrollHeight;
                  return;
             }
@@ -365,11 +404,16 @@
             score = 0;
             strikes = 0;
             isAnomalyPresent = false;
+            currentAnomalyElement = null;
             gameRunning = true;
             updateDisplay();
             
-            OUTPUT.innerHTML = `<span style="color: var(--accent-color);">> Data_stream_initiated...</span><br>`;
+            OUTPUT.innerHTML = '';
+            const startMsg = document.createElement('div');
+            startMsg.innerHTML = `<span style="color: var(--accent-color);">> Data_stream_initiated...</span><br>`;
+            OUTPUT.appendChild(startMsg);
             OUTPUT.scrollTop = OUTPUT.scrollHeight;
+
 
             START_BTN.textContent = '[ RUNNING ]';
             START_BTN.disabled = true;
@@ -401,8 +445,15 @@
                     // Missed Anomaly
                     strikes++;
                     isAnomalyPresent = false;
-                    OUTPUT.innerHTML += `<span style="color: #ff5f56; font-weight: bold;">[CRITICAL] Anomaly missed! Data integrity compromised! (-1 Strike)</span><br>`;
+                    currentAnomalyElement = null;
+                    
+                    const criticalMsg = document.createElement('div');
+                    criticalMsg.innerHTML = `<span style="color: #ff5f56; font-weight: bold;">[CRITICAL] Anomaly missed! Data integrity compromised! (-1 Strike)</span><br>`;
+                    OUTPUT.appendChild(criticalMsg);
+
                     updateDisplay();
+                    OUTPUT.scrollTop = OUTPUT.scrollHeight;
+
 
                     if (strikes >= 3) {
                         endGame("Critical anomalies were missed.");

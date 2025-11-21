@@ -443,15 +443,22 @@ section {
     font-family: var(--font-code);
 }
 
-/* Styling for the Anomaly text (now subtle) */
+/* Styling for the Anomaly text (subtle, pre-detection) */
 .anomaly {
-    /* Subtle change: slightly lighter text color than default, but not red */
     color: var(--text-secondary); 
-    font-weight: bold;
-    font-size: 1.1em; /* Slight bump in size */
-    opacity: 0.8; /* Subtle fading */
+    /* font-weight: bold; */
+    font-size: 1.1em;
+    opacity: 0.8;
     /* Keep the visual flash to signal it's a critical moment */
     animation: flash 0.2s 3; 
+}
+
+/* NEW: Styling for a successfully detected anomaly */
+.detected-anomaly {
+    color: var(--accent-color) !important; /* Green/Teal accent color */
+    opacity: 1;
+    background-color: rgba(0, 150, 136, 0.1); /* Subtle background highlight */
+    transition: color 0.3s, background-color 0.3s;
 }
 
 /* Animation when an anomaly appears */
