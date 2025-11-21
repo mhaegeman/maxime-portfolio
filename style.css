@@ -166,3 +166,33 @@ nav {
     background: none;
     box-shadow: none;
 }
+
+/* --- RESPONSIVE DESIGN --- */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 15px;
+    }
+    
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px 0;
+    }
+
+    .nav-links {
+        margin-top: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    h1 {
+        font-size: 2rem; /* Shrink big titles */
+    }
+
+    section {
+        padding-left: 20px; /* Reduce left padding on mobile */
+        border-left: none; /* Optional: remove the line on mobile for cleaner look */
+    }
+}
