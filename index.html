@@ -140,7 +140,7 @@
                 <span class="status-indicator"></span>
                 <span>System Status: Online</span>
                 <span>|</span>
-                <span>Copenhagen: 13:31 UTC+1</span>
+                <span id="cph-time">Copenhagen: Loading...</span>
             </div>
             <div style="margin-top: 15px; opacity: 0.5;">
                 &copy; 2025 Maxime Haegeman. Built with code.
@@ -163,6 +163,26 @@
 
         // Start the animation when the page loads
         window.onload = typeWriter;
+    </script>
+    <script>
+        function updateTime() {
+            const timeContainer = document.getElementById('cph-time');
+            
+            // Get current time in Copenhagen (CET/CEST)
+            const now = new Date().toLocaleTimeString('en-GB', {
+                timeZone: 'Europe/Copenhagen',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                timeZoneName: 'short'
+            });
+
+            timeContainer.innerText = `Copenhagen: ${now}`;
+        }
+
+        // Update immediately, then every second
+        updateTime();
+        setInterval(updateTime, 1000);
     </script>
 
 </body>
