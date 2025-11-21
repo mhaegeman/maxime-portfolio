@@ -7,7 +7,9 @@
     --text-secondary: #8b949e;
     --accent-color: #00ff9d;
     --accent-glow: rgba(0, 255, 157, 0.2);
-    --nav-bg: rgba(10, 10, 10, 0.9); /* Added for nav transparency */
+    /* Define Nav Colors for Dark Mode */
+    --nav-bg: rgba(10, 10, 10, 0.9); 
+    --nav-border: rgba(255, 255, 255, 0.05);
     
     --font-code: 'Fira Code', monospace;
     --font-body: 'Inter', sans-serif;
@@ -22,7 +24,9 @@
     
     --accent-color: #009688;   /* Ocean Teal / Sea Glass */
     --accent-glow: rgba(0, 150, 136, 0.2);
-    --nav-bg: rgba(253, 252, 240, 0.95); /* Light nav background */
+    /* Define Nav Colors for Light Mode */
+    --nav-bg: rgba(253, 252, 240, 0.95); /* Light Creme */
+    --nav-border: rgba(0, 0, 0, 0.05);  /* Subtle dark border */
 }
 
 /* --- GLOBAL RESET & BASE --- */
