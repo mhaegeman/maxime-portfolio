@@ -156,7 +156,7 @@ a:hover {
 
 section {
     padding: 80px 0;
-    /* This line uses hardcoded white/black. It should use a variable for better light mode contrast. */
+    /* Use variable for subtle guide line */
     border-left: 1px solid var(--nav-border); 
     margin-left: 20px;
     padding-left: 40px;
@@ -165,7 +165,7 @@ section {
 /* --- COMPONENTS: The "Card" Look --- */
 .card, .project-item, .skill-box {
     background: var(--surface-color);
-    /* This line uses hardcoded white/black. It should use a variable for better light mode contrast. */
+    /* Use variable for border color */
     border: 1px solid var(--nav-border); 
     padding: 2rem;
     border-radius: 4px;
@@ -401,9 +401,11 @@ section {
     }
 }
 
+
 /* --- GAME STYLES --- */
 .game-layout {
     display: flex;
+    flex-wrap: wrap; /* Allows wrapping on smaller screens */
     gap: 3rem;
     align-items: flex-start;
     margin-top: 2rem;
@@ -411,6 +413,7 @@ section {
 
 .game-window {
     flex: 2;
+    min-width: 300px;
     background: var(--surface-color);
     border: 1px solid var(--accent-color);
     padding: 1rem;
@@ -421,33 +424,84 @@ section {
     white-space: pre-wrap;
     line-height: 1.2;
     box-shadow: 0 0 10px var(--accent-glow);
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .game-scoreboard {
     flex: 1;
-    min-width: 300px;
+    min-width: 250px;
 }
 
+/* Game Status Boxes */
+.status-box {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    border: 1px solid var(--text-secondary);
+    border-radius: 4px;
+    font-family: var(--font-code);
+}
+
+/* Styling for the Anomaly text (now subtle) */
 .anomaly {
-    color: #ff5f56; /* Red error color */
+    /* Subtle change: slightly lighter text color than default, but not red */
+    color: var(--text-secondary); 
     font-weight: bold;
-    animation: flash 0.2s 3;
+    font-size: 1.1em; /* Slight bump in size */
+    opacity: 0.8; /* Subtle fading */
+    /* Keep the visual flash to signal it's a critical moment */
+    animation: flash 0.2s 3; 
 }
 
+/* Animation when an anomaly appears */
 @keyframes flash {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.2; }
 }
 
+/* Leaderboard styling */
 .leaderboard-list {
     list-style: none;
     padding: 0;
 }
 
 .leaderboard-list li {
-    padding: 8px;
+    padding: 10px;
     margin-bottom: 5px;
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--surface-color);
     border-left: 3px solid var(--accent-color);
     font-family: var(--font-code);
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.leaderboard-list li:first-child {
+    font-weight: bold;
+    border-left-width: 5px;
+}
+
+/* Input field styling */
+.game-input {
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: 5px;
+    background: var(--bg-color);
+    border: 1px solid var(--text-secondary);
+    color: var(--text-primary);
+    font-family: var(--font-code);
+    border-radius: 2px;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .game-layout {
+        flex-direction: column;
+    }
+    .game-window {
+        height: 300px;
+    }
+    .game-scoreboard {
+        order: -1; /* Move score to top on mobile */
+    }
 }

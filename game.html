@@ -9,8 +9,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     
-    <!-- Custom CSS for the Game Window and Leaderboard -->
+    <!-- Custom CSS for the Game Window and Leaderboard is now included in style.css -->
     <style>
+        /* This style block ensures the custom game styles are present even if style.css is not immediately updated */
         /* --- GAME STYLES --- */
         .game-layout {
             display: flex;
@@ -52,11 +53,13 @@
             font-family: var(--font-code);
         }
 
-        /* Styling for the Anomaly text */
+        /* Styling for the Anomaly text (now subtle, based on style.css update) */
         .anomaly {
-            color: #ff5f56; /* Red error color */
+            color: var(--text-secondary); 
             font-weight: bold;
-            animation: flash 0.2s 3;
+            font-size: 1.1em;
+            opacity: 0.8;
+            animation: flash 0.2s 3; 
         }
 
         /* Animation when an anomaly appears */
@@ -84,6 +87,20 @@
         .leaderboard-list li:first-child {
             font-weight: bold;
             border-left-width: 5px;
+        }
+        
+        /* Input field styling */
+        .game-input {
+            width: 100%;
+            padding: 8px 10px;
+            margin-top: 5px;
+            margin-bottom: 20px;
+            background: var(--bg-color);
+            border: 1px solid var(--text-secondary);
+            color: var(--text-primary);
+            font-family: var(--font-code);
+            border-radius: 2px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
         }
 
         /* Mobile Adjustments */
@@ -117,7 +134,7 @@
         <section class="section">
             <h2 class="section-title">Data_Stream_Anomaly_Detection</h2>
             <p style="color: var(--text-secondary); margin-bottom: 30px; font-family: var(--font-code);">
-                // INSTRUCTION: Detect the data anomaly (red text) and press the SPACEBAR quickly. Three strikes and you're out.
+                // INSTRUCTION: Detect the anomaly (subtle pattern break) and press the SPACEBAR. Three strikes and you're out.
             </p>
 
             <div class="game-layout">
@@ -125,6 +142,10 @@
                 <!-- Game Scoreboard and Status -->
                 <div class="game-scoreboard">
                     <h3 style="margin-top: 0; color: var(--accent-color);">Status_Panel</h3>
+                    
+                    <label for="player-name" style="font-family: var(--font-code); font-size: 0.9rem;">Player_ID (10 chars max):</label>
+                    <input type="text" id="player-name" class="game-input" maxlength="10" placeholder="ENTER INITIALS" value="PLAYER">
+
                     <div class="status-box">
                         <span>SCORE:</span>
                         <span id="score" style="color: var(--accent-color);">0</span>
@@ -169,6 +190,7 @@
         const SCORE_EL = document.getElementById('score');
         const STRIKES_EL = document.getElementById('strikes');
         const START_BTN = document.getElementById('start-button');
+        const NAME_INPUT = document.getElementById('player-name');
         
         let score = 0;
         let strikes = 0;
@@ -179,8 +201,9 @@
         const LEADERBOARD_KEY = 'anomaly_leaderboard';
         const MAX_SCORES = 5;
         const BASE_DELAY = 200; // Time between data points (ms)
-        const ANOMALY_CHANCE = 0.10; // 10% chance for an anomaly
-
+        const ANOMALY_CHANCE = 0.12; // Increased chance for subtlety
+        const NORMAL_RANGE = { min: 10, max: 100 };
+        
         // --- Leaderboard Functions ---
 
         function loadLeaderboard() {
@@ -191,10 +214,11 @@
         function saveScore(newScore) {
             let scores = loadLeaderboard();
             
-            // Generate a simple identifier (or ask user for initials in a real game)
-            const name = `P${Math.floor(Math.random() * 1000)}`; 
+            // Get player name, sanitize, and limit length
+            let playerName = NAME_INPUT.value.trim().toUpperCase() || 'ANON';
+            playerName = playerName.substring(0, 10);
             
-            scores.push({ name: name, score: newScore, date: new Date().toLocaleDateString() });
+            scores.push({ name: playerName, score: newScore, date: new Date().toLocaleDateString() });
             
             // Sort by score (descending)
             scores.sort((a, b) => b.score - a.score);
@@ -220,10 +244,14 @@
 
             scores.forEach((entry, index) => {
                 const item = document.createElement('li');
+                // Use fixed-width formatting for better alignment
+                const namePadded = entry.name.padEnd(10, ' ');
+                const scorePadded = String(entry.score).padStart(4, ' ');
+
                 item.innerHTML = `
                     <span style="color: var(--accent-color); font-weight: bold;">[${index + 1}]</span> 
-                    ${entry.name}: 
-                    <span style="float: right;">${entry.score} pts</span>
+                    ${namePadded}: 
+                    <span style="float: right;">${scorePadded} pts</span>
                 `;
                 list.appendChild(item);
             });
@@ -246,15 +274,28 @@
         function generateDataPoint() {
             let logEntry = '';
             const timestamp = new Date().toLocaleTimeString('en-GB');
-
-            // 10% chance to generate an anomaly
-            if (Math.random() < ANOMALY_CHANCE && !isAnomalyPresent) {
+            
+            // 1. Determine if it's an anomaly
+            const shouldBeAnomaly = Math.random() < ANOMALY_CHANCE && !isAnomalyPresent;
+            
+            if (shouldBeAnomaly) {
                 isAnomalyPresent = true;
-                const anomalyValue = (Math.random() * 5000 + 5000).toFixed(2); // Large, obvious number
-                logEntry = `<span class="anomaly">[${timestamp}] ERROR: ANOMALY_DETECTED value=${anomalyValue}</span><br>`;
+                
+                // Anomaly is a value far outside the normal range (e.g., > 1000)
+                // or a non-standard string format.
+                if (Math.random() < 0.5) {
+                    // Type 1 Anomaly: Grossly out-of-range number
+                    const anomalyValue = (Math.random() * 5000 + 5000).toFixed(3); 
+                    logEntry = `<span class="anomaly">[${timestamp}] DATA: data_point=${anomalyValue}</span><br>`;
+                } else {
+                    // Type 2 Anomaly: Unexpected data type/format (e.g., a hash or timestamp)
+                    const anomalyValue = Math.random().toString(36).substring(2, 10).toUpperCase();
+                    logEntry = `<span class="anomaly">[${timestamp}] DATA: hash_point=${anomalyValue}</span><br>`;
+                }
+
             } else {
-                // Normal data point: 3-digit float
-                const normalValue = (Math.random() * 100 + 10).toFixed(3);
+                // Normal data point: 3-digit float within NORMAL_RANGE
+                const normalValue = (Math.random() * (NORMAL_RANGE.max - NORMAL_RANGE.min) + NORMAL_RANGE.min).toFixed(3);
                 logEntry = `<span style="color: var(--text-secondary);">[${timestamp}] INFO: data_point=${normalValue}</span><br>`;
             }
 
@@ -281,6 +322,7 @@
             
             START_BTN.textContent = '[ RESTART_GAME ]';
             START_BTN.disabled = false;
+            NAME_INPUT.disabled = false;
             document.removeEventListener('keydown', handleKeyPress);
         }
 
@@ -313,6 +355,13 @@
         }
         
         function startGame() {
+            // Check if name is entered
+            if (!NAME_INPUT.value.trim()) {
+                 OUTPUT.innerHTML += `<span style="color: #ff5f56; font-weight: bold;">[ERROR] Player_ID_Required.</span><br>`;
+                 OUTPUT.scrollTop = OUTPUT.scrollHeight;
+                 return;
+            }
+
             score = 0;
             strikes = 0;
             isAnomalyPresent = false;
@@ -324,6 +373,7 @@
 
             START_BTN.textContent = '[ RUNNING ]';
             START_BTN.disabled = true;
+            NAME_INPUT.disabled = true;
 
             // Clear any existing interval
             if (gameInterval) clearInterval(gameInterval);
@@ -343,8 +393,10 @@
 
             // Add cleanup for anomaly status when the output scrolls past
             OUTPUT.addEventListener('scroll', () => {
-                // Simple check: if the scroll is near the bottom, assume the anomaly is visible.
-                // If the scroll is far above the bottom, the anomaly might have passed unseen.
+                // Check if the anomaly is present AND it has scrolled out of view.
+                // We assume anomaly is out of view if the scroll position is high enough 
+                // that the bottom line is not visible (i.e., less than scrollHeight - clientHeight).
+                // Use a safety margin of 50px.
                 if (isAnomalyPresent && OUTPUT.scrollTop < (OUTPUT.scrollHeight - OUTPUT.clientHeight - 50)) {
                     // Missed Anomaly
                     strikes++;
