@@ -1,16 +1,28 @@
 /* --- VARIABLES: Easy to tweak colors --- */
 :root {
-    --bg-color: #0a0a0a;       /* Deep Black */
-    --surface-color: #161b22;  /* Slightly lighter for cards */
-    --text-primary: #e6edf3;   /* Bright White/Grey */
-    --text-secondary: #8b949e; /* Muted Grey */
-    
-    /* The "Python" Neon Accent */
-    --accent-color: #00ff9d;   /* Cyberpunk Green */
+    /* Default DARK Theme (Cyberpunk) */
+    --bg-color: #0a0a0a;
+    --surface-color: #161b22;
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+    --accent-color: #00ff9d;
     --accent-glow: rgba(0, 255, 157, 0.2);
+    --nav-bg: rgba(10, 10, 10, 0.9); /* Added for nav transparency */
     
     --font-code: 'Fira Code', monospace;
     --font-body: 'Inter', sans-serif;
+}
+
+/* --- LIGHT THEME (Creme/Beach Vibes) --- */
+[data-theme="light"] {
+    --bg-color: #fdfcf0;       /* Warm Cream/Sand */
+    --surface-color: #f4f1ea;  /* Slightly darker sand for cards */
+    --text-primary: #4a4036;   /* Dark Coffee Brown */
+    --text-secondary: #8b7e74; /* Warm Grey */
+    
+    --accent-color: #009688;   /* Ocean Teal / Sea Glass */
+    --accent-glow: rgba(0, 150, 136, 0.2);
+    --nav-bg: rgba(253, 252, 240, 0.95); /* Light nav background */
 }
 
 /* --- GLOBAL RESET & BASE --- */
@@ -18,6 +30,54 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    overflow-x: hidden;
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+}
+
+/* --- NAVIGATION UPDATES --- */
+nav {
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    background: var(--nav-bg); /* Use variable instead of hardcoded black */
+    backdrop-filter: blur(10px);
+    z-index: 100;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    
+    /* Flexbox to align links left and button right */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+[data-theme="light"] nav {
+    border-bottom: 1px solid rgba(0,0,0,0.05); /* Softer border for light mode */
+}
+
+/* --- THEME TOGGLE BUTTON --- */
+#theme-toggle {
+    background: transparent;
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    padding: 8px 12px;
+    cursor: pointer;
+    font-family: var(--font-code);
+    font-size: 1.2rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+#theme-toggle:hover {
+    background: var(--accent-color);
+    color: var(--bg-color);
+    box-shadow: 0 0 10px var(--accent-glow);
 }
 
 body {

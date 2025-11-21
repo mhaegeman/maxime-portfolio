@@ -24,12 +24,14 @@
 
     <div class="container">
         <nav>
-            <!-- <a href="index.html" class="logo">~/maxime_haegeman</a> -->
             <div class="nav-links">
                 <a href="index.html">_home</a>
                 <a href="projects.html">_git_repos</a>
                 <a href="blog.html">_medium_logs</a>
-                <a href="cv.html">_sys_profile</a> </div>
+                <a href="cv.html">_sys_profile</a>
+            </div>
+            
+            <button id="theme-toggle" title="Switch Theme">☀</button>
         </nav>
 
         <section id="hero" style="min-height: 90vh; display: flex; align-items: center;">
@@ -198,6 +200,34 @@
         // Update immediately, then every second
         updateTime();
         setInterval(updateTime, 1000);
+    </script>
+
+    <script>
+        // Check for saved user preference, if any, on load
+        const currentTheme = localStorage.getItem('theme');
+        const toggleBtn = document.getElementById('theme-toggle');
+
+        if (currentTheme) {
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            if (currentTheme === 'light') {
+                toggleBtn.innerText = '☾'; // Switch icon to moon if already light
+            }
+        }
+
+        // Handle Click Event
+        toggleBtn.addEventListener('click', function() {
+            let theme = document.documentElement.getAttribute('data-theme');
+            
+            if (theme === 'light') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                toggleBtn.innerText = '☀'; // Sun icon for dark mode
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                toggleBtn.innerText = '☾'; // Moon icon for light mode
+            }
+        });
     </script>
 
 </body>
