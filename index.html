@@ -30,8 +30,7 @@
                 <a href="blog.html">_medium_logs</a>
                 <a href="cv.html">_sys_profile</a>
             </div>
-            
-            <button id="theme-toggle" title="Switch Theme">☀</button>
+            <button id="theme-toggle" title="Switch Theme">☀</button> 
         </nav>
 
         <section id="hero" style="min-height: 90vh; display: flex; align-items: center;">
@@ -63,9 +62,7 @@
                 <div class="hero-visual">
                     <div class="video-frame">
                         <video autoplay loop muted playsinline poster="content/profile_bnw.jpg">
-                            <!-- <source src="content/profile_anim.mp4" type="video/mp4">
-                            Your browser does not support the video tag. -->
-                        </video>
+                            </video>
                     </div>
                 </div>
 
@@ -201,63 +198,7 @@
         updateTime();
         setInterval(updateTime, 1000);
     </script>
-
-    <script>
-        // Check for saved user preference, if any, on load
-        const currentTheme = localStorage.getItem('theme');
-        const toggleBtn = document.getElementById('theme-toggle');
-
-        if (currentTheme) {
-            document.documentElement.setAttribute('data-theme', currentTheme);
-            if (currentTheme === 'light') {
-                toggleBtn.innerText = '☾'; // Switch icon to moon if already light
-            }
-        }
-
-        // Handle Click Event
-        toggleBtn.addEventListener('click', function() {
-            let theme = document.documentElement.getAttribute('data-theme');
-            
-            if (theme === 'light') {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
-                toggleBtn.innerText = '☀'; // Sun icon for dark mode
-            } else {
-                document.documentElement.setAttribute('data-theme', 'light');
-                localStorage.setItem('theme', 'light');
-                toggleBtn.innerText = '☾'; // Moon icon for light mode
-            }
-        });
-
-        document.addEventListener('DOMContentLoaded', () => {
-
-            // 1. Highlight Current Page
-            const currentLocation = location.href;
-            const menuItems = document.querySelectorAll('.nav-links a');
-            menuItems.forEach(item => {
-                if(item.href === currentLocation || (currentLocation.endsWith("/") && item.href.includes("index.html"))) {
-                    item.classList.add('active');
-                }
-            });
-
-            // 2. Smart Scroll (Hide/Show Navbar)
-            let lastScrollTop = 0;
-            const navbar = document.querySelector('nav');
-
-            window.addEventListener('scroll', function() {
-                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                
-                if (scrollTop > lastScrollTop && scrollTop > 50) {
-                    // Scrolling DOWN -> Hide Nav
-                    navbar.style.transform = "translateY(-100%)";
-                } else {
-                    // Scrolling UP -> Show Nav
-                    navbar.style.transform = "translateY(0)";
-                }
-                lastScrollTop = scrollTop;
-            });
-        });
-    </script>
+    <script src="loader.js"></script>
 
 </body>
 </html>

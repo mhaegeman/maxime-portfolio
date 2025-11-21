@@ -7,6 +7,76 @@ const CONFIG = {
     maxArticles: 8
 };
 
+// --- THEME SWITCHER LOGIC ---
+function initThemeToggle() {
+    const toggleBtn = document.getElementById('theme-toggle');
+    if (!toggleBtn) return;
+
+    // Load saved preference
+    const currentTheme = localStorage.getItem('theme');
+    if (currentTheme) {
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        toggleBtn.innerText = currentTheme === 'light' ? '☾' : '☀';
+    } else {
+        // Set default to dark and icon to sun
+        document.documentElement.setAttribute('data-theme', 'dark');
+        toggleBtn.innerText = '☀';
+    }
+
+    // Handle Click
+    toggleBtn.addEventListener('click', function() {
+        let theme = document.documentElement.getAttribute('data-theme');
+        
+        if (theme === 'light') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+            toggleBtn.innerText = '☀';
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light');
+            toggleBtn.innerText = '☾';
+        }
+    });
+}
+
+// --- NAVIGATION ENHANCEMENTS (Active Link & Smart Scroll) ---
+function initNavEnhancements() {
+    // 1. Highlight Current Page
+    const menuItems = document.querySelectorAll('.nav-links a');
+    const path = window.location.pathname.split('/').pop() || 'index.html'; // Get the page filename
+    
+    menuItems.forEach(item => {
+        const itemPath = item.href.split('/').pop() || 'index.html';
+        if(itemPath === path) {
+            item.classList.add('active');
+        }
+    });
+
+    // 2. Smart Scroll (Hide/Show Navbar)
+    let lastScrollTop = 0;
+    const navbar = document.querySelector('nav');
+    if (!navbar) return;
+
+    window.addEventListener('scroll', function() {
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // Only trigger movement if scrolling past the initial top section
+        if (scrollTop > 50) {
+            if (scrollTop > lastScrollTop) {
+                // Scrolling DOWN -> Hide Nav
+                navbar.style.transform = "translateY(-100%)";
+            } else {
+                // Scrolling UP -> Show Nav
+                navbar.style.transform = "translateY(0)";
+            }
+        } else {
+            // Always show nav at the very top
+            navbar.style.transform = "translateY(0)";
+        }
+        lastScrollTop = scrollTop;
+    }, { passive: true }); // Use passive listener for performance
+}
+
 // --- GITHUB FETCHER ---
 async function loadRepos() {
     const container = document.getElementById('repo-grid');
@@ -164,8 +234,10 @@ async function loadExperience() {
     }
 }
 
-// Initialize
+// Initialize all dynamic loading and functionality
 document.addEventListener('DOMContentLoaded', () => {
+    initThemeToggle();
+    initNavEnhancements();
     loadRepos();
     loadMedium();
     loadExperience();
