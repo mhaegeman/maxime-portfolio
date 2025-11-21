@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maxime | CV</title>
+    <title>Maxime | System Log</title>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -22,51 +22,25 @@
         <section class="section">
             <h2 class="section-title">System_Runtime_History</h2>
             
-            <div class="timeline">
-                
-                <div class="timeline-item">
-                    <span class="job-date">2023 - Present</span>
-                    <h3 style="margin-top: 5px;">Senior Data Scientist @ TechCorp DK</h3>
-                    <p class="card-desc" style="margin-top: 10px;">
-                        Lead architect for the recommendation engine serving 1M+ users.
-                    </p>
-                    <ul style="list-style: disc; margin-left: 20px; color: var(--text-secondary); font-size: 0.9rem;">
-                        <li>Reduced latency by 40% using Rust-based microservices.</li>
-                        <li>Mentored 3 junior data engineers.</li>
-                        <li>Implemented A/B testing framework.</li>
-                    </ul>
-                </div>
-
-                <div class="timeline-item">
-                    <span class="job-date">2020 - 2023</span>
-                    <h3 style="margin-top: 5px;">Data Engineer @ StartupXYZ</h3>
-                    <p class="card-desc" style="margin-top: 10px;">
-                        Built the initial data infrastructure from scratch using GCP.
-                    </p>
-                    <ul style="list-style: disc; margin-left: 20px; color: var(--text-secondary); font-size: 0.9rem;">
-                        <li>Designed ETL pipelines using Airflow and BigQuery.</li>
-                        <li>Automated reporting dashboards for stakeholders.</li>
-                    </ul>
-                </div>
-
-                <div class="timeline-item">
-                    <span class="job-date">2018 - 2020</span>
-                    <h3 style="margin-top: 5px;">M.Sc. Computer Science @ University of Copenhagen</h3>
-                    <p class="card-desc" style="margin-top: 10px;">
-                        Focus on Machine Learning and Distributed Systems.
-                    </p>
-                </div>
-
+            <div class="timeline" id="cv-timeline">
+                <p style="color: var(--accent-color);">_fetching_experience_data...</p>
             </div>
             
             <div style="margin-top: 40px; text-align: center;">
-                <a href="#" style="border: 1px solid var(--accent-color); padding: 10px 20px; color: var(--accent-color);">
+                <a href="resume.pdf" download class="btn">
                     [ DOWNLOAD_FULL_RESUME.PDF ]
                 </a>
             </div>
 
         </section>
         
-        </div>
+        <footer>
+            <div style="margin-top: 50px; opacity: 0.5; text-align: center;">
+                &copy; 2025 Maxime Haegeman. Built with code.
+            </div>
+        </footer>
+    </div>
+
+    <script src="loader.js"></script>
 </body>
 </html>
