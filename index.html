@@ -228,6 +228,35 @@
                 toggleBtn.innerText = '☾'; // Moon icon for light mode
             }
         });
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // 1. Highlight Current Page
+            const currentLocation = location.href;
+            const menuItems = document.querySelectorAll('.nav-links a');
+            menuItems.forEach(item => {
+                if(item.href === currentLocation || (currentLocation.endsWith("/") && item.href.includes("index.html"))) {
+                    item.classList.add('active');
+                }
+            });
+
+            // 2. Smart Scroll (Hide/Show Navbar)
+            let lastScrollTop = 0;
+            const navbar = document.querySelector('nav');
+
+            window.addEventListener('scroll', function() {
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (scrollTop > lastScrollTop && scrollTop > 50) {
+                    // Scrolling DOWN -> Hide Nav
+                    navbar.style.transform = "translateY(-100%)";
+                } else {
+                    // Scrolling UP -> Show Nav
+                    navbar.style.transform = "translateY(0)";
+                }
+                lastScrollTop = scrollTop;
+            });
+        });
     </script>
 
 </body>

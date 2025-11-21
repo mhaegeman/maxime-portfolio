@@ -7,7 +7,10 @@
     --text-secondary: #8b949e;
     --accent-color: #00ff9d;
     --accent-glow: rgba(0, 255, 157, 0.2);
-    --nav-bg: rgba(10, 10, 10, 0.9); /* Added for nav transparency */
+    /* Dark Mode Nav (Translucent Black) */
+    --nav-bg: rgba(10, 10, 10, 0.85); 
+    --nav-border: rgba(255, 255, 255, 0.1);
+    --nav-text: #e6edf3;
     
     --font-code: 'Fira Code', monospace;
     --font-body: 'Inter', sans-serif;
@@ -22,7 +25,10 @@
     
     --accent-color: #009688;   /* Ocean Teal / Sea Glass */
     --accent-glow: rgba(0, 150, 136, 0.2);
-    --nav-bg: rgba(253, 252, 240, 0.95); /* Light nav background */
+    /* Light Mode Nav (Translucent Sand/Creme) */
+    --nav-bg: rgba(253, 252, 240, 0.85); 
+    --nav-border: rgba(74, 64, 54, 0.1); /* Low opacity coffee color */
+    --nav-text: #4a4036;
 }
 
 /* --- GLOBAL RESET & BASE --- */
@@ -41,22 +47,60 @@ body {
     transition: background-color 0.3s, color 0.3s; /* Smooth transition */
 }
 
-/* --- NAVIGATION UPDATES --- */
+/* --- NAVIGATION CORE STYLES --- */
 nav {
-    padding: 20px 0;
+    padding: 15px 0; /* Slightly slimmer for a modern look */
     position: sticky;
     top: 0;
-    background: var(--nav-bg);       
-    backdrop-filter: blur(10px);
-    z-index: 100;
-    border-bottom: 1px solid var(--nav-border); 
-    transition: background 0.3s ease, border-color 0.3s ease; /* Smooth transition */
     
-    /* Ensure flex layout for the button if you haven't already */
+    /* CRITICAL: Use variables for theme switching */
+    background: var(--nav-bg);
+    border-bottom: 1px solid var(--nav-border);
+    
+    /* Glassmorphism Blur */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px); /* Safari support */
+    
+    z-index: 1000;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    
+    transition: background 0.3s ease, border-color 0.3s ease, padding 0.3s ease, transform 0.3s ease;
 }
+
+/* --- NAVIGATION LINKS --- */
+.nav-links a {
+    color: var(--nav-text); /* Ensures links turn brown in light mode */
+    font-weight: 500;
+    margin-right: 20px;
+    position: relative;
+    border-bottom: none; /* Remove the default underline */
+    transition: color 0.3s ease;
+}
+
+/* Hover Effect: A small glowing dot or line instead of full underline */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background-color: var(--accent-color);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* Active Page Style */
+.nav-links a.active {
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
 
 /* --- THEME TOGGLE BUTTON --- */
 #theme-toggle {
@@ -77,14 +121,6 @@ nav {
     box-shadow: 0 0 10px var(--accent-glow);
 }
 
-body {
-    background-color: var(--bg-color);
-    color: var(--text-primary);
-    font-family: var(--font-body);
-    line-height: 1.6;
-    overflow-x: hidden;
-}
-
 /* --- TYPOGRAPHY --- */
 h1, h2, h3, h4 {
     font-family: var(--font-code);
@@ -97,6 +133,7 @@ h1 {
     text-shadow: 0 0 10px var(--accent-glow);
 }
 
+/* Global 'a' tags (used for footer links/contact, etc., but not nav) */
 a {
     color: var(--text-primary);
     text-decoration: none;
@@ -119,7 +156,8 @@ a:hover {
 
 section {
     padding: 80px 0;
-    border-left: 1px solid rgba(255, 255, 255, 0.1); /* Adds a subtle guide line */
+    /* This line uses hardcoded white/black. It should use a variable for better light mode contrast. */
+    border-left: 1px solid var(--nav-border); 
     margin-left: 20px;
     padding-left: 40px;
 }
@@ -127,7 +165,8 @@ section {
 /* --- COMPONENTS: The "Card" Look --- */
 .card, .project-item, .skill-box {
     background: var(--surface-color);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    /* This line uses hardcoded white/black. It should use a variable for better light mode contrast. */
+    border: 1px solid var(--nav-border); 
     padding: 2rem;
     border-radius: 4px;
     transition: transform 0.3s ease, border-color 0.3s ease;
@@ -179,17 +218,6 @@ section {
     background: var(--accent-color);
     color: var(--bg-color);
     box-shadow: 0 0 20px var(--accent-glow);
-}
-
-/* --- NAVIGATION --- */
-nav {
-    padding: 20px 0;
-    position: sticky;
-    top: 0;
-    background: rgba(10, 10, 10, 0.9);
-    backdrop-filter: blur(10px);
-    z-index: 100;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
 /* --- GRID SYSTEM --- */
@@ -258,7 +286,7 @@ nav {
 .timeline {
     position: relative;
     padding-left: 20px;
-    border-left: 2px solid rgba(255, 255, 255, 0.1); /* The faint main line */
+    border-left: 2px solid var(--nav-border); /* Use variable for faint main line */
     margin-top: 2rem;
 }
 
