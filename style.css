@@ -46,19 +46,16 @@ nav {
     padding: 20px 0;
     position: sticky;
     top: 0;
-    background: var(--nav-bg); /* Use variable instead of hardcoded black */
+    background: var(--nav-bg);       
     backdrop-filter: blur(10px);
     z-index: 100;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid var(--nav-border); 
+    transition: background 0.3s ease, border-color 0.3s ease; /* Smooth transition */
     
-    /* Flexbox to align links left and button right */
+    /* Ensure flex layout for the button if you haven't already */
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-[data-theme="light"] nav {
-    border-bottom: 1px solid rgba(0,0,0,0.05); /* Softer border for light mode */
 }
 
 /* --- THEME TOGGLE BUTTON --- */
