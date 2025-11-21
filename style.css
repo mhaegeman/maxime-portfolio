@@ -134,3 +134,35 @@ nav {
     z-index: 100;
     border-bottom: 1px solid rgba(255,255,255,0.05);
 }
+
+/* --- GRID SYSTEM --- */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+/* Tag styling for the repo cards */
+.tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--accent-color);
+    font-size: 0.8rem;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border: 1px solid rgba(0, 255, 157, 0.2);
+}
+
+.card-header a {
+    color: var(--text-primary);
+    border-bottom: none;
+}
+
+.card-header a:hover {
+    color: var(--accent-color);
+    background: none;
+    box-shadow: none;
+}

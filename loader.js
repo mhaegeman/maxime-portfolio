@@ -10,11 +10,11 @@ const CONFIG = {
 // --- GITHUB FETCHER ---
 async function loadRepos() {
     const container = document.getElementById('repo-grid');
-    if (!container) return; // Stop if we aren't on the projects page
+    if (!container) return; 
 
     try {
-        // Fetch repos (sorted by updated date)
-        const response = await fetch(`https://api.github.com/users/${CONFIG.githubUser}/repos?sort=updated&direction=desc`);
+        // CHANGED: sort=stars to show most popular repos first
+        const response = await fetch(`https://api.github.com/users/${CONFIG.githubUser}/repos?sort=stars&direction=desc`);
         const data = await response.json();
 
         // Clear the "Loading..." text
@@ -22,9 +22,6 @@ async function loadRepos() {
 
         // Slice to limit number of repos
         data.slice(0, CONFIG.maxRepos).forEach(repo => {
-            // Skip forked repos if you want only your own work
-            // if (repo.fork) return; 
-
             const card = document.createElement('article');
             card.className = 'card';
             
@@ -36,15 +33,17 @@ async function loadRepos() {
 
             card.innerHTML = `
                 <div>
-                    <h3 class="card-header">${repo.name}</h3>
+                    <h3 class="card-header">
+                        <a href="${repo.html_url}" target="_blank">${repo.name}</a>
+                    </h3>
                     <div class="card-tags">
                         <span class="tag">${lang}</span>
                     </div>
                     <p class="card-desc">
                         ${repo.description || 'No description provided.'}
                     </p>
-                    <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 15px;">
-                        ★ ${repo.stargazers_count} &nbsp; ⑂ ${repo.forks_count} &nbsp; 🟢 ${date}
+                    <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 15px; font-family: var(--font-code);">
+                        ★ ${repo.stargazers_count} &nbsp; ⑂ ${repo.forks_count}
                     </div>
                 </div>
                 <br>
