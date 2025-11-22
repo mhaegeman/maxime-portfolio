@@ -279,7 +279,39 @@ nav {
     box-shadow: none;
 }
 
-/* --- RESPONSIVE DESIGN --- */
+/* --- RESPONSIVE DESIGN (MOBILE & TABLET) --- */
+@media (max-width: 900px) {
+    .hero-layout {
+        /* Changed from column-reverse to column so Text appears first, Image second */
+        flex-direction: column; 
+        text-align: center;
+        justify-content: center;
+    }
+    
+    .terminal-window {
+        width: 100%;
+    }
+    
+    .video-frame {
+        width: 200px; /* Smaller on mobile */
+        height: 200px;
+        margin-bottom: 30px;
+    }
+    
+    /* Center the typewriter text on mobile */
+    .terminal-window h1 {
+        margin-left: 0 !important;
+    }
+    .terminal-window p {
+        margin-left: 0 !important;
+        margin: 0 auto 20px auto !important;
+    }
+    .terminal-window div {
+        margin-left: 0 !important;
+    }
+}
+
+/* Mobile Navigation Adjustments */
 @media (max-width: 768px) {
     .container {
         padding: 0 15px;
@@ -289,10 +321,18 @@ nav {
         flex-direction: column;
         align-items: flex-start;
         padding: 15px 0;
+        position: relative; /* Added for absolute positioning of button */
+    }
+    
+    /* Move Theme Toggle to Top Right */
+    #theme-toggle {
+        position: absolute;
+        top: 15px;
+        right: 0;
     }
 
     .nav-links {
-        margin-top: 15px;
+        margin-top: 0;
         display: flex;
         flex-direction: column;
         gap: 10px;
@@ -327,9 +367,7 @@ nav {
 .timeline-item::before {
     content: '';
     position: absolute;
-    /* FIX: Adjusted left position to align with the 2px border-left of the .timeline div */
     left: -27px; 
-    /* FIX: Adjusted top position to vertically align with the job date/title line */
     top: 8px; 
     width: 12px;
     height: 12px;
@@ -399,38 +437,6 @@ nav {
     background-color: var(--bg-color); /* Fallback color */
 }
 
-/* MOBILE RESPONSIVENESS */
-@media (max-width: 900px) {
-    .hero-layout {
-        flex-direction: column-reverse; /* Put video on top on mobile */
-        text-align: center;
-        justify-content: center;
-    }
-    
-    .terminal-window {
-        width: 100%;
-    }
-    
-    .video-frame {
-        width: 200px; /* Smaller on mobile */
-        height: 200px;
-        margin-bottom: 30px;
-    }
-    
-    /* Center the typewriter text on mobile */
-    .terminal-window h1 {
-        margin-left: 0 !important;
-    }
-    .terminal-window p {
-        margin-left: 0 !important;
-        margin: 0 auto 20px auto !important;
-    }
-    .terminal-window div {
-        margin-left: 0 !important;
-    }
-}
-
-
 /* Define the base look for terminal/log windows using theme variables */
 .terminal-window {
     /* Use surface color for the background (it's slightly lighter than bg-color) */
@@ -452,34 +458,47 @@ nav {
     color: var(--text-secondary); 
 }
 
-/* --- GAME STYLES --- */
+/* --- GAME STYLES (GRID LAYOUT FIX) --- */
 .game-layout {
-    display: flex;
-    flex-wrap: wrap; /* Allows wrapping on smaller screens */
-    gap: 3rem;
-    align-items: flex-start;
+    display: grid;
+    /* Desktop: Sidebar (1 part) | Game Window (2 parts) */
+    grid-template-columns: 1fr 2fr;
+    grid-template-areas: 
+        "status window"
+        "leaderboard window";
+    gap: 2rem;
+    align-items: start;
     margin-top: 2rem;
 }
 
+/* Assign grid areas */
+.game-status {
+    grid-area: status;
+    min-width: 250px;
+}
+
+.game-leaderboard {
+    grid-area: leaderboard;
+    min-width: 250px;
+}
+
 .game-window {
-    flex: 2;
-    min-width: 300px;
+    grid-area: window;
     background: var(--surface-color);
     border: 1px solid var(--accent-color);
     padding: 1rem;
+    
+    /* FIXED HEIGHT to prevent expansion */
     height: 400px;
-    overflow-y: scroll;
+    max-height: 400px;
+    overflow-y: auto; /* Scroll if content overflows */
+    
     font-family: var(--font-code);
     font-size: 0.9rem;
     white-space: pre-wrap;
     line-height: 1.2;
     box-shadow: 0 0 10px var(--accent-glow);
     transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-.game-scoreboard {
-    flex: 1;
-    min-width: 250px;
 }
 
 /* Game Status Boxes */
@@ -499,7 +518,6 @@ nav {
     font-weight: bold;
     font-size: 1.1em;
     opacity: 0.8;
-    /* Keep the visual flash to signal it's a critical moment */
     animation: flash 0.2s 3; 
 }
 
@@ -510,6 +528,27 @@ nav {
     background-color: rgba(0, 150, 136, 0.1); /* Subtle background highlight */
     transition: color 0.3s, background-color 0.3s;
 }
+
+/* NEW: Styling for the Detect Button (Mobile Friendly) */
+#detect-button {
+    width: 100%;
+    margin-top: 10px;
+    padding: 15px;
+    font-size: 1.1rem;
+    border-color: var(--accent-color);
+    background: rgba(0, 255, 157, 0.05); /* Faint background */
+}
+#detect-button:active {
+    background: var(--accent-color);
+    color: var(--bg-color);
+}
+#detect-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-color: var(--text-secondary);
+    color: var(--text-secondary);
+}
+
 
 /* Animation when an anomaly appears */
 @keyframes flash {
@@ -552,15 +591,19 @@ nav {
     box-shadow: 0 0 5px rgba(0,0,0,0.1);
 }
 
-/* Mobile Adjustments */
-@media (max-width: 768px) {
+/* Mobile Adjustments for Game */
+@media (max-width: 900px) {
     .game-layout {
-        flex-direction: column;
+        grid-template-columns: 1fr;
+        /* Mobile Order: Status -> Window -> Leaderboard */
+        grid-template-areas: 
+            "status"
+            "window"
+            "leaderboard";
     }
+    
     .game-window {
         height: 300px;
-    }
-    .game-scoreboard {
-        order: -1; /* Move score to top on mobile */
+        max-height: 300px;
     }
 }
