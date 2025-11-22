@@ -298,8 +298,8 @@ nav {
 /* The "Node" or "Commit Dot" */
 .timeline-item::before {
     content: '';
-    position: absolute;
-    left: -35px; 
+    position: relative;
+    padding-left: 30px;
     top: 8px; 
     width: 12px;
     height: 12px;
