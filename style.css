@@ -47,80 +47,6 @@ body {
     transition: background-color 0.3s, color 0.3s; /* Smooth transition */
 }
 
-/* --- NAVIGATION CORE STYLES --- */
-nav {
-    padding: 15px 0; /* Slightly slimmer for a modern look */
-    position: sticky;
-    top: 0;
-    
-    /* CRITICAL: Use variables for theme switching */
-    background: var(--nav-bg);
-    border-bottom: 1px solid var(--nav-border);
-    
-    /* Glassmorphism Blur */
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px); /* Safari support */
-    
-    z-index: 1000;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    
-    transition: background 0.3s ease, border-color 0.3s ease, padding 0.3s ease, transform 0.3s ease;
-}
-
-/* --- NAVIGATION LINKS --- */
-.nav-links a {
-    color: var(--nav-text); /* Ensures links turn brown in light mode */
-    font-weight: 500;
-    margin-right: 20px;
-    position: relative;
-    border-bottom: none; /* Remove the default underline */
-    transition: color 0.3s ease;
-}
-
-/* Hover Effect: A small glowing dot or line instead of full underline */
-.nav-links a::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: -4px;
-    left: 0;
-    background-color: var(--accent-color);
-    transition: width 0.3s ease;
-}
-
-.nav-links a:hover::after {
-    width: 100%;
-}
-
-/* Active Page Style */
-.nav-links a.active {
-    color: var(--accent-color);
-    font-weight: bold;
-}
-
-
-/* --- THEME TOGGLE BUTTON --- */
-#theme-toggle {
-    background: transparent;
-    border: 1px solid var(--accent-color);
-    color: var(--accent-color);
-    padding: 8px 12px;
-    cursor: pointer;
-    font-family: var(--font-code);
-    font-size: 1.2rem;
-    border-radius: 4px;
-    transition: all 0.3s ease;
-}
-
-#theme-toggle:hover {
-    background: var(--accent-color);
-    color: var(--bg-color);
-    box-shadow: 0 0 10px var(--accent-glow);
-}
-
 /* --- TYPOGRAPHY --- */
 h1, h2, h3, h4 {
     font-family: var(--font-code);
@@ -220,6 +146,79 @@ section {
     box-shadow: 0 0 20px var(--accent-glow);
 }
 
+/* --- NAVIGATION --- */
+nav {
+    padding: 15px 0; /* Slightly slimmer for a modern look */
+    position: sticky;
+    top: 0;
+    
+    /* CRITICAL: Use variables for theme switching */
+    background: var(--nav-bg);
+    border-bottom: 1px solid var(--nav-border);
+    
+    /* Glassmorphism Blur */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px); /* Safari support */
+    
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    transition: background 0.3s ease, border-color 0.3s ease, padding 0.3s ease, transform 0.3s ease;
+}
+
+/* --- NAVIGATION LINKS --- */
+.nav-links a {
+    color: var(--nav-text); /* Ensures links turn brown in light mode */
+    font-weight: 500;
+    margin-right: 20px;
+    position: relative;
+    border-bottom: none; /* Remove the default underline */
+    transition: color 0.3s ease;
+}
+
+/* Hover Effect: A small glowing dot or line instead of full underline */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background-color: var(--accent-color);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* Active Page Style */
+.nav-links a.active {
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+/* --- THEME TOGGLE BUTTON --- */
+#theme-toggle {
+    background: transparent;
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    padding: 8px 12px;
+    cursor: pointer;
+    font-family: var(--font-code);
+    font-size: 1.2rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+#theme-toggle:hover {
+    background: var(--accent-color);
+    color: var(--bg-color);
+    box-shadow: 0 0 10px var(--accent-glow);
+}
+
 /* --- GRID SYSTEM --- */
 .grid {
     display: grid;
@@ -286,7 +285,7 @@ section {
 .timeline {
     position: relative;
     padding-left: 20px;
-    border-left: 2px solid var(--nav-border); /* Use variable for faint main line */
+    border-left: 2px solid var(--nav-border); /* The faint main line */
     margin-top: 2rem;
 }
 
@@ -300,8 +299,8 @@ section {
 .timeline-item::before {
     content: '';
     position: absolute;
-    left: -26px; /* Align perfectly on the border line */
-    top: 5px;
+    left: -27px; 
+    top: 8px; 
     width: 12px;
     height: 12px;
     background-color: var(--bg-color);
@@ -402,6 +401,27 @@ section {
 }
 
 
+/* Define the base look for terminal/log windows using theme variables */
+.terminal-window {
+    /* Use surface color for the background (it's slightly lighter than bg-color) */
+    background: var(--surface-color) !important; 
+    /* Use the nav border color, which changes based on theme, for a soft border */
+    border: 1px solid var(--nav-border) !important; 
+    border-radius: 5px;
+    box-shadow: 0 0 5px var(--accent-glow);
+    transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+/* You may also want to ensure the log list colors adapt */
+.terminal-window #blog-list a {
+    color: var(--text-primary); /* Ensures blog titles adapt */
+}
+
+/* Also ensure the color of system messages in the log adapts */
+.terminal-window #blog-list p, .terminal-window #blog-list div > span {
+    color: var(--text-secondary); 
+}
+
 /* --- GAME STYLES --- */
 .game-layout {
     display: flex;
@@ -446,7 +466,7 @@ section {
 /* Styling for the Anomaly text (subtle, pre-detection) */
 .anomaly {
     color: var(--text-secondary); 
-    /* font-weight: bold; */
+    font-weight: bold;
     font-size: 1.1em;
     opacity: 0.8;
     /* Keep the visual flash to signal it's a critical moment */
@@ -493,11 +513,13 @@ section {
     width: 100%;
     padding: 8px 10px;
     margin-top: 5px;
+    margin-bottom: 20px;
     background: var(--bg-color);
     border: 1px solid var(--text-secondary);
     color: var(--text-primary);
     font-family: var(--font-code);
     border-radius: 2px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
 }
 
 /* Mobile Adjustments */
@@ -511,25 +533,4 @@ section {
     .game-scoreboard {
         order: -1; /* Move score to top on mobile */
     }
-}
-
-/* Define the base look for terminal/log windows using theme variables */
-.terminal-window {
-    /* Use surface color for the background (it's slightly lighter than bg-color) */
-    background: var(--surface-color) !important; 
-    /* Use the nav border color, which changes based on theme, for a soft border */
-    border: 1px solid var(--nav-border) !important; 
-    border-radius: 5px;
-    box-shadow: 0 0 5px var(--accent-glow);
-    transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
-}
-
-/* You may also want to ensure the log list colors adapt */
-.terminal-window #blog-list a {
-    color: var(--text-primary); /* Ensures blog titles adapt */
-}
-
-/* Also ensure the color of system messages in the log adapts */
-.terminal-window #blog-list p, .terminal-window #blog-list div > span {
-    color: var(--text-secondary); 
 }
