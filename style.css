@@ -299,8 +299,8 @@ nav {
 .timeline-item::before {
     content: '';
     position: absolute;
-    left: -20px; 
-    top: 8px; 
+    left: -12px; 
+    top: 12px; 
     width: 12px;
     height: 12px;
     background-color: var(--bg-color);
