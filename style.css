@@ -284,7 +284,7 @@ nav {
 /* --- TIMELINE (Experience) --- */
 .timeline {
     position: relative;
-    padding-left: 22px;
+    padding-left: 20px;
     border-left: 2px solid var(--nav-border); /* The faint main line */
     margin-top: 2rem;
 }
@@ -298,8 +298,10 @@ nav {
 /* The "Node" or "Commit Dot" */
 .timeline-item::before {
     content: '';
-    position: relative;
-    padding-left: 30px;
+    position: absolute;
+    /* FIX: Adjusted left position to align with the 2px border-left of the .timeline div */
+    left: -27px; 
+    /* FIX: Adjusted top position to vertically align with the job date/title line */
     top: 8px; 
     width: 12px;
     height: 12px;
