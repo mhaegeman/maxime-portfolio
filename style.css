@@ -146,6 +146,34 @@ section {
     box-shadow: 0 0 20px var(--accent-glow);
 }
 
+/* --- SUPER SAIYAN BUTTON & MODE --- */
+.btn-saiyan {
+    display: inline-block;
+    padding: 12px 24px;
+    font-family: var(--font-code);
+    font-weight: bold;
+    border: 1px solid #ffdd00; /* Electric Yellow */
+    color: #ffdd00;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-saiyan:hover {
+    background: #ffdd00;
+    color: #000;
+    box-shadow: 0 0 25px rgba(255, 221, 0, 0.8);
+}
+
+/* This class replaces the blue/green border with yellow gold */
+.saiyan-mode {
+    background: linear-gradient(135deg, #ffdd00, #ffaa00) !important;
+    box-shadow: 0 0 50px rgba(255, 221, 0, 0.6) !important;
+    transition: all 0.5s ease;
+}
+
 /* --- NAVIGATION --- */
 nav {
     padding: 15px 0; /* Slightly slimmer for a modern look */
