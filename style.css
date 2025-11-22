@@ -512,3 +512,24 @@ section {
         order: -1; /* Move score to top on mobile */
     }
 }
+
+/* Define the base look for terminal/log windows using theme variables */
+.terminal-window {
+    /* Use surface color for the background (it's slightly lighter than bg-color) */
+    background: var(--surface-color) !important; 
+    /* Use the nav border color, which changes based on theme, for a soft border */
+    border: 1px solid var(--nav-border) !important; 
+    border-radius: 5px;
+    box-shadow: 0 0 5px var(--accent-glow);
+    transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+/* You may also want to ensure the log list colors adapt */
+.terminal-window #blog-list a {
+    color: var(--text-primary); /* Ensures blog titles adapt */
+}
+
+/* Also ensure the color of system messages in the log adapts */
+.terminal-window #blog-list p, .terminal-window #blog-list div > span {
+    color: var(--text-secondary); 
+}

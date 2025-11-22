@@ -14,7 +14,7 @@ function saveScore(newScore) {
     let scores = loadLeaderboard();
     
     // 1. Add new score (using a default placeholder name)
-    scores.push({ name: 'PLAYER', score: newScore, date: new Date().toLocaleDateString() });
+    scores.push({ name: 'PLAYER ONE', score: newScore, date: new Date().toLocaleDateString() });
     
     // 2. Sort by score (descending)
     scores.sort((a, b) => b.score - a.score);
