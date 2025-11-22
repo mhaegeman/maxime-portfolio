@@ -36,8 +36,7 @@
 
         <section id="hero" style="min-height: 90vh; display: flex; align-items: center;">
             <div class="container hero-layout">
-                
-                <div class="terminal-window" style="font-family: 'Fira Code', monospace; flex: 1;">
+                <div style="font-family: 'Fira Code', monospace; flex: 1;">
                     <p style="color: var(--text-secondary); margin-bottom: 10px;">
                         <span style="color: #ff7b72;">from</span> education <span style="color: #ff7b72;">import</span> DataScience
                     </p>
@@ -56,14 +55,16 @@
                     </p>
 
                     <div style="margin-top: 40px; margin-left: 20px;">
-                        <a href="cv.html" class="btn">View_Profile()</a>
+                        <a href="profile.html" class="btn">View_Profile()</a>
                     </div>
                 </div>
 
                 <div class="hero-visual">
                     <div class="video-frame">
                         <video autoplay loop muted playsinline poster="content/profile_bnw.jpg">
-                            </video>
+                            <!-- <source src="content/profile_anim.mp4" type="video/mp4">
+                            Your browser does not support the video tag. -->
+                        </video>
                     </div>
                 </div>
 
@@ -84,7 +85,6 @@
         <section class="section" id="projects">
             <h2 class="section-title">Selected_Projects</h2>
             <div class="grid">
-                
                 <article class="card">
                     <div>
                         <h3 class="card-header">seo-content-generator</h3>
@@ -135,7 +135,7 @@
 
         <section class="section" id="contact">
             <h2 class="section-title">Initialize_Handshake</h2>
-            <div class="terminal-window" style="padding: 20px;">
+            <div style="padding: 20px;">
                 <p style="margin-bottom: 20px; color: var(--text-secondary);">
                     // Interested in collaboration? Execute the command below.
                 </p>
@@ -199,6 +199,7 @@
         updateTime();
         setInterval(updateTime, 1000);
     </script>
+
     <script src="loader.js"></script>
 
 </body>
