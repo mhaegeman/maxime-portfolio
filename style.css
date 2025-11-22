@@ -299,7 +299,7 @@ nav {
 .timeline-item::before {
     content: '';
     position: absolute;
-    left: -29px; 
+    left: -20px; 
     top: 8px; 
     width: 12px;
     height: 12px;
