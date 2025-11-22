@@ -55,14 +55,14 @@
                         Leveraging my foundation in <span style="color: var(--text-primary);">Data Science</span>, I architect scalable data systems and engineer robust machine learning pipelines.
                     </p>
 
-                    <!-- Buttons Container -->
-                    <div style="margin-top: 40px; margin-left: 20px; display: flex; flex-wrap: wrap; gap: 15px; align-items: center;">
+                    <!-- Buttons Container (Only Profile Button left here) -->
+                    <div style="margin-top: 40px; margin-left: 20px;">
                         <a href="cv.html" class="btn">View_Profile()</a>
-                        <button id="saiyan-btn" class="btn-saiyan" onclick="triggerSaiyanMode()">Transform_to_Super_Saiyan()</button>
                     </div>
                 </div>
 
-                <div class="hero-visual">
+                <!-- Hero Visual: Flex column to stack Image + Button -->
+                <div class="hero-visual" style="display: flex; flex-direction: column; align-items: center; gap: 25px;">
                     <div class="video-frame" id="hero-frame">
                         <!-- Video Element: Autoplay/Loop removed so it waits for trigger -->
                         <video id="saiyan-video" muted playsinline poster="content/profile_bnw.jpg">
@@ -73,6 +73,9 @@
                         <!-- Hidden GIF Element: Shown after video ends -->
                         <img id="saiyan-gif" src="content/super_saian.gif" alt="Super Saiyan Mode" style="display: none; width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
                     </div>
+                    
+                    <!-- Super Saiyan Button Moved Here -->
+                    <button id="saiyan-btn" class="btn-saiyan" onclick="triggerSaiyanMode()">Super_Saiyan_Mode()</button>
                 </div>
 
             </div>
@@ -172,7 +175,7 @@
     </div>
 
     <script>
-        const text = "Hey there, I'm Maxime."; 
+        const text = "Hi, I'm Maxime."; 
         const speed = 100; // Speed in milliseconds
         let i = 0;
 
@@ -223,7 +226,7 @@
             btn.disabled = true;
             btn.style.opacity = '0.5';
             btn.style.cursor = 'not-allowed';
-            btn.innerText = "Power_Level_Over_9000!";
+            btn.innerText = "max_evolution_reached";
 
             // 3. Play the transformation video
             video.style.display = 'block';
