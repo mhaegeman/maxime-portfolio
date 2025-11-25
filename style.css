@@ -278,77 +278,6 @@ nav {
     background: none;
     box-shadow: none;
 }
-
-/* --- RESPONSIVE DESIGN (MOBILE & TABLET) --- */
-@media (max-width: 900px) {
-    .hero-layout {
-        /* Changed from column-reverse to column so Text appears first, Image second */
-        flex-direction: column; 
-        text-align: center;
-        justify-content: center;
-    }
-    
-    .terminal-window {
-        width: 100%;
-    }
-    
-    .video-frame {
-        width: 200px; /* Smaller on mobile */
-        height: 200px;
-        margin-bottom: 30px;
-    }
-    
-    /* Center the typewriter text on mobile */
-    .terminal-window h1 {
-        margin-left: 0 !important;
-    }
-    .terminal-window p {
-        margin-left: 0 !important;
-        margin: 0 auto 20px auto !important;
-    }
-    .terminal-window div {
-        margin-left: 0 !important;
-    }
-}
-
-/* Mobile Navigation Adjustments */
-@media (max-width: 768px) {
-    .container {
-        padding: 0 15px;
-    }
-    
-    nav {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 15px 0;
-        position: relative; /* Added for absolute positioning of button */
-    }
-    
-    /* Move Theme Toggle to Top Right */
-    #theme-toggle {
-        position: absolute;
-        top: 15px;
-        right: 0;
-    }
-
-    .nav-links {
-        margin-top: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        width: 100%;
-    }
-
-    h1 {
-        font-size: 2rem; /* Shrink big titles */
-    }
-
-    section {
-        padding-left: 20px; /* Reduce left padding on mobile */
-        border-left: none; /* Optional: remove the line on mobile for cleaner look */
-    }
-}
-
 /* --- TIMELINE (Experience) --- */
 .timeline {
     position: relative;
@@ -591,8 +520,70 @@ nav {
     box-shadow: 0 0 5px rgba(0,0,0,0.1);
 }
 
-/* Mobile Adjustments for Game */
+/* --- RESPONSIVE DESIGN (MOBILE & TABLET) --- */
 @media (max-width: 900px) {
+    .container {
+        padding: 0 20px; 
+        width: 100%;
+    }
+    section {
+        margin-left: 0 !important;
+        padding-left: 0 !important;
+        border-left: none;
+        padding-top: 40px;
+        padding-bottom: 40px;
+        text-align: center; 
+    }
+    .hero-layout {
+        flex-direction: column; 
+        text-align: center;
+        justify-content: center;
+        gap: 2rem;
+    }
+    #hero h1, 
+    #hero p, 
+    #hero div {
+        margin-left: 0 !important;
+        width: 100%; /* Ensure full width for centering */
+    }
+    nav {
+        flex-direction: column;
+        align-items: center; /* Centers the whole nav block */
+        padding: 15px 0;
+    } 
+    .nav-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Centers the links */
+        gap: 15px;
+        width: 100%;
+        margin-top: 10px;
+    }
+    .nav-links a {
+        margin-right: 0; /* Remove right margin to center perfectly */
+        font-size: 1.1rem; /* Make links slightly larger for touch targets */
+    }
+    .timeline {
+        text-align: left; /* Keep timeline text left-aligned for readability */
+        margin-left: 10px; /* Small offset for the timeline line */
+    }
+    .terminal-window {
+        width: 100%;
+        text-align: left; /* Keep code logs left-aligned */
+    }
+    .video-frame {
+        width: 200px; /* Smaller on mobile */
+        height: 200px;
+        margin-bottom: 30px;
+    }
+    #theme-toggle {
+        position: absolute;
+        top: 15px;
+        right: 0;
+    }
+    h1 {
+        font-size: 2rem; /* Shrink big titles */
+    }
     .game-layout {
         grid-template-columns: 1fr;
         /* Mobile Order: Status -> Window -> Leaderboard */
@@ -601,7 +592,6 @@ nav {
             "window"
             "leaderboard";
     }
-    
     .game-window {
         height: 300px;
         max-height: 300px;
