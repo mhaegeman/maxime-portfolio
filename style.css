@@ -522,79 +522,64 @@ nav {
 
 /* --- RESPONSIVE DESIGN (MOBILE & TABLET) --- */
 @media (max-width: 900px) {
+    
     .container {
-        padding: 0 20px; 
+        padding: 0 20px;
         width: 100%;
     }
+
     section {
         margin-left: 0 !important;
         padding-left: 0 !important;
-        border-left: none;
+        border-left: none !important;
+        text-align: center;
         padding-top: 40px;
         padding-bottom: 40px;
-        text-align: center; 
     }
+
     .hero-layout {
         flex-direction: column; 
-        text-align: center;
+        align-items: center;
         justify-content: center;
         gap: 2rem;
     }
+
     #hero h1, 
     #hero p, 
     #hero div {
         margin-left: 0 !important;
-        width: 100%; /* Ensure full width for centering */
+        width: 100%;
+        text-align: center;
     }
+
+    #hero .video-frame {
+        width: 200px !important;
+        height: 200px !important;
+        border-radius: 50% !important;
+        margin: 0 auto 30px auto !important; /* 'auto' centers it, !important protects it */
+    }
+    
     nav {
         flex-direction: column;
-        align-items: center; /* Centers the whole nav block */
+        align-items: center;
         padding: 15px 0;
     } 
     .nav-links {
         display: flex;
         flex-direction: column;
-        align-items: center; /* Centers the links */
+        align-items: center;
         gap: 15px;
         width: 100%;
         margin-top: 10px;
-    }
-    .nav-links a {
-        margin-right: 0; /* Remove right margin to center perfectly */
-        font-size: 1.1rem; /* Make links slightly larger for touch targets */
-    }
-    .timeline {
-        text-align: left; /* Keep timeline text left-aligned for readability */
-        margin-left: 10px; /* Small offset for the timeline line */
-    }
-    .terminal-window {
-        width: 100%;
-        text-align: left; /* Keep code logs left-aligned */
-    }
-    #hero .video-frame {
-        width: 200px !important;  /* Override the 100% width */
-        height: 200px !important; /* Ensure height matches width */
-        border-radius: 50%;       /* Keeps it a perfect circle */
-        margin: 0 auto 30px auto; /* Centers it horizontally */
     }
     #theme-toggle {
         position: absolute;
         top: 15px;
         right: 0;
     }
-    h1 {
-        font-size: 2rem; /* Shrink big titles */
-    }
+    
     .game-layout {
         grid-template-columns: 1fr;
-        /* Mobile Order: Status -> Window -> Leaderboard */
-        grid-template-areas: 
-            "status"
-            "window"
-            "leaderboard";
-    }
-    .game-window {
-        height: 300px;
-        max-height: 300px;
+        grid-template-areas: "status" "window" "leaderboard";
     }
 }
