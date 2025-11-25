@@ -571,10 +571,11 @@ nav {
         width: 100%;
         text-align: left; /* Keep code logs left-aligned */
     }
-    .video-frame {
-        width: 200px; /* Smaller on mobile */
-        height: 200px;
-        margin-bottom: 30px;
+    #hero .video-frame {
+        width: 200px !important;  /* Override the 100% width */
+        height: 200px !important; /* Ensure height matches width */
+        border-radius: 50%;       /* Keeps it a perfect circle */
+        margin: 0 auto 30px auto; /* Centers it horizontally */
     }
     #theme-toggle {
         position: absolute;
