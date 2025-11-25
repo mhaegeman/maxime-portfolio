@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Malmo Survivor: The Long Road</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #111;
+            user-select: none;
+        }
+
+        #canvas-container {
+            width: 100vw;
+            height: 100vh;
+            display: block;
+        }
+
+        #ui-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        #score-board {
+            padding: 20px;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 2px 2px 0 #000;
+        }
+
+        #controls-hint {
+            padding: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            font-size: 14px;
+            text-shadow: 1px 1px 0 #000;
+        }
+
+        #game-over-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            pointer-events: auto;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+
+        #game-over-screen.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        h1 {
+            color: #ff4444;
+            font-size: 60px;
+            margin: 0 0 20px 0;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+        }
+
+        .btn {
+            background: white;
+            color: black;
+            border: none;
+            padding: 15px 40px;
+            font-size: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: transform 0.1s, background 0.2s;
+        }
+
+        .btn:hover {
+            background: #ff4444;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+    <!-- Import Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+    <div id="canvas-container"></div>
+
+    <div id="ui-layer">
+        <div id="score-board">DISTANCE: <span id="score-val">0</span>m</div>
+        <div id="controls-hint">W to Move Forward • A/D to Strafe • SPACE or CLICK to Shoot</div>
+    </div>
+
+    <div id="game-over-screen">
+        <h1>YOU DIED</h1>
+        <p style="color: white; margin-bottom: 30px; font-size: 24px;">The horde caught you on the bridge.</p>
+        <p style="color: #aaa; margin-bottom: 30px; font-size: 18px;">Distance Reached: <span id="final-score">0</span>m</p>
+        <button class="btn" id="restart-btn">Try Again</button>
+    </div>
+
+    <script>
+        // --- GAME CONSTANTS ---
+        const ROAD_WIDTH = 40;
+        const ROAD_LENGTH = 10000; // Effectively infinite for this demo
+        const PLAYER_SPEED = 0.3; // Even slower, heavier feel
+        const ZOMBIE_SPEED_BASE = 0.08; // Very slow approach
+        const ROCKET_SPEED = 2.5;
+        const PLAYER_LIMIT_X = 18; // Keep player on road
+
+        // --- GLOBALS ---
+        let scene, camera, renderer;
+        let player, playerMesh, weaponMesh;
+        let zombies = [];
+        let rockets = [];
+        let particles = [];
+        let buildings = [];
+        
+        // Raycasting for aiming
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+        const aimPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -1.5); // Plane at zombie chest height (y=1.5)
+
+        let score = 0;
+        let isGameOver = false;
+        let lastTime = 0;
+        let lastSpawnTime = 0;
+
+        // Input state
+        const keys = { w: false, a: false, s: false, d: false, space: false };
+
+        // --- INIT ---
+        function init() {
+            const container = document.getElementById('canvas-container');
+
+            // Scene
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x884433); // Sunset reddish-brown
+            scene.fog = new THREE.Fog(0x884433, 20, 120); // Closer fog for atmosphere
+
+            // Camera
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+            
+            // Renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            container.appendChild(renderer.domElement);
+
+            // Lights
+            const ambientLight = new THREE.AmbientLight(0x663333, 0.6); // Warm sunset ambient
+            scene.add(ambientLight);
+
+            const dirLight = new THREE.DirectionalLight(0xffaa44, 1.0); // Orange Sun
+            dirLight.position.set(-50, 100, -50); // Coming from front-left
+            dirLight.castShadow = true;
+            dirLight.shadow.mapSize.width = 2048;
+            dirLight.shadow.mapSize.height = 2048;
+            dirLight.shadow.camera.near = 0.5;
+            dirLight.shadow.camera.far = 500;
+            // Make shadow area large enough for the road view
+            dirLight.shadow.camera.left = -50;
+            dirLight.shadow.camera.right = 50;
+            dirLight.shadow.camera.top = 50;
+            dirLight.shadow.camera.bottom = -50;
+            scene.add(dirLight);
+
+            // The World (Road)
+            createWorld();
+
+            // The Player
+            createPlayer();
+
+            // Event Listeners
+            window.addEventListener('resize', onWindowResize, false);
+            window.addEventListener('mousemove', onMouseMove, false); // Track mouse pos
+            document.addEventListener('keydown', (e) => handleKey(e, true));
+            document.addEventListener('keyup', (e) => handleKey(e, false));
+            document.addEventListener('mousedown', shootRocket); // Mouse click to shoot
+            document.getElementById('restart-btn').addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent shooting when clicking restart
+                restartGame();
+            });
+
+            // Start Loop
+            requestAnimationFrame(animate);
+        }
+
+        // --- ASSET CREATION ---
+
+        function createWorld() {
+            // 1. The Road
+            const roadGeo = new THREE.PlaneGeometry(ROAD_WIDTH, ROAD_LENGTH);
+            const roadMat = new THREE.MeshPhongMaterial({ color: 0x222222 }); // Dark Asphalt
+            const road = new THREE.Mesh(roadGeo, roadMat);
+            road.rotation.x = -Math.PI / 2;
+            road.position.z = -ROAD_LENGTH / 2 + 50; // Start near 0, extend into negative Z
+            road.receiveShadow = true;
+            scene.add(road);
+
+            // 1b. Checkpoint Lines (Every 100m)
+            const lineGeo = new THREE.PlaneGeometry(ROAD_WIDTH, 2);
+            const lineMat = new THREE.MeshBasicMaterial({ color: 0xffff00 }); // Yellow lines
+            
+            for(let i=100; i<ROAD_LENGTH; i+=100) {
+                const line = new THREE.Mesh(lineGeo, lineMat);
+                line.rotation.x = -Math.PI / 2;
+                line.position.set(0, 0.02, -i); // Slightly above road (z is negative)
+                scene.add(line);
+            }
+
+            // 2. The Grass/Ground sides
+            const groundGeo = new THREE.PlaneGeometry(500, ROAD_LENGTH);
+            const groundMat = new THREE.MeshLambertMaterial({ color: 0x2d3a2d }); // Dark grass
+            const ground = new THREE.Mesh(groundGeo, groundMat);
+            ground.rotation.x = -Math.PI / 2;
+            ground.position.y = -0.1; // Slightly below road
+            ground.position.z = -ROAD_LENGTH / 2 + 50;
+            scene.add(ground);
+
+            // 3. Buildings & Decor along the road
+            const brickColors = [0x8B4513, 0xA0522D, 0xCD5C5C, 0x555555];
+            
+            // Generate buildings every 20-40 units along Z
+            for (let z = 20; z > -1000; z -= (15 + Math.random() * 20)) {
+                // Left Side
+                createBuilding(-25 - Math.random() * 10, z, brickColors);
+                // Right Side
+                createBuilding(25 + Math.random() * 10, z, brickColors);
+            }
+        }
+
+        function createBuilding(x, z, colors) {
+            const h = 8 + Math.random() * 15;
+            const w = 6 + Math.random() * 6;
+            const d = 6 + Math.random() * 6;
+            
+            const geo = new THREE.BoxGeometry(w, h, d);
+            const mat = new THREE.MeshLambertMaterial({ 
+                color: colors[Math.floor(Math.random() * colors.length)] 
+            });
+            const mesh = new THREE.Mesh(geo, mat);
+            mesh.position.set(x, h/2, z);
+            mesh.castShadow = true;
+            mesh.receiveShadow = true;
+            scene.add(mesh);
+            buildings.push(mesh);
+        }
+
+        function createPlayer() {
+            const group = new THREE.Group();
+
+            // Body
+            const bodyGeo = new THREE.BoxGeometry(1.5, 3, 1.5);
+            const bodyMat = new THREE.MeshLambertMaterial({ color: 0x3366ff });
+            playerMesh = new THREE.Mesh(bodyGeo, bodyMat);
+            playerMesh.position.y = 1.5;
+            playerMesh.castShadow = true;
+            group.add(playerMesh);
+
+            // Head
+            const headGeo = new THREE.BoxGeometry(1, 1, 1);
+            const headMat = new THREE.MeshLambertMaterial({ color: 0xffccaa });
+            const head = new THREE.Mesh(headGeo, headMat);
+            head.position.y = 3.5;
+            head.castShadow = true;
+            group.add(head);
+
+            // Rocket Launcher
+            const launcherGeo = new THREE.CylinderGeometry(0.3, 0.3, 2.5, 8);
+            const launcherMat = new THREE.MeshStandardMaterial({ color: 0x222222 });
+            weaponMesh = new THREE.Mesh(launcherGeo, launcherMat);
+            weaponMesh.rotation.x = Math.PI / 2; // Horizontal
+            weaponMesh.position.set(0.8, 2.8, 0.5);
+            group.add(weaponMesh);
+
+            // Initial Position
+            group.position.set(0, 0, 0);
+            
+            scene.add(group);
+            player = {
+                mesh: group,
+                canShoot: true,
+                cooldown: 0
+            };
+        }
+
+        function spawnEnemy() {
+            if (isGameOver) return;
+
+            const group = new THREE.Group();
+
+            // Zombie Body
+            const geo = new THREE.BoxGeometry(1.5, 3, 1.5);
+            const mat = new THREE.MeshLambertMaterial({ color: 0x44aa44 }); // Zombie Green
+            const mesh = new THREE.Mesh(geo, mat);
+            mesh.position.y = 1.5;
+            mesh.castShadow = true;
+            group.add(mesh);
+
+            // Arms (Stick out forward)
+            const armGeo = new THREE.BoxGeometry(1.5, 0.4, 0.4);
+            const armMesh = new THREE.Mesh(armGeo, mat);
+            armMesh.position.set(0, 2.5, 0.5); 
+            group.add(armMesh);
+
+            // Spawn ahead of player
+            // Random X on road (-18 to 18)
+            const spawnX = (Math.random() * 36) - 18;
+            // Spawn Z: 60 to 80 units ahead (Negative Z is forward)
+            const spawnZ = player.mesh.position.z - (60 + Math.random() * 20);
+
+            group.position.set(spawnX, 0, spawnZ);
+
+            scene.add(group);
+            
+            // Speed based on score (Distance) - slightly faster as you go
+            const speed = ZOMBIE_SPEED_BASE + (score * 0.0001);
+            
+            zombies.push({
+                mesh: group,
+                speed: Math.min(speed, 0.3)
+            });
+        }
+
+        function shootRocket() {
+            if (!player.canShoot) return;
+            
+            // 1. Find where mouse is pointing
+            raycaster.setFromCamera(mouse, camera);
+            const target = new THREE.Vector3();
+            raycaster.ray.intersectPlane(aimPlane, target);
+
+            // Fallback if ray misses plane (shouldn't happen with top-down view)
+            if (!target) return;
+
+            // 2. Calculate direction vector
+            const weaponWorldPos = new THREE.Vector3();
+            weaponMesh.getWorldPosition(weaponWorldPos);
+            
+            const direction = new THREE.Vector3();
+            direction.subVectors(target, weaponWorldPos).normalize();
+
+            // 3. Create Rocket
+            const rocketGeo = new THREE.ConeGeometry(0.2, 1, 8);
+            rocketGeo.rotateX(Math.PI / 2); // Align cone tip to +Z axis for lookAt
+            const rocketMat = new THREE.MeshBasicMaterial({ color: 0xffaa00 });
+            const rocket = new THREE.Mesh(rocketGeo, rocketMat);
+            
+            rocket.position.copy(weaponWorldPos);
+            rocket.lookAt(target); // Rotate to face target
+
+            scene.add(rocket);
+            rockets.push({
+                mesh: rocket,
+                velocity: direction.multiplyScalar(ROCKET_SPEED),
+                life: 150
+            });
+
+            player.canShoot = false;
+            player.cooldown = 15; // Short cooldown (0.25s)
+        }
+
+        function createExplosion(position) {
+            const color = 0xff5500;
+            for(let i=0; i<8; i++) {
+                const geo = new THREE.BoxGeometry(0.5 + Math.random(), 0.5 + Math.random(), 0.5 + Math.random());
+                const mat = new THREE.MeshBasicMaterial({ color: color });
+                const p = new THREE.Mesh(geo, mat);
+                p.position.copy(position);
+                
+                // Random velocity
+                const vel = new THREE.Vector3(
+                    (Math.random() - 0.5) * 0.5,
+                    (Math.random() - 0.5) * 0.5,
+                    (Math.random() - 0.5) * 0.5
+                );
+
+                scene.add(p);
+                particles.push({
+                    mesh: p,
+                    velocity: vel,
+                    life: 30
+                });
+            }
+        }
+
+        // --- UTILS ---
+
+        function onMouseMove(event) {
+            // Normalize mouse coordinates (-1 to +1)
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        }
+
+        function handleKey(e, pressed) {
+            const k = e.key.toLowerCase();
+            if (k === 'w' || k === 'arrowup') keys.w = pressed;
+            if (k === 'a' || k === 'arrowleft') keys.a = pressed;
+            if (k === 's' || k === 'arrowdown') keys.s = pressed;
+            if (k === 'd' || k === 'arrowright') keys.d = pressed;
+            if (k === ' ') {
+                if(pressed && !keys.space) shootRocket(); 
+                keys.space = pressed;
+            }
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        // --- MAIN LOOP ---
+
+        function animate(time) {
+            requestAnimationFrame(animate);
+            if (isGameOver) return;
+
+            const delta = time - lastTime;
+            lastTime = time;
+
+            // 1. Spawning Logic
+            // Increase spawn rate based on distance (every 100m it gets faster)
+            // Spawn faster as score increases
+            const difficultyMultiplier = Math.floor(score / 100);
+            const currentSpawnRate = Math.max(500, 2500 - (difficultyMultiplier * 300));
+
+            if (time - lastSpawnTime > currentSpawnRate) {
+                spawnEnemy();
+                lastSpawnTime = time;
+            }
+
+            // 2. Player Movement (Cartesian)
+            // Forward (W) moves along -Z
+            if (keys.w) player.mesh.position.z -= PLAYER_SPEED;
+            // Back (S) - Optional, but useful for spacing
+            if (keys.s) player.mesh.position.z += PLAYER_SPEED;
+
+            // Update Score based on Distance (negative Z)
+            // We use -player.mesh.position.z because we move in negative Z
+            const distance = Math.floor(Math.max(0, -player.mesh.position.z));
+            if (distance > score) {
+                score = distance;
+                document.getElementById('score-val').innerText = score;
+            }
+
+            // Strafe (A/D)
+            if (keys.a) player.mesh.position.x -= PLAYER_SPEED;
+            if (keys.d) player.mesh.position.x += PLAYER_SPEED;
+
+            // Clamp X
+            player.mesh.position.x = Math.max(-PLAYER_LIMIT_X, Math.min(PLAYER_LIMIT_X, player.mesh.position.x));
+
+            // 3. Camera Follow
+            // Rigid follow on Z to prevent motion sickness/instability
+            // Smooth follow on X for a nice feel
+            const targetCamZ = player.mesh.position.z + 25; // 25 units behind
+            const targetCamX = player.mesh.position.x * 0.5; // Slight tracking
+            
+            camera.position.z = targetCamZ;
+            camera.position.y = 12; // Height
+            
+            // Simple Lerp for X
+            camera.position.x += (targetCamX - camera.position.x) * 0.1;
+            
+            // Look slightly ahead of player
+            camera.lookAt(player.mesh.position.x, 2, player.mesh.position.z - 20);
+
+            // 4. Projectiles
+            if(player.cooldown > 0) {
+                player.cooldown--;
+                if (player.cooldown <= 0) player.canShoot = true;
+            }
+
+            for (let i = rockets.length - 1; i >= 0; i--) {
+                const r = rockets[i];
+                r.life--;
+                
+                // Move rocket along its velocity vector
+                r.mesh.position.add(r.velocity);
+                
+                if(r.life <= 0) {
+                    scene.remove(r.mesh);
+                    rockets.splice(i, 1);
+                    continue;
+                }
+
+                // Collision with Zombies
+                let hit = false;
+                for(let j = zombies.length - 1; j >= 0; j--) {
+                    const z = zombies[j];
+                    // Simple distance check
+                    if(r.mesh.position.distanceTo(z.mesh.position) < 3) {
+                        createExplosion(z.mesh.position);
+                        scene.remove(z.mesh);
+                        zombies.splice(j, 1);
+                        hit = true;
+                        // Score is not updated here anymore
+                        break;
+                    }
+                }
+
+                if(hit) {
+                    scene.remove(r.mesh);
+                    rockets.splice(i, 1);
+                }
+            }
+
+            // 5. Zombies
+            for (let i = 0; i < zombies.length; i++) {
+                const z = zombies[i];
+                
+                // Move towards player
+                // Z axis: constant approach
+                z.mesh.position.z += z.speed;
+                
+                // X axis: slowly steer towards player
+                if(z.mesh.position.x < player.mesh.position.x) z.mesh.position.x += 0.05;
+                if(z.mesh.position.x > player.mesh.position.x) z.mesh.position.x -= 0.05;
+
+                // Look at player
+                z.mesh.lookAt(player.mesh.position);
+
+                // Collision with Player
+                if(z.mesh.position.distanceTo(player.mesh.position) < 2) {
+                    endGame();
+                }
+
+                // Cleanup if they pass the player significantly
+                if(z.mesh.position.z > player.mesh.position.z + 10) {
+                    scene.remove(z.mesh);
+                    zombies.splice(i, 1);
+                    i--; // adjust index
+                }
+            }
+
+            // 6. Particles
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.life--;
+                p.mesh.position.add(p.velocity);
+                p.mesh.scale.multiplyScalar(0.9);
+                if(p.life <= 0) {
+                    scene.remove(p.mesh);
+                    particles.splice(i, 1);
+                }
+            }
+            
+            // Light follows player to ensure shadows always work
+            const light = scene.children.find(c => c.isDirectionalLight);
+            if(light) {
+                light.position.z = player.mesh.position.z + 50;
+                light.target.position.z = player.mesh.position.z - 50;
+                light.target.updateMatrixWorld();
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        function endGame() {
+            isGameOver = true;
+            document.getElementById('game-over-screen').classList.add('visible');
+            document.getElementById('final-score').innerText = score;
+        }
+
+        function restartGame() {
+            // Reset Vars
+            score = 0;
+            document.getElementById('score-val').innerText = '0';
+            isGameOver = false;
+            
+            // Clear Entities
+            zombies.forEach(z => scene.remove(z.mesh));
+            zombies = [];
+            rockets.forEach(r => scene.remove(r.mesh));
+            rockets = [];
+            particles.forEach(p => scene.remove(p.mesh));
+            particles = [];
+
+            // Reset Player Pos
+            player.mesh.position.set(0, 0, 0);
+
+            // Hide UI
+            document.getElementById('game-over-screen').classList.remove('visible');
+
+            // Restart Loop
+            lastTime = performance.now();
+            requestAnimationFrame(animate);
+        }
+
+        // Run
+        init();
+
+    </script>
+</body>
+</html>
