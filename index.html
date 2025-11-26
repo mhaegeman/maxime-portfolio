@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; script-src 'self' https://api.github.com https://api.rss2json.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com;">
+        content="default-src 'self'; script-src 'self' https://api.github.com https://api.rss2json.com; connect-src 'self' https://api.github.com https://api.rss2json.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com;">
     <meta name="description"
         content="Portfolio of Maxime Haegeman - Data Engineer & Python Developer specializing in scalable data and ML pipelines.">
     <meta name="keywords" content="Data Scientist, Python, Machine Learning, Data Engineer, Maxime Haegeman">
@@ -55,13 +55,12 @@
                             style="color: #d2a8ff;">Maxime</span>(DataEngineer, MLEngineer):
                     </p>
 
-                    <h1 style="font-size: 2.5rem; margin-left: 20px;">
+                    <h1 style="font-size: 2.5rem;">
                         <span style="color: var(--accent-color); margin-right: 10px;">>>></span>
                         <span id="typewriter"></span><span class="cursor">_</span>
                     </h1>
 
-                    <p
-                        style="margin-left: 20px; color: var(--text-secondary); max-width: 600px; margin-top: 20px; line-height: 1.8;">
+                    <p style="color: var(--text-secondary); max-width: 600px; margin-top: 20px; line-height: 1.8;">
                         I am a <span style="color: var(--text-primary);">Developer</span> bridging the gap between
                         models and production.
                         Leveraging my foundation in <span style="color: var(--text-primary);">Data Science</span>, I
@@ -69,16 +68,16 @@
                     </p>
 
                     <!-- Buttons Container (Only Profile Button left here) -->
-                    <div style="margin-top: 40px; margin-left: 20px;">
+                    <div style="margin-top: 50px;">
                         <a href="cv.html" class="btn">View_Profile()</a>
                     </div>
                 </div>
 
                 <!-- Hero Visual: Flex column to stack Image + Button -->
-                <div class="hero-visual" style="display: flex; flex-direction: column; align-items: center; gap: 25px;">
+                <div class="hero-visual" style="display: flex; flex-direction: column; align-items: center; gap: 40px;">
                     <div class="video-frame" id="hero-frame">
                         <!-- Video Element: Autoplay/Loop removed so it waits for trigger -->
-                        <video id="saiyan-video" muted playsinline preload="none" poster="content/profile_bnw.jpg">
+                        <video id="saiyan-video" muted playsinline poster="content/profile_bnw.jpg">
                             <source src="content/profile_supersaian.mp4" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>

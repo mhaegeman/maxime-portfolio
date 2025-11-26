@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://api.github.com https://api.rss2json.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com;">
+        content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://api.github.com https://api.rss2json.com; connect-src 'self' https://api.github.com https://api.rss2json.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com;">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Maxime | Survivor Protocol</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,16 +20,18 @@
 
 <body>
 
-    <nav>
-        <div class="nav-links">
-            <a href="index.html">_home</a>
-            <a href="projects.html">_git_repos</a>
-            <a href="blog.html">_medium_logs</a>
-            <a href="cv.html">_sys_profile</a>
-            <a href="games.html" class="active">_games</a>
-        </div>
-        <button id="theme-toggle" title="Switch Theme">☀</button>
-    </nav>
+    <div class="container">
+        <nav>
+            <div class="nav-links">
+                <a href="index.html">_home</a>
+                <a href="projects.html">_git_repos</a>
+                <a href="blog.html">_medium_logs</a>
+                <a href="cv.html">_sys_profile</a>
+                <a href="games.html" class="active">_games</a>
+            </div>
+            <button id="theme-toggle" title="Switch Theme">☀</button>
+        </nav>
+    </div>
 
     <div id="game-wrapper">
         <div id="canvas-container"></div>
