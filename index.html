@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://api.github.com https://api.rss2json.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com;">
-    <meta name="description" content="Portfolio of Maxime Haegeman - Data Engineer & Python Developer specializing in scalable data and ML pipelines.">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' https://api.github.com https://api.rss2json.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com;">
+    <meta name="description"
+        content="Portfolio of Maxime Haegeman - Data Engineer & Python Developer specializing in scalable data and ML pipelines.">
     <meta name="keywords" content="Data Scientist, Python, Machine Learning, Data Engineer, Maxime Haegeman">
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.maximehaegeman.dev/">
     <meta property="og:title" content="Maxime Haegeman | Data Engineer">
     <meta property="og:description" content="Specializing in scalable data and ML pipelines.">
-    <meta property="og:image" content="https://www.maximehaegeman.dev/assets/preview-card.png"> <meta property="twitter:card" content="summary_large_image">
+    <meta property="og:image" content="https://www.maximehaegeman.dev/assets/preview-card.png">
+    <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:title" content="Maxime Haegeman | Data Engineer">
     <meta property="twitter:description" content="Specializing in scalable data and ML pipelines.">
     <meta charset="UTF-8">
@@ -17,9 +21,13 @@
     <title>Maxime Haegeman | Data Engineer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&family=Inter:wght@400;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/index.css">
 </head>
+
 <body>
 
     <div class="container">
@@ -29,31 +37,35 @@
                 <a href="projects.html">_git_repos</a>
                 <a href="blog.html">_medium_logs</a>
                 <a href="cv.html">_sys_profile</a>
-                <a href="game.html">_anomaly_detector</a>
-                <a href="survivor.html">_exit</a>
+                <a href="games.html">_games</a>
             </div>
-            <button id="theme-toggle" title="Switch Theme">☀</button> 
+            <button id="theme-toggle" title="Switch Theme">☀</button>
         </nav>
 
         <section id="hero" style="min-height: 90vh; display: flex; align-items: center;">
             <div class="container hero-layout">
-                
+
                 <div style="font-family: 'Fira Code', monospace; flex: 1;">
                     <p style="color: var(--text-secondary); margin-bottom: 10px;">
-                        <span style="color: #ff7b72;">from</span> education <span style="color: #ff7b72;">import</span> DataScience
+                        <span style="color: #ff7b72;">from</span> education <span style="color: #ff7b72;">import</span>
+                        DataScience
                     </p>
                     <p style="color: var(--text-secondary); margin-bottom: 20px;">
-                        <span style="color: #79c0ff;">class</span> <span style="color: #d2a8ff;">Maxime</span>(DataEngineer, MLEngineer):
+                        <span style="color: #79c0ff;">class</span> <span
+                            style="color: #d2a8ff;">Maxime</span>(DataEngineer, MLEngineer):
                     </p>
-                    
+
                     <h1 style="font-size: 2.5rem; margin-left: 20px;">
                         <span style="color: var(--accent-color); margin-right: 10px;">>>></span>
                         <span id="typewriter"></span><span class="cursor">_</span>
                     </h1>
-                    
-                    <p style="margin-left: 20px; color: var(--text-secondary); max-width: 600px; margin-top: 20px; line-height: 1.8;">
-                        I am a <span style="color: var(--text-primary);">Developer</span> bridging the gap between models and production. 
-                        Leveraging my foundation in <span style="color: var(--text-primary);">Data Science</span>, I architect scalable data systems and engineer robust machine learning pipelines.
+
+                    <p
+                        style="margin-left: 20px; color: var(--text-secondary); max-width: 600px; margin-top: 20px; line-height: 1.8;">
+                        I am a <span style="color: var(--text-primary);">Developer</span> bridging the gap between
+                        models and production.
+                        Leveraging my foundation in <span style="color: var(--text-primary);">Data Science</span>, I
+                        architect scalable data systems and engineer robust machine learning pipelines.
                     </p>
 
                     <!-- Buttons Container (Only Profile Button left here) -->
@@ -66,37 +78,27 @@
                 <div class="hero-visual" style="display: flex; flex-direction: column; align-items: center; gap: 25px;">
                     <div class="video-frame" id="hero-frame">
                         <!-- Video Element: Autoplay/Loop removed so it waits for trigger -->
-                        <video id="saiyan-video" muted playsinline poster="content/profile_bnw.jpg">
+                        <video id="saiyan-video" muted playsinline preload="none" poster="content/profile_bnw.jpg">
                             <source src="content/profile_supersaian.mp4" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
-                        
+
                         <!-- Hidden GIF Element: Shown after video ends -->
-                        <img id="saiyan-gif" src="content/super_saian.gif" alt="Super Saiyan Mode" style="display: none; width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+                        <img id="saiyan-gif" data-src="content/super_saian.gif" alt="Super Saiyan Mode"
+                            style="display: none; width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
                     </div>
-                    
+
                     <!-- Super Saiyan Button Moved Here -->
-                    <button id="saiyan-btn" class="btn-saiyan" onclick="triggerSaiyanMode()">Super_Saiyan_Mode()</button>
+                    <button id="saiyan-btn" class="btn-saiyan">Super_Saiyan_Mode()</button>
                 </div>
 
             </div>
         </section>
 
-        <style>
-            /* Blinking Cursor Animation */
-            .cursor {
-                animation: blink 1s infinite;
-            }
-            @keyframes blink {
-                0%, 100% { opacity: 1; }
-                50% { opacity: 0; }
-            }
-        </style>
-
         <section class="section" id="projects">
             <h2 class="section-title">Selected_Projects</h2>
             <div class="grid">
-                
+
                 <article class="card">
                     <div>
                         <h3 class="card-header">seo-content-generator</h3>
@@ -108,7 +110,8 @@
                             Automated content generation tool optimized for SEO performance.
                         </p>
                     </div>
-                    <a href="https://github.com/mhaegeman/seo-content-generator" target="_blank" class="btn-link">view_source -></a>
+                    <a href="https://github.com/mhaegeman/seo-content-generator" target="_blank"
+                        class="btn-link">view_source -></a>
                 </article>
 
                 <article class="card">
@@ -122,7 +125,8 @@
                             Integration with OpenWeather API for real-time meteorological data analysis.
                         </p>
                     </div>
-                    <a href="https://github.com/mhaegeman/openweather" target="_blank" class="btn-link">view_source -></a>
+                    <a href="https://github.com/mhaegeman/openweather" target="_blank" class="btn-link">view_source
+                        -></a>
                 </article>
 
                 <article class="card">
@@ -136,7 +140,8 @@
                             Credit scoring model and analysis for banking customer data.
                         </p>
                     </div>
-                    <a href="https://github.com/mhaegeman/scoring-bank-project" target="_blank" class="btn-link">view_source -></a>
+                    <a href="https://github.com/mhaegeman/scoring-bank-project" target="_blank"
+                        class="btn-link">view_source -></a>
                 </article>
 
             </div>
@@ -175,76 +180,9 @@
         </footer>
     </div>
 
-    <script>
-        const text = "Hi, I'm Maxime."; 
-        const speed = 100; // Speed in milliseconds
-        let i = 0;
-
-        function typeWriter() {
-            if (i < text.length) {
-                document.getElementById("typewriter").innerHTML += text.charAt(i);
-                i++;
-                setTimeout(typeWriter, speed);
-            }
-        }
-
-        // Start the animation when the page loads
-        window.onload = typeWriter;
-    </script>
-    <script>
-        function updateTime() {
-            const timeContainer = document.getElementById('cph-time');
-            
-            // Get current time in Copenhagen (CET/CEST)
-            const now = new Date().toLocaleTimeString('en-GB', {
-                timeZone: 'Europe/Copenhagen',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                timeZoneName: 'short'
-            });
-
-            timeContainer.innerText = `Copenhagen: ${now}`;
-        }
-
-        // Update immediately, then every second
-        updateTime();
-        setInterval(updateTime, 1000);
-    </script>
-
-    <!-- Super Saiyan Logic -->
-    <script>
-        function triggerSaiyanMode() {
-            const frame = document.getElementById('hero-frame');
-            const video = document.getElementById('saiyan-video');
-            const gif = document.getElementById('saiyan-gif');
-            const btn = document.getElementById('saiyan-btn');
-
-            // 1. Change Border to Yellow/Gold using the new class
-            frame.classList.add('saiyan-mode');
-            
-            // 2. Prepare the UI: Disable button to prevent double clicks
-            btn.disabled = true;
-            btn.style.opacity = '0.5';
-            btn.style.cursor = 'not-allowed';
-            btn.innerText = "max_evolution_reached";
-
-            // 3. Play the transformation video
-            video.style.display = 'block';
-            gif.style.display = 'none';
-            
-            video.currentTime = 0;
-            video.play().catch(error => console.log("Video play error:", error));
-
-            // 4. When video ends, swap to the looping GIF
-            video.onended = function() {
-                video.style.display = 'none';
-                gif.style.display = 'block';
-            };
-        }
-    </script>
-
     <script src="loader.js"></script>
+    <script src="js/index.js"></script>
 
 </body>
+
 </html>

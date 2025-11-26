@@ -24,9 +24,9 @@ function initThemeToggle() {
     }
 
     // Handle Click
-    toggleBtn.addEventListener('click', function() {
+    toggleBtn.addEventListener('click', function () {
         let theme = document.documentElement.getAttribute('data-theme');
-        
+
         if (theme === 'light') {
             document.documentElement.setAttribute('data-theme', 'dark');
             localStorage.setItem('theme', 'dark');
@@ -44,10 +44,10 @@ function initNavEnhancements() {
     // 1. Highlight Current Page
     const menuItems = document.querySelectorAll('.nav-links a');
     const path = window.location.pathname.split('/').pop() || 'index.html'; // Get the page filename
-    
+
     menuItems.forEach(item => {
         const itemPath = item.href.split('/').pop() || 'index.html';
-        if(itemPath === path) {
+        if (itemPath === path) {
             item.classList.add('active');
         }
     });
@@ -57,9 +57,9 @@ function initNavEnhancements() {
     const navbar = document.querySelector('nav');
     if (!navbar) return;
 
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function () {
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        
+
         // Only trigger movement if scrolling past the initial top section
         if (scrollTop > 50) {
             if (scrollTop > lastScrollTop) {
@@ -101,10 +101,10 @@ async function loadRepos() {
 
             const card = document.createElement('article');
             card.className = 'card';
-            
+
             // Determine primary language (fallback to "Code")
             const lang = repo.language || 'Code';
-            
+
             // Format date
             const date = new Date(repo.updated_at).toLocaleDateString();
 
@@ -126,7 +126,7 @@ async function loadRepos() {
                 <br>
                 <a href="${repo.html_url}" target="_blank" class="btn-link">git_clone -></a>
             `;
-            
+
             container.appendChild(card);
         });
 
@@ -161,7 +161,7 @@ async function loadMedium() {
                 entry.style.marginBottom = '15px';
                 entry.style.borderBottom = '1px dashed rgba(255,255,255,0.1)';
                 entry.style.paddingBottom = '10px';
-                
+
                 // "Log Entry" Layout
                 entry.innerHTML = `
                     <div style="color: var(--text-secondary);">
@@ -175,7 +175,7 @@ async function loadMedium() {
                         </a>
                     </div>
                 `;
-                
+
                 // Add hover effect via JS (optional, or use CSS class)
                 const link = entry.querySelector('a');
                 link.onmouseover = () => link.style.borderBottom = "1px solid var(--accent-color)";
@@ -234,6 +234,16 @@ async function loadExperience() {
     }
 }
 
+// --- PRINT BUTTON LOGIC ---
+function initPrintButton() {
+    const printBtn = document.getElementById('print-btn');
+    if (!printBtn) return;
+
+    printBtn.addEventListener('click', () => {
+        window.print();
+    });
+}
+
 // Initialize all dynamic loading and functionality
 document.addEventListener('DOMContentLoaded', () => {
     initThemeToggle();
@@ -241,4 +251,5 @@ document.addEventListener('DOMContentLoaded', () => {
     loadRepos();
     loadMedium();
     loadExperience();
+    initPrintButton();
 });

@@ -1,0 +1,161 @@
+/* --- Internal Styles for Game Layout & Mechanics --- */
+/* These override/complement style.css to ensure the game specific layout works immediately */
+
+/* GRID LAYOUT: Handles Desktop vs Mobile positioning */
+.game-layout {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-areas:
+        "status window"
+        "leaderboard window";
+    gap: 2rem;
+    align-items: start;
+    margin-top: 2rem;
+}
+
+.game-status {
+    grid-area: status;
+    min-width: 250px;
+}
+
+.game-leaderboard {
+    grid-area: leaderboard;
+    min-width: 250px;
+}
+
+.game-window {
+    grid-area: window;
+    background: var(--surface-color);
+    border: 1px solid var(--accent-color);
+    padding: 1rem;
+
+    /* Fixed height with scroll for terminal feel */
+    height: 400px;
+    max-height: 400px;
+    overflow-y: auto;
+
+    font-family: var(--font-code);
+    font-size: 0.9rem;
+    white-space: pre-wrap;
+    line-height: 1.2;
+    box-shadow: 0 0 10px var(--accent-glow);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* MOBILE LAYOUT ADJUSTMENTS */
+@media (max-width: 900px) {
+    .game-layout {
+        grid-template-columns: 1fr;
+        /* Reorder: Status -> Game Window -> Leaderboard */
+        grid-template-areas:
+            "status"
+            "window"
+            "leaderboard";
+    }
+
+    .game-window {
+        height: 300px;
+        max-height: 300px;
+    }
+}
+
+/* UI COMPONENTS */
+.status-box {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    border: 1px solid var(--text-secondary);
+    border-radius: 4px;
+    font-family: var(--font-code);
+}
+
+.game-input {
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    background: var(--bg-color);
+    border: 1px solid var(--text-secondary);
+    color: var(--text-primary);
+    font-family: var(--font-code);
+    border-radius: 2px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* DETECT BUTTON STYLING */
+#detect-button {
+    width: 100%;
+    margin-top: 10px;
+    padding: 15px;
+    font-size: 1.1rem;
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    background: rgba(0, 255, 157, 0.05);
+    cursor: pointer;
+    font-family: var(--font-code);
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+#detect-button:active {
+    background: var(--accent-color);
+    color: var(--bg-color);
+}
+
+#detect-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-color: var(--text-secondary);
+    color: var(--text-secondary);
+    background: transparent;
+}
+
+/* ANOMALY STYLING */
+.anomaly {
+    color: var(--text-secondary);
+    font-weight: bold;
+    font-size: 1.1em;
+    opacity: 0.8;
+    animation: flash 0.2s 3;
+}
+
+.detected-anomaly {
+    color: var(--accent-color) !important;
+    opacity: 1;
+    background-color: rgba(0, 150, 136, 0.1);
+    transition: color 0.3s, background-color 0.3s;
+}
+
+@keyframes flash {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.2;
+    }
+}
+
+/* LEADERBOARD */
+.leaderboard-list {
+    list-style: none;
+    padding: 0;
+}
+
+.leaderboard-list li {
+    padding: 10px;
+    margin-bottom: 5px;
+    background: var(--surface-color);
+    border-left: 3px solid var(--accent-color);
+    font-family: var(--font-code);
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.leaderboard-list li:first-child {
+    font-weight: bold;
+    border-left-width: 5px;
+}

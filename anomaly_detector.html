@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' https://api.github.com https://api.rss2json.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com;">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maxime | Anomaly Detector</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com/css2">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&family=Inter:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/anomaly-detector.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <nav>
+            <div class="nav-links">
+                <a href="index.html">_home</a>
+                <a href="projects.html">_git_repos</a>
+                <a href="blog.html">_medium_logs</a>
+                <a href="cv.html">_sys_profile</a>
+                <a href="games.html" class="active">_games</a>
+            </div>
+            <button id="theme-toggle" title="Switch Theme">☀</button>
+        </nav>
+
+        <section class="section">
+            <h2 class="section-title">Data_Stream_Anomaly_Detection</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 30px; font-family: var(--font-code);">
+                // INSTRUCTION: Detect the anomaly (subtle pattern break) and press SPACEBAR or [DETECT]. <br>
+                // SCORING: Speed matters! Points decrease the longer the anomaly goes undetected.
+            </p>
+
+            <div class="game-layout">
+
+                <!-- 1. Game Status Panel -->
+                <div class="game-status">
+                    <h3 style="margin-top: 0; color: var(--accent-color);">Status_Panel</h3>
+
+                    <label for="player-name" style="font-family: var(--font-code); font-size: 0.9rem;">Player_ID (10
+                        chars max):</label>
+                    <input type="text" id="player-name" class="game-input" maxlength="10" placeholder="ENTER INITIALS"
+                        value="PLAYER">
+
+                    <div class="status-box">
+                        <span>SCORE:</span>
+                        <span id="score" style="color: var(--accent-color);">0</span>
+                    </div>
+                    <div class="status-box">
+                        <span>STRIKES:</span>
+                        <span id="strikes" style="color: #ff5f56;">0 / 3</span>
+                    </div>
+
+                    <button id="start-button" class="btn" style="width: 100%; margin-top: 10px;">[ START_GAME ]</button>
+
+                    <!-- Mobile/Desktop Action Button -->
+                    <button id="detect-button" disabled>[ DETECT_ANOMALY ]</button>
+                </div>
+
+                <!-- 2. Game Terminal Output -->
+                <div class="game-window" id="game-output">
+                    <p style="color: var(--text-secondary);">
+                        <span style="color: var(--accent-color);">></span> System_Ready.<br>
+                        <span style="color: var(--accent-color);">></span> Press_[ START_GAME ]_to_begin_data_stream.
+                    </p>
+                </div>
+
+                <!-- 3. Leaderboard -->
+                <div class="game-leaderboard">
+                    <h3 style="margin-top: 0; color: var(--accent-color);">Local_Leaderboard (Top 5)</h3>
+                    <ul class="leaderboard-list" id="leaderboard-list">
+                        <p style="color: var(--text-secondary);">Loading scores...</p>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div style="margin-top: 50px; opacity: 0.5; text-align: center;">
+                &copy; 2025 Maxime Haegeman. Built with code.
+            </div>
+        </footer>
+    </div>
+
+    <!-- Centralized Logic (Theme, Nav, etc.) -->
+    <script src="loader.js"></script>
+
+    <!-- Specific Game Logic -->
+    <script src="js/anomaly-detector.js"></script>
+</body>
+
+</html>

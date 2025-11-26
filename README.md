@@ -14,14 +14,25 @@ A minimal, terminal-themed personal website designed for Data Scientists and Eng
 
 ```bash
 .
-├── index.html          # Landing page (Hero section)
-├── projects.html       # Git repositories grid
-├── blog.html           # Medium article logs
-├── cv.html             # Work experience timeline
-├── style.css           # Global styles and terminal themes
-├── loader.js           # Logic for fetching GitHub, Medium, and JSON data
-├── experience.json     # Database for your work history
-└── resume.pdf          # (Optional) Your downloadable PDF resume
+├── index.html              # Landing page (Hero section)
+├── projects.html           # Git repositories grid
+├── blog.html               # Medium article logs
+├── cv.html                 # Work experience timeline
+├── games.html              # Games landing page
+├── anomaly_detector.html   # Anomaly Detector game
+├── survivor.html           # Survivor Protocol game (Three.js)
+├── css/                    # External stylesheets
+│   ├── index.css
+│   ├── anomaly-detector.css
+│   └── survivor.css
+├── js/                     # External scripts
+│   ├── index.js
+│   ├── anomaly-detector.js
+│   └── survivor.js
+├── style.css               # Global styles and terminal themes
+├── loader.js               # Logic for fetching GitHub, Medium, and JSON data
+├── experience.json         # Database for your work history
+└── resume.pdf              # (Optional) Your downloadable PDF resume
 ```
 
 ## 🛠 Configuration

@@ -1,0 +1,109 @@
+/* Override body for this page to prevent scrolling */
+body {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* Container for the game to fill space below Nav */
+#game-wrapper {
+    position: relative;
+    flex: 1;
+    /* Takes remaining height */
+    width: 100%;
+    background-color: var(--bg-color);
+    overflow: hidden;
+}
+
+#canvas-container {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* UI Overlays adapted to Theme */
+#ui-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+#score-board {
+    font-family: var(--font-code);
+    color: var(--accent-color);
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-shadow: 0 0 10px var(--accent-glow);
+}
+
+#controls-hint {
+    font-family: var(--font-code);
+    color: var(--text-secondary);
+    text-align: center;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 4px;
+    align-self: center;
+}
+
+/* Game Over Screen - Themed */
+#game-over-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 10, 10, 0.9);
+    /* Dark overlay */
+    backdrop-filter: blur(5px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s;
+}
+
+#game-over-screen.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#game-over-screen h1 {
+    color: #ff5f56;
+    /* Warning Red for Death */
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 20px rgba(255, 95, 86, 0.5);
+}
+
+.stats-text {
+    color: var(--text-primary);
+    font-family: var(--font-code);
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+/* Use the existing .btn class but ensure visibility on dark bg */
+.btn-restart {
+    border-color: #ff5f56;
+    color: #ff5f56;
+}
+
+.btn-restart:hover {
+    background-color: #ff5f56;
+    color: white;
+    box-shadow: 0 0 20px rgba(255, 95, 86, 0.5);
+}

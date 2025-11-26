@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maxime | Games</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&family=Inter:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' https://api.github.com https://api.rss2json.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com;">
+</head>
+
+<body>
+
+    <div class="container">
+        <nav>
+            <div class="nav-links">
+                <a href="index.html">_home</a>
+                <a href="projects.html">_git_repos</a>
+                <a href="blog.html">_medium_logs</a>
+                <a href="cv.html">_sys_profile</a>
+                <a href="games.html" class="active">_games</a>
+            </div>
+            <button id="theme-toggle" title="Switch Theme">☀</button>
+        </nav>
+
+        <section class="section">
+            <h2 class="section-title">Interactive_Simulations</h2>
+            <div class="grid">
+
+                <article class="card">
+                    <div>
+                        <h3 class="card-header">_anomaly_detector</h3>
+                        <div class="card-tags">
+                            <span class="tag">JS</span>
+                            <span class="tag">Pattern Recognition</span>
+                        </div>
+                        <p class="card-desc">
+                            Analyze data streams and detect anomalies in real-time. Test your attention to detail.
+                        </p>
+                    </div>
+                    <a href="anomaly_detector.html" class="btn-link">launch_simulation -></a>
+                </article>
+
+                <article class="card">
+                    <div>
+                        <h3 class="card-header">_survivor_protocol</h3>
+                        <div class="card-tags">
+                            <span class="tag">Three.js</span>
+                            <span class="tag">Survival</span>
+                        </div>
+                        <p class="card-desc">
+                            3D survival simulation. Evade the horde and travel as far as possible.
+                        </p>
+                    </div>
+                    <a href="survivor.html" class="btn-link">launch_simulation -></a>
+                </article>
+
+            </div>
+        </section>
+
+        <footer>
+            <div class="status-bar">
+                <span class="status-indicator"></span>
+                <span>System Status: Online</span>
+            </div>
+            <div style="margin-top: 15px; opacity: 0.5;">
+                &copy; 2025 Maxime Haegeman. Built with code.
+            </div>
+        </footer>
+    </div>
+
+    <script src="loader.js"></script>
+</body>
+
+</html>

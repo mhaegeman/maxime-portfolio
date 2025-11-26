@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' https://api.github.com https://api.rss2json.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com;">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maxime | System Log</title>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="container">
         <nav>
@@ -15,27 +19,26 @@
                 <a href="projects.html">_git_repos</a>
                 <a href="blog.html">_medium_logs</a>
                 <a href="cv.html">_sys_profile</a>
-                <a href="game.html">_anomaly_detector</a>
+                <a href="games.html">_games</a>
             </div>
             <button id="theme-toggle" title="Switch Theme">☀</button>
         </nav>
-        <script src="loader.js"></script>
 
         <section class="section">
             <h2 class="section-title">System_Runtime_History</h2>
-            
+
             <div class="timeline" id="cv-timeline">
                 <p style="color: var(--accent-color);">_fetching_experience_data...</p>
             </div>
-            
+
             <div style="margin-top: 40px; text-align: center;">
-                <button onclick="window.print()" class="btn">
+                <button id="print-btn" class="btn">
                     [ PRINT_SYSTEM_LOG_TO_PDF ]
                 </button>
             </div>
 
         </section>
-        
+
         <footer>
             <div style="margin-top: 50px; opacity: 0.5; text-align: center;">
                 &copy; 2025 Maxime Haegeman. Built with code.
@@ -45,4 +48,5 @@
 
     <script src="loader.js"></script>
 </body>
+
 </html>
