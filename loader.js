@@ -100,31 +100,26 @@ async function loadRepos() {
             // if (repo.fork) return; 
 
             const card = document.createElement('article');
-            card.className = 'card';
+            card.className = 'card proj-card';
 
-            // Determine primary language (fallback to "Code")
             const lang = repo.language || 'Code';
-
-            // Format date
-            const date = new Date(repo.updated_at).toLocaleDateString();
+            const desc = repo.description
+                ? (repo.description.length > 120 ? repo.description.slice(0, 117) + '…' : repo.description)
+                : 'No description provided.';
 
             card.innerHTML = `
-                <div>
+                <div class="proj-header">
                     <h3 class="card-header">
-                        <a href="${repo.html_url}" target="_blank">${repo.name}</a>
+                        <span class="proj-prompt">~/</span>${repo.name}
                     </h3>
-                    <div class="card-tags">
-                        <span class="tag">${lang}</span>
-                    </div>
-                    <p class="card-desc">
-                        ${repo.description || 'No description provided.'}
-                    </p>
-                    <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 15px; font-family: var(--font-code);">
-                        ★ ${repo.stargazers_count} &nbsp; ⑂ ${repo.forks_count}
-                    </div>
+                    <a href="${repo.html_url}" target="_blank" class="btn-link">git_clone&nbsp;→</a>
                 </div>
-                <br>
-                <a href="${repo.html_url}" target="_blank" class="btn-link">git_clone -></a>
+                <div class="card-tags">
+                    <span class="tag">${lang}</span>
+                    <span class="proj-stat">★ ${repo.stargazers_count}</span>
+                    <span class="proj-stat">⑂ ${repo.forks_count}</span>
+                </div>
+                <p class="card-desc">${desc}</p>
             `;
 
             container.appendChild(card);
