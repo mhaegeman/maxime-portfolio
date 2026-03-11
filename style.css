@@ -533,6 +533,10 @@ nav {
 }
 
 .video-frame img.active {
+    filter: brightness(0.85) saturate(1.1);
+}
+
+[data-theme="dark"] .video-frame img.active {
     filter: brightness(1.25) saturate(1.1);
 }
 
