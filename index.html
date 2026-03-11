@@ -45,38 +45,39 @@
         <section id="hero" style="min-height: 90vh; display: flex; align-items: center;">
             <div class="container hero-layout">
 
-                <div style="font-family: 'Fira Code', monospace; flex: 1;">
-                    <p style="margin-bottom: 10px;">
-                        <span style="color: #ff7b72;">from</span> education <span style="color: #ff7b72;">import</span>
-                        DataScience
-                    </p>
-                    <p style="margin-bottom: 20px;">
-                        <span style="color: #79c0ff;">class</span> <span
-                            style="color: #d2a8ff;">Maxime</span>(DataEngineer, MLEngineer):
-                    </p>
-
-                    <h1 style="font-size: 2.5rem;">
+                <div class="hero-text">
+                    <h1 class="hero-heading">
                         <span style="color: var(--accent-color); margin-right: 10px;">>>></span>
                         <span id="typewriter"></span><span class="cursor">_</span>
                     </h1>
 
-                    <div class="hero-code-block">
-                        <p class="py-l1"><span class="py-str">"""</span></p>
-                        <p class="py-l2"><span class="py-str">Developer bridging the gap between</span></p>
-                        <p class="py-l2"><span class="py-str">models and production, architecting</span></p>
-                        <p class="py-l2"><span class="py-str">scalable data &amp; ML pipelines.</span></p>
-                        <p class="py-l1"><span class="py-str">"""</span></p>
-                        <p class="py-blank"></p>
-                        <p class="py-l1"><span class="py-kw">def</span> <span class="py-fn">__init__</span>(<span class="py-self">self</span>):</p>
-                        <p class="py-l2"><span class="py-self">self</span>.role&nbsp;&nbsp;= <span class="py-str">"Lead Data / ML Engineer"</span></p>
-                        <p class="py-l2"><span class="py-self">self</span>.base&nbsp;&nbsp;= <span class="py-str">"Copenhagen, Denmark"</span></p>
-                        <p class="py-l2"><span class="py-self">self</span>.exp&nbsp;&nbsp;&nbsp;= <span class="py-num">5</span> <span class="py-op">+</span> <span class="py-comment"># years of experience</span></p>
-                        <p class="py-blank"></p>
-                        <p class="py-l1"><span class="py-kw">def</span> <span class="py-fn">mission</span>(<span class="py-self">self</span>) -&gt; <span class="py-type">str</span>:</p>
-                        <p class="py-l2"><span class="py-kw">return</span> <span class="py-str">"Bridge models to production"</span></p>
+                    <!-- Unified Python code box -->
+                    <div class="code-box">
+                        <div class="code-box-tab">
+                            <span class="code-box-dots"><span></span><span></span><span></span></span>
+                            maxime.py
+                        </div>
+                        <div class="code-box-body">
+                            <p><span class="py-kw">from</span> education <span class="py-kw">import</span> DataScience</p>
+                            <p class="py-blank"></p>
+                            <p><span class="py-kw">class</span> <span class="py-fn">Maxime</span>(DataEngineer, MLEngineer):</p>
+                            <p class="py-l1"><span class="py-str">"""</span></p>
+                            <p class="py-l2"><span class="py-str">Developer bridging the gap between</span></p>
+                            <p class="py-l2"><span class="py-str">models and production, architecting</span></p>
+                            <p class="py-l2"><span class="py-str">scalable data &amp; ML pipelines.</span></p>
+                            <p class="py-l1"><span class="py-str">"""</span></p>
+                            <p class="py-blank"></p>
+                            <p class="py-l1"><span class="py-kw">def</span> <span class="py-fn">__init__</span>(<span class="py-self">self</span>):</p>
+                            <p class="py-l2"><span class="py-self">self</span>.role<span class="py-op"> = </span><span class="py-str">"Lead Data / ML Engineer"</span></p>
+                            <p class="py-l2"><span class="py-self">self</span>.base<span class="py-op"> = </span><span class="py-str">"Copenhagen, Denmark"</span></p>
+                            <p class="py-l2"><span class="py-self">self</span>.exp<span class="py-op"> = </span><span class="py-num">5</span>  <span class="py-comment"># years of experience</span></p>
+                            <p class="py-blank"></p>
+                            <p class="py-l1"><span class="py-kw">def</span> <span class="py-fn">mission</span>(<span class="py-self">self</span>) -&gt; <span class="py-type">str</span>:</p>
+                            <p class="py-l2"><span class="py-kw">return</span> <span class="py-str">"Bridge models to production"</span></p>
+                        </div>
                     </div>
 
-                    <!-- Buttons Container (Only Profile Button left here) -->
+                    <!-- Buttons Container -->
                     <div class="hero-buttons">
                         <a href="cv.html" class="btn">View_Profile()</a>
                     </div>

@@ -10,35 +10,91 @@
 /* =============================================
    PYTHON SYNTAX COLOURS  (GitHub Dark palette)
    ============================================= */
-.py-kw   { color: #ff7b72; }                 /* keywords: def, return, from, import */
-.py-fn   { color: #d2a8ff; }                 /* function / method names */
-.py-self { color: #ffa657; }                 /* self parameter */
-.py-type { color: #79c0ff; }                 /* type hints: str, list, int */
-.py-str  { color: #a5d6ff; }                 /* string literals */
-.py-num  { color: #79c0ff; }                 /* numeric literals */
-.py-op   { color: var(--text-secondary); }   /* operators: +, =, -> */
-.py-comment { color: #8b949e; font-style: italic; } /* # comments */
-.py-var  { color: #ffa657; }                 /* variable names */
+.py-kw      { color: #ff7b72; }                        /* keywords: def, return, from, import, class */
+.py-fn      { color: #d2a8ff; }                        /* function / method names */
+.py-self    { color: #ffa657; }                        /* self parameter */
+.py-type    { color: #79c0ff; }                        /* type hints: str, list, int */
+.py-str     { color: #a5d6ff; }                        /* string literals */
+.py-num     { color: #79c0ff; }                        /* numeric literals */
+.py-op      { color: var(--text-secondary); }          /* operators */
+.py-comment { color: #8b949e; font-style: italic; }    /* # comments */
+
+.py-blank { display: block; height: 0.6em; }           /* blank line between blocks */
+.py-l1    { padding-left: 1.5em; }                     /* 1 indent = 4 spaces in monospace */
+.py-l2    { padding-left: 3em; }                       /* 2 indents */
 
 /* =============================================
-   HERO CODE BLOCK
+   HERO LAYOUT
    ============================================= */
-.hero-code-block {
-    margin-top: 20px;
+.hero-text {
     font-family: 'Fira Code', monospace;
-    font-size: 0.9rem;
-    line-height: 1.8;
+    flex: 1;
+}
+
+.hero-heading {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+/* =============================================
+   CODE BOX  (IDE-style window)
+   ============================================= */
+.code-box {
+    display: inline-block;          /* shrink-wrap to content on desktop */
+    width: 100%;
     max-width: 520px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+    text-align: left !important;    /* override mobile center-align */
+    margin-top: 4px;
 }
 
-.hero-code-block p {
+/* Title bar with traffic-light dots + filename */
+.code-box-tab {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    font-family: 'Fira Code', monospace;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.code-box-dots {
+    display: flex;
+    gap: 5px;
+}
+
+.code-box-dots span {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.code-box-dots span:nth-child(1) { background: #ff5f57; }
+.code-box-dots span:nth-child(2) { background: #febc2e; }
+.code-box-dots span:nth-child(3) { background: #28c840; }
+
+/* Code body */
+.code-box-body {
+    padding: 14px 18px;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.88rem;
+    line-height: 1.75;
+    overflow-x: auto;               /* horizontal scroll if content overflows */
+    text-align: left !important;    /* hard override */
+}
+
+.code-box-body p {
     margin: 0;
-    white-space: pre; /* preserve spacing */
+    white-space: nowrap;            /* preserve spacing / alignment */
+    text-align: left !important;
 }
-
-.py-blank { height: 0.9rem; }  /* empty line between blocks */
-.py-l1 { padding-left: 1.4em; }  /* 1 indent level */
-.py-l2 { padding-left: 2.8em; }  /* 2 indent levels */
 
 /* =============================================
    SKILLS SECTION
@@ -58,8 +114,8 @@
 }
 
 .skill-key {
-    color: #ffa657;           /* variable name — orange */
-    min-width: 140px;         /* align chips in a loose column */
+    color: #ffa657;
+    min-width: 140px;
     flex-shrink: 0;
 }
 
@@ -101,9 +157,24 @@
 [data-theme="light"] .chip-ml    { background: rgba(63,  185,  80,  0.12); }
 [data-theme="light"] .chip-mon   { background: rgba(139, 148, 158, 0.12); }
 
-/* Mobile: shrink skill-key so chips don't overflow */
-@media (max-width: 600px) {
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+@media (max-width: 768px) {
+    .code-box {
+        max-width: 100%;
+    }
+
+    .code-box-body {
+        font-size: 0.78rem;
+        padding: 12px 14px;
+    }
+
+    .hero-heading {
+        font-size: 2rem;
+        text-align: center;         /* keep heading centered on mobile */
+    }
+
     .skill-key { min-width: unset; font-size: 0.78rem; }
-    .hero-code-block { font-size: 0.8rem; }
-    .skill-row { gap: 4px; }
+    .skill-row  { gap: 4px; }
 }
