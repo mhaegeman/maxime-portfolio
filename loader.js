@@ -135,57 +135,67 @@ async function loadRepos() {
     }
 }
 
-/// --- MEDIUM FETCHER (Server Log Style) ---
+// --- MEDIUM FETCHER (Server Log Style) ---
 async function loadMedium() {
     const container = document.getElementById('blog-list');
     if (!container) return; // Stop if we aren't on the blog page
 
     const rssUrl = `https://medium.com/feed/@${CONFIG.mediumUser}`;
-    const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}`;
 
     try {
-        const response = await fetch(apiUrl);
+        const response = await fetch(proxyUrl);
         const data = await response.json();
+
+        if (!data.contents) throw new Error('Empty response from proxy');
+
+        // Parse the RSS XML directly in the browser
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(data.contents, 'text/xml');
+        const items = Array.from(xml.querySelectorAll('item'));
+
+        if (!items.length) throw new Error('No articles found in feed');
 
         container.innerHTML = '';
 
-        if (data.status === 'ok') {
-            data.items.slice(0, CONFIG.maxArticles).forEach(item => {
-                // Format the Date to look like a system timestamp
-                const pubDate = new Date(item.pubDate);
-                const timestamp = pubDate.toISOString().split('T')[0]; // YYYY-MM-DD
-                const time = pubDate.toTimeString().split(' ')[0]; // HH:MM:SS
+        items.slice(0, CONFIG.maxArticles).forEach(item => {
+            // Format the Date to look like a system timestamp
+            const pubDate = new Date(item.querySelector('pubDate')?.textContent || Date.now());
+            const timestamp = pubDate.toISOString().split('T')[0]; // YYYY-MM-DD
+            const time = pubDate.toTimeString().split(' ')[0]; // HH:MM:SS
 
-                // Create the entry line
-                const entry = document.createElement('div');
-                entry.style.marginBottom = '15px';
-                entry.style.borderBottom = '1px dashed rgba(255,255,255,0.1)';
-                entry.style.paddingBottom = '10px';
+            const title = item.querySelector('title')?.textContent?.trim() || 'Untitled';
+            // <link> in RSS 2.0 is a text node sibling; textContent is reliable here
+            const linkUrl = item.querySelector('link')?.nextSibling?.nodeValue?.trim()
+                         || item.querySelector('guid')?.textContent?.trim()
+                         || '#';
 
-                // "Log Entry" Layout
-                entry.innerHTML = `
-                    <div style="color: var(--text-secondary);">
-                        <span style="color: #8b949e;">[${timestamp} ${time}]</span> 
-                        <span style="color: var(--accent-color);">INFO:</span> New_Article_Detected
-                    </div>
-                    <div style="margin-left: 20px; margin-top: 5px;">
-                        <span style="color: #79c0ff;">>></span> 
-                        <a href="${item.link}" target="_blank" style="color: var(--text-primary); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.3s;">
-                            ${item.title}
-                        </a>
-                    </div>
-                `;
+            // Create the entry line
+            const entry = document.createElement('div');
+            entry.style.marginBottom = '15px';
+            entry.style.borderBottom = '1px dashed rgba(255,255,255,0.1)';
+            entry.style.paddingBottom = '10px';
 
-                // Add hover effect via JS (optional, or use CSS class)
-                const link = entry.querySelector('a');
-                link.onmouseover = () => link.style.borderBottom = "1px solid var(--accent-color)";
-                link.onmouseout = () => link.style.borderBottom = "1px solid transparent";
+            // "Log Entry" Layout
+            entry.innerHTML = `
+                <div style="color: var(--text-secondary);">
+                    <span style="color: #8b949e;">[${timestamp} ${time}]</span>
+                    <span style="color: var(--accent-color);">INFO:</span> New_Article_Detected
+                </div>
+                <div style="margin-left: 20px; margin-top: 5px;">
+                    <span style="color: #79c0ff;">>></span>
+                    <a href="${linkUrl}" target="_blank" style="color: var(--text-primary); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.3s;">
+                        ${title}
+                    </a>
+                </div>
+            `;
 
-                container.appendChild(entry);
-            });
-        } else {
-            throw new Error('Failed to parse feed');
-        }
+            const link = entry.querySelector('a');
+            link.onmouseover = () => link.style.borderBottom = "1px solid var(--accent-color)";
+            link.onmouseout = () => link.style.borderBottom = "1px solid transparent";
+
+            container.appendChild(entry);
+        });
 
     } catch (error) {
         container.innerHTML = `<p style="color: #ff5f56;">[ERROR] Connection refused: ${error.message}</p>`;
