@@ -182,8 +182,43 @@ section {
 }
 
 /* --- HERO LAYOUT UTILITIES --- */
-.hero-buttons {
-    margin-top: 80px;
+.profile-link {
+    display: block;
+    border-radius: 50%;
+    text-decoration: none;
+}
+
+.profile-hover-overlay {
+    grid-area: 1 / 1;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 2;
+}
+
+.profile-hover-overlay span {
+    font-family: var(--font-code);
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--accent-color);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 0 0 12px var(--accent-glow);
+}
+
+.profile-link:hover .profile-hover-overlay {
+    opacity: 1;
+}
+
+.profile-link:hover .video-frame video.active,
+.profile-link:hover .video-frame img.active {
+    filter: blur(3px) brightness(1) saturate(1.1);
 }
 
 .saiyan-btn-wrapper {
@@ -533,7 +568,7 @@ nav {
 }
 
 .video-frame img.active {
-    filter: brightness(1.25) saturate(1.1);
+    filter: brightness(1) saturate(1.1);
 }
 
 /* Define the base look for terminal/log windows using theme variables */
@@ -637,10 +672,6 @@ nav {
         height: 200px !important;
         border-radius: 50% !important;
         margin: 0 auto !important;
-    }
-
-    .hero-buttons {
-        margin-top: 24px;
     }
 
     .saiyan-btn-wrapper {

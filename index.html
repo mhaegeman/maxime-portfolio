@@ -77,24 +77,25 @@
                         </div>
                     </div>
 
-                    <!-- Buttons Container -->
-                    <div class="hero-buttons">
-                        <a href="cv.html" class="btn">View_Profile()</a>
-                    </div>
                 </div>
 
                 <!-- Hero Visual: Flex column to stack Image + Button -->
                 <div class="hero-visual" style="display: flex; flex-direction: column; align-items: center; gap: 40px;">
-                    <div class="video-frame" id="hero-frame">
-                        <!-- Video Element: Autoplay/Loop removed so it waits for trigger -->
-                        <video id="saiyan-video" muted playsinline poster="content/profile_bnw.jpg">
-                            <source src="content/profile_supersaian.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
+                    <a href="cv.html" class="profile-link">
+                        <div class="video-frame" id="hero-frame">
+                            <!-- Video Element: Autoplay/Loop removed so it waits for trigger -->
+                            <video id="saiyan-video" muted playsinline poster="content/profile_bnw.jpg">
+                                <source src="content/profile_supersaian.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
 
-                        <!-- Hidden GIF Element: Shown after video ends -->
-                        <img id="saiyan-gif" data-src="content/super_saian.gif" alt="Super Saiyan Mode">
-                    </div>
+                            <!-- Hidden GIF Element: Shown after video ends -->
+                            <img id="saiyan-gif" data-src="content/super_saian.gif" alt="Super Saiyan Mode">
+
+                            <!-- Hover overlay -->
+                            <div class="profile-hover-overlay"><span>View_Profile()</span></div>
+                        </div>
+                    </a>
 
                     <!-- Super Saiyan Button Moved Here - center it on image-->
                     <div class="saiyan-btn-wrapper">
