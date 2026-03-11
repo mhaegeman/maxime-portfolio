@@ -346,6 +346,73 @@ nav {
     background: none;
     box-shadow: none;
 }
+/* --- PROJECTS: compact ls-style list --- */
+.proj-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 1.2rem;
+}
+
+.proj-card {
+    padding: 0.85rem 1.1rem !important;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.proj-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.proj-header .card-header {
+    margin-bottom: 0;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.proj-prompt {
+    color: var(--accent-color);
+    opacity: 0.5;
+    font-size: 0.8rem;
+}
+
+.proj-header .btn-link {
+    flex-shrink: 0;
+    font-size: 0.78rem;
+    font-family: var(--font-code);
+    color: var(--accent-color);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+    white-space: nowrap;
+}
+
+.proj-header .btn-link:hover {
+    border-bottom-color: var(--accent-color);
+    background: none;
+    box-shadow: none;
+    color: var(--accent-color);
+}
+
+.proj-card .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.proj-card .card-desc {
+    font-size: 0.82rem;
+    line-height: 1.45;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
 /* --- TIMELINE (Experience) --- */
 .timeline {
     position: relative;
