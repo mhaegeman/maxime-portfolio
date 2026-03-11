@@ -181,6 +181,44 @@ section {
     transition: all 0.5s ease;
 }
 
+/* --- HERO LAYOUT UTILITIES --- */
+.hero-buttons {
+    margin-top: 80px;
+}
+
+.saiyan-btn-wrapper {
+    margin-top: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- FOOTER STATUS BAR --- */
+.status-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-code);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    flex-wrap: wrap;
+}
+
+.status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--accent-color);
+    box-shadow: 0 0 6px var(--accent-color);
+    display: inline-block;
+    animation: blink 2s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
 /* --- NAVIGATION --- */
 nav {
     padding: 15px 0; /* Slightly slimmer for a modern look */
@@ -249,6 +287,29 @@ nav {
 }
 
 #theme-toggle:hover {
+    background: var(--accent-color);
+    color: var(--bg-color);
+    box-shadow: 0 0 10px var(--accent-glow);
+}
+
+/* --- HAMBURGER MENU TOGGLE (Mobile only) --- */
+.menu-toggle {
+    display: none;
+    background: transparent;
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    padding: 8px 12px;
+    cursor: pointer;
+    font-family: var(--font-code);
+    font-size: 1.2rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    -webkit-appearance: none;
+    appearance: none;
+    line-height: 1;
+}
+
+.menu-toggle:hover {
     background: var(--accent-color);
     color: var(--bg-color);
     box-shadow: 0 0 10px var(--accent-glow);
@@ -394,142 +455,9 @@ nav {
     color: var(--text-secondary); 
 }
 
-/* --- GAME STYLES (GRID LAYOUT FIX) --- */
-.game-layout {
-    display: grid;
-    /* Desktop: Sidebar (1 part) | Game Window (2 parts) */
-    grid-template-columns: 1fr 2fr;
-    grid-template-areas: 
-        "status window"
-        "leaderboard window";
-    gap: 2rem;
-    align-items: start;
-    margin-top: 2rem;
-}
-
-/* Assign grid areas */
-.game-status {
-    grid-area: status;
-    min-width: 250px;
-}
-
-.game-leaderboard {
-    grid-area: leaderboard;
-    min-width: 250px;
-}
-
-.game-window {
-    grid-area: window;
-    background: var(--surface-color);
-    border: 1px solid var(--accent-color);
-    padding: 1rem;
-    
-    /* FIXED HEIGHT to prevent expansion */
-    height: 400px;
-    max-height: 400px;
-    overflow-y: auto; /* Scroll if content overflows */
-    
-    font-family: var(--font-code);
-    font-size: 0.9rem;
-    white-space: pre-wrap;
-    line-height: 1.2;
-    box-shadow: 0 0 10px var(--accent-glow);
-    transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-/* Game Status Boxes */
-.status-box {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    padding: 10px 15px;
-    border: 1px solid var(--text-secondary);
-    border-radius: 4px;
-    font-family: var(--font-code);
-}
-
-/* Styling for the Anomaly text (subtle, pre-detection) */
-.anomaly {
-    color: var(--text-secondary); 
-    font-weight: bold;
-    font-size: 1.1em;
-    opacity: 0.8;
-    animation: flash 0.2s 3; 
-}
-
-/* NEW: Styling for a successfully detected anomaly */
-.detected-anomaly {
-    color: var(--accent-color) !important; /* Green/Teal accent color */
-    opacity: 1;
-    background-color: rgba(0, 150, 136, 0.1); /* Subtle background highlight */
-    transition: color 0.3s, background-color 0.3s;
-}
-
-/* NEW: Styling for the Detect Button (Mobile Friendly) */
-#detect-button {
-    width: 100%;
-    margin-top: 10px;
-    padding: 15px;
-    font-size: 1.1rem;
-    border-color: var(--accent-color);
-    background: rgba(0, 255, 157, 0.05); /* Faint background */
-}
-#detect-button:active {
-    background: var(--accent-color);
-    color: var(--bg-color);
-}
-#detect-button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    border-color: var(--text-secondary);
-    color: var(--text-secondary);
-}
-
-
-/* Animation when an anomaly appears */
-@keyframes flash {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.2; }
-}
-
-/* Leaderboard styling */
-.leaderboard-list {
-    list-style: none;
-    padding: 0;
-}
-
-.leaderboard-list li {
-    padding: 10px;
-    margin-bottom: 5px;
-    background: var(--surface-color);
-    border-left: 3px solid var(--accent-color);
-    font-family: var(--font-code);
-    border-radius: 2px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-
-.leaderboard-list li:first-child {
-    font-weight: bold;
-    border-left-width: 5px;
-}
-
-/* Input field styling */
-.game-input {
-    width: 100%;
-    padding: 8px 10px;
-    margin-top: 5px;
-    margin-bottom: 20px;
-    background: var(--bg-color);
-    border: 1px solid var(--text-secondary);
-    color: var(--text-primary);
-    font-family: var(--font-code);
-    border-radius: 2px;
-    box-shadow: 0 0 5px rgba(0,0,0,0.1);
-}
-
 /* --- RESPONSIVE DESIGN (MOBILE & TABLET) --- */
 @media (max-width: 900px) {
-    
+
     .container {
         padding: 0 20px;
         width: 100%;
@@ -544,15 +472,58 @@ nav {
         padding-bottom: 40px;
     }
 
+    /* --- NAV: hamburger row layout --- */
+    nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 20px;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        width: 100%;
+        padding: 12px 0 4px 0;
+        border-top: 1px solid var(--nav-border);
+        margin-top: 10px;
+    }
+
+    .nav-links.open {
+        display: flex;
+    }
+
+    .nav-links a {
+        margin-right: 0;
+        padding: 6px 0;
+        font-size: 1rem;
+    }
+
+    #theme-toggle {
+        position: static;
+    }
+
+    /* --- HERO --- */
+    h1 {
+        font-size: 2rem;
+    }
+
     .hero-layout {
-        flex-direction: column; 
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         gap: 2rem;
     }
 
-    #hero h1, 
-    #hero p, 
+    #hero h1,
+    #hero p,
     #hero div {
         margin-left: 0 !important;
         width: 100%;
@@ -563,30 +534,58 @@ nav {
         width: 200px !important;
         height: 200px !important;
         border-radius: 50% !important;
-        margin: 0 auto 30px auto !important; /* 'auto' centers it, !important protects it */
+        margin: 0 auto !important;
     }
-    
-    nav {
-        flex-direction: column;
-        align-items: center;
-        padding: 15px 0;
-    } 
-    .nav-links {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 15px;
-        width: 100%;
-        margin-top: 10px;
+
+    .hero-buttons {
+        margin-top: 24px;
     }
-    #theme-toggle {
-        position: absolute;
-        top: 15px;
-        right: 0;
+
+    .saiyan-btn-wrapper {
+        margin-top: 0;
     }
-    
-    .game-layout {
+
+    /* --- GRID: single column on mobile --- */
+    .grid {
         grid-template-columns: 1fr;
-        grid-template-areas: "status" "window" "leaderboard";
+    }
+
+    /* --- TIMELINE --- */
+    .timeline-item {
+        padding-left: 20px;
+    }
+
+    /* --- FOOTER --- */
+    .status-bar {
+        justify-content: center;
+    }
+}
+
+/* --- EXTRA SMALL SCREENS (≤ 480px) --- */
+@media (max-width: 480px) {
+
+    h1 {
+        font-size: 1.6rem;
+    }
+
+    #hero .video-frame {
+        width: 160px !important;
+        height: 160px !important;
+    }
+
+    .btn-saiyan {
+        font-size: 0.8rem;
+        padding: 10px 14px;
+        letter-spacing: 0.5px;
+    }
+
+    .btn {
+        font-size: 0.85rem;
+        padding: 10px 18px;
+    }
+
+    section {
+        padding-top: 30px;
+        padding-bottom: 30px;
     }
 }
