@@ -282,9 +282,17 @@ async function loadMedium() {
 
         if (!items.length) throw new Error('No articles found in feed');
 
+        // Pre-extract content:encoded blocks from raw XML to avoid namespace issues
+        const encodedBlocks = [];
+        const encodedRegex = /<content:encoded>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/content:encoded>/g;
+        let encMatch;
+        while ((encMatch = encodedRegex.exec(xmlText)) !== null) {
+            encodedBlocks.push(encMatch[1]);
+        }
+
         container.innerHTML = '';
 
-        items.slice(0, CONFIG.maxArticles).forEach(item => {
+        items.slice(0, CONFIG.maxArticles).forEach((item, idx) => {
             const title = item.querySelector('title')?.textContent?.trim() || 'Untitled';
             const linkUrl = item.querySelector('link')?.nextSibling?.nodeValue?.trim()
                          || item.querySelector('guid')?.textContent?.trim()
@@ -293,8 +301,8 @@ async function loadMedium() {
             const pubDate = new Date(item.querySelector('pubDate')?.textContent || Date.now());
             const dateStr = pubDate.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: 'numeric' });
 
-            // Extract featured image from content:encoded
-            const encoded = item.getElementsByTagName('content:encoded')[0]?.textContent || '';
+            // Extract featured image from pre-parsed content:encoded block
+            const encoded = encodedBlocks[idx] || '';
             const imgUrl = extractFirstImage(encoded);
 
             // Extract categories/tags
