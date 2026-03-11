@@ -228,6 +228,36 @@ section {
     justify-content: center;
 }
 
+/* --- CONTACT SOCIAL ICONS --- */
+.social-links {
+    display: flex;
+    gap: 24px;
+    margin-top: 24px;
+    align-items: center;
+}
+
+.social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+.social-icon svg {
+    width: 36px;
+    height: 36px;
+    fill: white;
+}
+
+[data-theme="light"] .social-icon svg {
+    fill: #1a1a1a;
+}
+
+.social-icon:hover {
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 8px var(--accent-glow));
+}
+
 /* --- FOOTER STATUS BAR --- */
 .status-bar {
     display: flex;
