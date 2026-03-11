@@ -79,8 +79,9 @@ function resetToOriginal() {
     // Restore original frame border
     frame.classList.remove('saiyan-mode');
 
-    // Crossfade back to BW profile pic
+    // Fade out GIF, fade in video poster (BW profile pic)
     gif.classList.remove('active');
+    video.load(); // resets video to poster state without playing
     video.classList.add('active');
 
     // Reset button to original state
