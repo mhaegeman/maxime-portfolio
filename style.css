@@ -346,6 +346,73 @@ nav {
     background: none;
     box-shadow: none;
 }
+/* --- PROJECTS: compact ls-style list --- */
+.proj-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 1.2rem;
+}
+
+.proj-card {
+    padding: 0.85rem 1.1rem !important;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.proj-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.proj-header .card-header {
+    margin-bottom: 0;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.proj-prompt {
+    color: var(--accent-color);
+    opacity: 0.5;
+    font-size: 0.8rem;
+}
+
+.proj-header .btn-link {
+    flex-shrink: 0;
+    font-size: 0.78rem;
+    font-family: var(--font-code);
+    color: var(--accent-color);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+    white-space: nowrap;
+}
+
+.proj-header .btn-link:hover {
+    border-bottom-color: var(--accent-color);
+    background: none;
+    box-shadow: none;
+    color: var(--accent-color);
+}
+
+.proj-card .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.proj-card .card-desc {
+    font-size: 0.82rem;
+    line-height: 1.45;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
 /* --- TIMELINE (Experience) --- */
 .timeline {
     position: relative;
@@ -390,14 +457,26 @@ nav {
 }
 
 /* Styling the bullet points in the achievements list */
-.timeline-item ul li {
-    margin-bottom: 8px;
-    color: var(--text-secondary);
+.timeline-item ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 6px;
 }
 
-.timeline-item ul li::marker {
-    color: var(--accent-color); /* Green bullet points */
-    content: "> "; /* Replaces standard bullet with terminal arrow */
+.timeline-item ul li {
+    position: relative;
+    padding-left: 1.6em;   /* indent text away from the > */
+    margin-bottom: 8px;
+    color: var(--text-secondary);
+    text-align: left;       /* always left regardless of parent text-align */
+}
+
+.timeline-item ul li::before {
+    content: ">";
+    position: absolute;
+    left: 0;
+    color: var(--accent-color);
+    font-family: var(--font-code);
 }
 
 /* --- HERO SECTION LAYOUT --- */
@@ -564,7 +643,15 @@ nav {
         grid-template-columns: 1fr;
     }
 
-    /* --- TIMELINE --- */
+    /* --- TIMELINE: always left-aligned on mobile --- */
+    .timeline,
+    .timeline-item,
+    .timeline-item h3,
+    .timeline-item p,
+    .timeline-item .job-date {
+        text-align: left;
+    }
+
     .timeline-item {
         padding-left: 20px;
     }
