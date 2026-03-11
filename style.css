@@ -533,11 +533,7 @@ nav {
 }
 
 .video-frame img.active {
-    filter: brightness(0.85) saturate(1.1);
-}
-
-[data-theme="dark"] .video-frame img.active {
-    filter: brightness(1.25) saturate(1.1);
+    filter: brightness(1) saturate(1.1);
 }
 
 /* Define the base look for terminal/log windows using theme variables */
