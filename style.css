@@ -151,6 +151,7 @@ section {
     display: inline-block;
     padding: 12px 24px;
     font-family: var(--font-code);
+    font-size: 1rem;
     font-weight: bold;
     border: 1px solid #ffdd00; /* Electric Yellow */
     color: #ffdd00;
@@ -159,6 +160,12 @@ section {
     transition: all 0.3s ease;
     text-transform: uppercase;
     letter-spacing: 1px;
+    /* Reset native <button> appearance */
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+    border-radius: 0;
+    line-height: normal;
 }
 
 .btn-saiyan:hover {
