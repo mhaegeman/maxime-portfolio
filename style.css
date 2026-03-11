@@ -494,6 +494,36 @@ nav {
     gap: 6px;
 }
 
+.proj-card-ghost {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    padding: 0.75rem 1.1rem;
+    border: 1px dashed rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+    font-family: var(--font-code);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.proj-card-ghost:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+    box-shadow: 0 0 12px var(--accent-glow);
+}
+
+.proj-card-ghost .proj-prompt {
+    opacity: 0.4;
+}
+
+.proj-card-ghost:hover .proj-prompt {
+    opacity: 1;
+}
+
 .proj-header {
     display: flex;
     justify-content: space-between;
