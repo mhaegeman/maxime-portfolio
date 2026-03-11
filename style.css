@@ -426,12 +426,14 @@ nav {
 }
 
 /* The Video Itself */
-.video-frame video {
+.video-frame video,
+.video-frame img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensures video fills the circle without stretching */
+    object-fit: cover;
     border-radius: 50%;
-    background-color: var(--bg-color); /* Fallback color */
+    display: block;
+    background-color: var(--bg-color);
 }
 
 /* Define the base look for terminal/log windows using theme variables */
