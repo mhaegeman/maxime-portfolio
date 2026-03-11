@@ -107,9 +107,9 @@
 
 .skill-row {
     display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
+    align-items: flex-start;
+    flex-wrap: nowrap;   /* key+eq never drop below the chips */
+    gap: 0;
     margin-bottom: 10px;
 }
 
@@ -117,17 +117,22 @@
     color: #ffa657;
     min-width: 140px;
     flex-shrink: 0;
+    white-space: nowrap;
+    padding-top: 4px;    /* align text baseline with chip top */
 }
 
 .skill-eq {
     color: var(--text-secondary);
     flex-shrink: 0;
+    white-space: nowrap;
+    padding-top: 4px;
 }
 
 .skill-chips {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
+    min-width: 0;        /* allow shrinking so chips wrap inside their own box */
 }
 
 /* Base chip */
@@ -175,6 +180,5 @@
         text-align: center;         /* keep heading centered on mobile */
     }
 
-    .skill-key { min-width: unset; font-size: 0.78rem; }
-    .skill-row  { gap: 4px; }
+    .skill-key { min-width: unset; font-size: 0.78rem; white-space: nowrap; }
 }
