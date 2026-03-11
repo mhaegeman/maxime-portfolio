@@ -60,12 +60,21 @@
                         <span id="typewriter"></span><span class="cursor">_</span>
                     </h1>
 
-                    <p style="max-width: 600px; margin-top: 20px; line-height: 1.8;">
-                        I am a <span style="color: var(--text-primary);">Developer</span> bridging the gap between
-                        models and production.
-                        Leveraging my foundation in <span style="color: var(--text-primary);">Data Science</span>, I
-                        architect scalable data systems and engineer robust machine learning pipelines.
-                    </p>
+                    <div class="hero-code-block">
+                        <p class="py-l1"><span class="py-str">"""</span></p>
+                        <p class="py-l2"><span class="py-str">Developer bridging the gap between</span></p>
+                        <p class="py-l2"><span class="py-str">models and production, architecting</span></p>
+                        <p class="py-l2"><span class="py-str">scalable data &amp; ML pipelines.</span></p>
+                        <p class="py-l1"><span class="py-str">"""</span></p>
+                        <p class="py-blank"></p>
+                        <p class="py-l1"><span class="py-kw">def</span> <span class="py-fn">__init__</span>(<span class="py-self">self</span>):</p>
+                        <p class="py-l2"><span class="py-self">self</span>.role&nbsp;&nbsp;= <span class="py-str">"Lead Data / ML Engineer"</span></p>
+                        <p class="py-l2"><span class="py-self">self</span>.base&nbsp;&nbsp;= <span class="py-str">"Copenhagen, Denmark"</span></p>
+                        <p class="py-l2"><span class="py-self">self</span>.exp&nbsp;&nbsp;&nbsp;= <span class="py-num">5</span> <span class="py-op">+</span> <span class="py-comment"># years of experience</span></p>
+                        <p class="py-blank"></p>
+                        <p class="py-l1"><span class="py-kw">def</span> <span class="py-fn">mission</span>(<span class="py-self">self</span>) -&gt; <span class="py-type">str</span>:</p>
+                        <p class="py-l2"><span class="py-kw">return</span> <span class="py-str">"Bridge models to production"</span></p>
+                    </div>
 
                     <!-- Buttons Container (Only Profile Button left here) -->
                     <div class="hero-buttons">
@@ -83,13 +92,74 @@
                         </video>
 
                         <!-- Hidden GIF Element: Shown after video ends -->
-                        <img id="saiyan-gif" data-src="content/super_saian.gif" alt="Super Saiyan Mode"
-                            style="display: none;">
+                        <img id="saiyan-gif" data-src="content/super_saian.gif" alt="Super Saiyan Mode">
                     </div>
 
                     <!-- Super Saiyan Button Moved Here - center it on image-->
                     <div class="saiyan-btn-wrapper">
                         <button id="saiyan-btn" type="button" class="btn-saiyan">Super_Saiyan_Mode()</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="skills">
+            <h2 class="section-title">tech_stack.py</h2>
+            <div class="skills-code-block">
+                <p class="py-comment"># Skills parsed from ./cv.json — sorted by usage</p>
+                <p class="py-blank"></p>
+
+                <div class="skill-row">
+                    <span class="skill-key">languages</span>
+                    <span class="skill-eq">&nbsp;=&nbsp;</span>
+                    <div class="skill-chips">
+                        <span class="skill-chip chip-lang">Python</span>
+                        <span class="skill-chip chip-lang">SQL</span>
+                        <span class="skill-chip chip-lang">Bash</span>
+                    </div>
+                </div>
+
+                <div class="skill-row">
+                    <span class="skill-key">cloud_infra</span>
+                    <span class="skill-eq">&nbsp;=&nbsp;</span>
+                    <div class="skill-chips">
+                        <span class="skill-chip chip-cloud">Azure</span>
+                        <span class="skill-chip chip-cloud">Databricks</span>
+                        <span class="skill-chip chip-cloud">GCP</span>
+                        <span class="skill-chip chip-cloud">AWS</span>
+                        <span class="skill-chip chip-cloud">Docker</span>
+                    </div>
+                </div>
+
+                <div class="skill-row">
+                    <span class="skill-key">data_eng</span>
+                    <span class="skill-eq">&nbsp;=&nbsp;</span>
+                    <div class="skill-chips">
+                        <span class="skill-chip chip-data">PySpark</span>
+                        <span class="skill-chip chip-data">Airflow</span>
+                        <span class="skill-chip chip-data">Delta Lake</span>
+                        <span class="skill-chip chip-data">CI/CD</span>
+                    </div>
+                </div>
+
+                <div class="skill-row">
+                    <span class="skill-key">ml_stack</span>
+                    <span class="skill-eq">&nbsp;=&nbsp;</span>
+                    <div class="skill-chips">
+                        <span class="skill-chip chip-ml">TensorFlow</span>
+                        <span class="skill-chip chip-ml">PyTorch</span>
+                        <span class="skill-chip chip-ml">HuggingFace</span>
+                        <span class="skill-chip chip-ml">SpaCy</span>
+                    </div>
+                </div>
+
+                <div class="skill-row">
+                    <span class="skill-key">monitoring</span>
+                    <span class="skill-eq">&nbsp;=&nbsp;</span>
+                    <div class="skill-chips">
+                        <span class="skill-chip chip-mon">Grafana</span>
+                        <span class="skill-chip chip-mon">Tableau</span>
+                        <span class="skill-chip chip-mon">PowerBI</span>
                     </div>
                 </div>
             </div>

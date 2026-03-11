@@ -6,3 +6,104 @@
     0%, 100% { opacity: 1; }
     50% { opacity: 0; }
 }
+
+/* =============================================
+   PYTHON SYNTAX COLOURS  (GitHub Dark palette)
+   ============================================= */
+.py-kw   { color: #ff7b72; }                 /* keywords: def, return, from, import */
+.py-fn   { color: #d2a8ff; }                 /* function / method names */
+.py-self { color: #ffa657; }                 /* self parameter */
+.py-type { color: #79c0ff; }                 /* type hints: str, list, int */
+.py-str  { color: #a5d6ff; }                 /* string literals */
+.py-num  { color: #79c0ff; }                 /* numeric literals */
+.py-op   { color: var(--text-secondary); }   /* operators: +, =, -> */
+.py-comment { color: #8b949e; font-style: italic; } /* # comments */
+.py-var  { color: #ffa657; }                 /* variable names */
+
+/* =============================================
+   HERO CODE BLOCK
+   ============================================= */
+.hero-code-block {
+    margin-top: 20px;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9rem;
+    line-height: 1.8;
+    max-width: 520px;
+}
+
+.hero-code-block p {
+    margin: 0;
+    white-space: pre; /* preserve spacing */
+}
+
+.py-blank { height: 0.9rem; }  /* empty line between blocks */
+.py-l1 { padding-left: 1.4em; }  /* 1 indent level */
+.py-l2 { padding-left: 2.8em; }  /* 2 indent levels */
+
+/* =============================================
+   SKILLS SECTION
+   ============================================= */
+.skills-code-block {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9rem;
+    line-height: 2;
+}
+
+.skill-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.skill-key {
+    color: #ffa657;           /* variable name — orange */
+    min-width: 140px;         /* align chips in a loose column */
+    flex-shrink: 0;
+}
+
+.skill-eq {
+    color: var(--text-secondary);
+    flex-shrink: 0;
+}
+
+.skill-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+/* Base chip */
+.skill-chip {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 0.78rem;
+    font-family: 'Fira Code', monospace;
+    border: 1px solid;
+    transition: opacity 0.2s;
+}
+
+.skill-chip:hover { opacity: 0.75; }
+
+/* Category colours */
+.chip-lang  { color: #79c0ff; border-color: rgba(121, 192, 255, 0.35); background: rgba(121, 192, 255, 0.08); }
+.chip-cloud { color: #d2a8ff; border-color: rgba(210, 168, 255, 0.35); background: rgba(210, 168, 255, 0.08); }
+.chip-data  { color: #ffa657; border-color: rgba(255, 166, 87,  0.35); background: rgba(255, 166, 87,  0.08); }
+.chip-ml    { color: #3fb950; border-color: rgba(63,  185,  80,  0.35); background: rgba(63,  185,  80,  0.08); }
+.chip-mon   { color: #8b949e; border-color: rgba(139, 148, 158, 0.35); background: rgba(139, 148, 158, 0.08); }
+
+/* Light-mode chip adjustments */
+[data-theme="light"] .chip-lang  { background: rgba(121, 192, 255, 0.12); }
+[data-theme="light"] .chip-cloud { background: rgba(210, 168, 255, 0.12); }
+[data-theme="light"] .chip-data  { background: rgba(255, 166, 87,  0.12); }
+[data-theme="light"] .chip-ml    { background: rgba(63,  185,  80,  0.12); }
+[data-theme="light"] .chip-mon   { background: rgba(139, 148, 158, 0.12); }
+
+/* Mobile: shrink skill-key so chips don't overflow */
+@media (max-width: 600px) {
+    .skill-key { min-width: unset; font-size: 0.78rem; }
+    .hero-code-block { font-size: 0.8rem; }
+    .skill-row { gap: 4px; }
+}
