@@ -390,14 +390,26 @@ nav {
 }
 
 /* Styling the bullet points in the achievements list */
-.timeline-item ul li {
-    margin-bottom: 8px;
-    color: var(--text-secondary);
+.timeline-item ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 6px;
 }
 
-.timeline-item ul li::marker {
-    color: var(--accent-color); /* Green bullet points */
-    content: "> "; /* Replaces standard bullet with terminal arrow */
+.timeline-item ul li {
+    position: relative;
+    padding-left: 1.6em;   /* indent text away from the > */
+    margin-bottom: 8px;
+    color: var(--text-secondary);
+    text-align: left;       /* always left regardless of parent text-align */
+}
+
+.timeline-item ul li::before {
+    content: ">";
+    position: absolute;
+    left: 0;
+    color: var(--accent-color);
+    font-family: var(--font-code);
 }
 
 /* --- HERO SECTION LAYOUT --- */
@@ -564,7 +576,15 @@ nav {
         grid-template-columns: 1fr;
     }
 
-    /* --- TIMELINE --- */
+    /* --- TIMELINE: always left-aligned on mobile --- */
+    .timeline,
+    .timeline-item,
+    .timeline-item h3,
+    .timeline-item p,
+    .timeline-item .job-date {
+        text-align: left;
+    }
+
     .timeline-item {
         padding-left: 20px;
     }
