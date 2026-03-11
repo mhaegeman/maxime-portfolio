@@ -216,7 +216,21 @@ async function loadRepos() {
     }
 }
 
-// --- MEDIUM FETCHER (Server Log Style) ---
+// --- MEDIUM FETCHER (Card Grid Style) ---
+
+function extractFirstImage(html) {
+    const match = html.match(/<img[^>]+src="([^"]+)"/);
+    return match ? match[1] : null;
+}
+
+function articleTagClass(label) {
+    const l = label.toLowerCase();
+    if (['llm', 'gpt', 'generative', 'nlp', 'natural language', 'text classification', 'rag', 'transformer', 'diffusion', 'chatgpt', 'openai', 'reasoning'].some(k => l.includes(k))) return 'tag-nlp';
+    if (['machine learning', 'deep learning', 'neural', 'model', 'classification', 'regression', 'prediction'].some(k => l.includes(k))) return 'tag-ml';
+    if (['data engineering', 'spark', 'airflow', 'pipeline', 'etl', 'sql', 'docker', 'engineering'].some(k => l.includes(k))) return 'tag-engineering';
+    if (['cloud', 'aws', 'gcp', 'azure', 'google cloud'].some(k => l.includes(k))) return 'tag-cloud';
+    return 'tag-analytics';
+}
 
 // Try multiple CORS proxies in order; return raw XML text or throw.
 async function fetchRssXml(rssUrl) {
@@ -271,42 +285,41 @@ async function loadMedium() {
         container.innerHTML = '';
 
         items.slice(0, CONFIG.maxArticles).forEach(item => {
-            // Format the Date to look like a system timestamp
-            const pubDate = new Date(item.querySelector('pubDate')?.textContent || Date.now());
-            const timestamp = pubDate.toISOString().split('T')[0]; // YYYY-MM-DD
-            const time = pubDate.toTimeString().split(' ')[0]; // HH:MM:SS
-
             const title = item.querySelector('title')?.textContent?.trim() || 'Untitled';
-            // <link> in RSS 2.0 is a text node sibling; textContent is reliable here
             const linkUrl = item.querySelector('link')?.nextSibling?.nodeValue?.trim()
                          || item.querySelector('guid')?.textContent?.trim()
                          || '#';
 
-            // Create the entry line
-            const entry = document.createElement('div');
-            entry.style.marginBottom = '15px';
-            entry.style.borderBottom = '1px dashed rgba(255,255,255,0.1)';
-            entry.style.paddingBottom = '10px';
+            const pubDate = new Date(item.querySelector('pubDate')?.textContent || Date.now());
+            const dateStr = pubDate.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: 'numeric' });
 
-            // "Log Entry" Layout
-            entry.innerHTML = `
-                <div style="color: var(--text-secondary);">
-                    <span style="color: #8b949e;">[${timestamp} ${time}]</span>
-                    <span style="color: var(--accent-color);">INFO:</span> New_Article_Detected
-                </div>
-                <div style="margin-left: 20px; margin-top: 5px;">
-                    <span style="color: #79c0ff;">>></span>
-                    <a href="${linkUrl}" target="_blank" style="color: var(--text-primary); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.3s;">
-                        ${title}
-                    </a>
-                </div>
+            // Extract featured image from content:encoded
+            const encoded = item.getElementsByTagName('content:encoded')[0]?.textContent || '';
+            const imgUrl = extractFirstImage(encoded);
+
+            // Extract categories/tags
+            const categories = Array.from(item.querySelectorAll('category'))
+                .map(c => c.textContent.trim())
+                .filter(Boolean);
+
+            const tagsHtml = categories.slice(0, 4)
+                .map(c => `<span class="${articleTagClass(c)}">${c}</span>`)
+                .join('');
+
+            const card = document.createElement('article');
+            card.className = 'blog-card';
+            card.innerHTML = `
+                <a href="${linkUrl}" target="_blank" class="blog-card-link">
+                    ${imgUrl ? `<div class="blog-card-img"><img src="${imgUrl}" alt="${title}" loading="lazy"></div>` : '<div class="blog-card-img blog-card-img--empty"></div>'}
+                    <div class="blog-card-body">
+                        <span class="blog-date">${dateStr}</span>
+                        <h3 class="blog-title">${title}</h3>
+                        ${tagsHtml ? `<div class="blog-tags">${tagsHtml}</div>` : ''}
+                    </div>
+                </a>
             `;
 
-            const link = entry.querySelector('a');
-            link.onmouseover = () => link.style.borderBottom = "1px solid var(--accent-color)";
-            link.onmouseout = () => link.style.borderBottom = "1px solid transparent";
-
-            container.appendChild(entry);
+            container.appendChild(card);
         });
 
     } catch (error) {
