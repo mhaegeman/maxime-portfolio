@@ -136,22 +136,53 @@ async function loadRepos() {
 }
 
 // --- MEDIUM FETCHER (Server Log Style) ---
+
+// Try multiple CORS proxies in order; return raw XML text or throw.
+async function fetchRssXml(rssUrl) {
+    // Each entry: { url: string, extractXml: (response) => Promise<string> }
+    const proxies = [
+        {
+            // corsproxy.io — returns the raw content directly
+            url: `https://corsproxy.io/?url=${encodeURIComponent(rssUrl)}`,
+            extractXml: (r) => r.text()
+        },
+        {
+            // allorigins.win — returns JSON { contents: "..." }
+            url: `https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}`,
+            extractXml: async (r) => { const d = await r.json(); return d.contents || ''; }
+        },
+        {
+            // codetabs — returns raw content
+            url: `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(rssUrl)}`,
+            extractXml: (r) => r.text()
+        }
+    ];
+
+    for (const proxy of proxies) {
+        try {
+            const response = await fetch(proxy.url, { signal: AbortSignal.timeout(8000) });
+            if (!response.ok) continue;
+            const xml = await proxy.extractXml(response);
+            if (xml && xml.includes('<item>')) return xml;
+        } catch (_) {
+            // try next proxy
+        }
+    }
+    throw new Error('All proxies failed to reach the Medium RSS feed');
+}
+
 async function loadMedium() {
     const container = document.getElementById('blog-list');
     if (!container) return; // Stop if we aren't on the blog page
 
     const rssUrl = `https://medium.com/feed/@${CONFIG.mediumUser}`;
-    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}`;
 
     try {
-        const response = await fetch(proxyUrl);
-        const data = await response.json();
-
-        if (!data.contents) throw new Error('Empty response from proxy');
+        const xmlText = await fetchRssXml(rssUrl);
 
         // Parse the RSS XML directly in the browser
         const parser = new DOMParser();
-        const xml = parser.parseFromString(data.contents, 'text/xml');
+        const xml = parser.parseFromString(xmlText, 'text/xml');
         const items = Array.from(xml.querySelectorAll('item'));
 
         if (!items.length) throw new Error('No articles found in feed');
