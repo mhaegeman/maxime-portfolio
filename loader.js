@@ -1,5 +1,86 @@
 // loader.js
 
+// Skill tags per repo: { label, category }
+// Categories: ml | nlp | analytics | engineering | cloud
+const REPO_TAGS = {
+    'scoring-bank-project': [
+        { label: 'LightGBM',             category: 'ml' },
+        { label: 'Classification',        category: 'ml' },
+        { label: 'Imbalanced Learning',   category: 'ml' },
+        { label: 'Feature Engineering',   category: 'ml' },
+        { label: 'Streamlit',             category: 'analytics' },
+        { label: 'Dashboard',             category: 'analytics' },
+        { label: 'EDA',                   category: 'analytics' },
+        { label: 'Data Visualization',    category: 'analytics' },
+    ],
+    'Energy-consumption-prediction': [
+        { label: 'Regression',            category: 'ml' },
+        { label: 'Predictive Modeling',   category: 'ml' },
+        { label: 'Scikit-learn',          category: 'ml' },
+        { label: 'EDA',                   category: 'analytics' },
+        { label: 'Data Visualization',    category: 'analytics' },
+    ],
+    'seo-content-generator': [
+        { label: 'Generative AI',         category: 'nlp' },
+        { label: 'LLM',                   category: 'nlp' },
+        { label: 'Vertex AI',             category: 'nlp' },
+        { label: 'Content Generation',    category: 'nlp' },
+        { label: 'Streamlit',             category: 'analytics' },
+    ],
+    'fruit-classifier-aws': [
+        { label: 'PySpark',               category: 'engineering' },
+        { label: 'Distributed Computing', category: 'engineering' },
+        { label: 'Image Classification',  category: 'ml' },
+        { label: 'Deep Learning',         category: 'ml' },
+        { label: 'AWS S3',                category: 'cloud' },
+        { label: 'AWS EMR',               category: 'cloud' },
+    ],
+    'python-client-segmentation': [
+        { label: 'Clustering',            category: 'ml' },
+        { label: 'Customer Segmentation', category: 'ml' },
+        { label: 'K-Means',               category: 'ml' },
+        { label: 'EDA',                   category: 'analytics' },
+        { label: 'pandas',                category: 'analytics' },
+    ],
+    'Python-Object-Clasifier': [
+        { label: 'NLP',                   category: 'nlp' },
+        { label: 'LDA',                   category: 'nlp' },
+        { label: 'Text Classification',   category: 'nlp' },
+        { label: 'Topic Modeling',        category: 'ml' },
+    ],
+    'Nutriscore-Prediction': [
+        { label: 'Linear Regression',     category: 'ml' },
+        { label: 'Scikit-learn',          category: 'ml' },
+        { label: 'Predictive Modeling',   category: 'ml' },
+        { label: 'EDA',                   category: 'analytics' },
+    ],
+    'openweather': [
+        { label: 'REST API',              category: 'engineering' },
+        { label: 'Python',                category: 'engineering' },
+        { label: 'Data Fetching',         category: 'engineering' },
+    ],
+    'Verba': [
+        { label: 'RAG',                   category: 'nlp' },
+        { label: 'LLM',                   category: 'nlp' },
+        { label: 'Vector DB',             category: 'nlp' },
+        { label: 'Weaviate',              category: 'nlp' },
+        { label: 'Chatbot',               category: 'nlp' },
+        { label: 'Python',                category: 'engineering' },
+    ],
+    'sgtm-cloud-run-shell': [
+        { label: 'GCP',                   category: 'cloud' },
+        { label: 'Cloud Run',             category: 'cloud' },
+        { label: 'Google Tag Manager',    category: 'cloud' },
+        { label: 'Shell',                 category: 'engineering' },
+        { label: 'DevOps',                category: 'engineering' },
+    ],
+    'docker-stacks-pyspark': [
+        { label: 'Docker',                category: 'engineering' },
+        { label: 'PySpark',               category: 'engineering' },
+        { label: 'Jupyter',               category: 'engineering' },
+    ],
+};
+
 const CONFIG = {
     githubUser: 'mhaegeman', // Replace with your actual GitHub username
     mediumUser: 'maximehaegeman', // Replace with your actual Medium username
@@ -107,6 +188,10 @@ async function loadRepos() {
                 ? (repo.description.length > 120 ? repo.description.slice(0, 117) + '…' : repo.description)
                 : 'No description provided.';
 
+            const skillTags = (REPO_TAGS[repo.name] || [])
+                .map(t => `<span class="tag-${t.category}">${t.label}</span>`)
+                .join('');
+
             card.innerHTML = `
                 <div class="proj-header">
                     <h3 class="card-header">
@@ -119,6 +204,7 @@ async function loadRepos() {
                     <span class="proj-stat">★ ${repo.stargazers_count}</span>
                     <span class="proj-stat">⑂ ${repo.forks_count}</span>
                 </div>
+                ${skillTags ? `<div class="card-skill-tags">${skillTags}</div>` : ''}
                 <p class="card-desc">${desc}</p>
             `;
 
