@@ -421,19 +421,31 @@ nav {
     padding: 5px; /* Gap for the border effect */
     background: linear-gradient(135deg, var(--accent-color), #79c0ff); /* Green/Blue gradient border */
     box-shadow: 0 0 40px var(--accent-glow);
-    position: relative;
+    display: grid;
     overflow: hidden;
 }
 
-/* The Video Itself */
+/* Stack video and GIF in the same grid cell so they overlap cleanly */
 .video-frame video,
 .video-frame img {
+    grid-area: 1 / 1;
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 50%;
     display: block;
     background-color: var(--bg-color);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.video-frame video.active,
+.video-frame img.active {
+    opacity: 1;
+}
+
+.video-frame img.active {
+    filter: brightness(1.25) saturate(1.1);
 }
 
 /* Define the base look for terminal/log windows using theme variables */

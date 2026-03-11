@@ -47,23 +47,20 @@ function triggerSaiyanMode() {
     btn.style.cursor = 'not-allowed';
     btn.innerText = "max_evolution_reached";
 
-    // 3. Play the transformation video
-    video.style.display = 'block';
-    gif.style.display = 'none';
+    // 3. Start preloading GIF now (while video plays) to avoid blank frame later
+    if (!gif.src && gif.dataset.src) {
+        gif.src = gif.dataset.src;
+    }
 
+    // 4. Play the transformation video
+    video.classList.add('active');
     video.currentTime = 0;
     video.play().catch(error => console.log("Video play error:", error));
 
-    // 4. When video ends, swap to the looping GIF
+    // 5. When video ends, crossfade to GIF
     video.onended = function () {
-        video.style.display = 'none';
-
-        // Lazy load the GIF
-        if (!gif.src && gif.dataset.src) {
-            gif.src = gif.dataset.src;
-        }
-
-        gif.style.display = 'block';
+        video.classList.remove('active');
+        gif.classList.add('active');
     };
 }
 
@@ -73,7 +70,11 @@ document.addEventListener('DOMContentLoaded', () => {
     updateTime();
     setInterval(updateTime, 1000);
 
-    // Bind Saiyan Button if it exists (it has onclick in HTML, but better here if we remove onclick)
+    // Show the video poster (BW profile pic) on load
+    const heroVideo = document.getElementById('saiyan-video');
+    if (heroVideo) heroVideo.classList.add('active');
+
+    // Bind Saiyan Button
     const saiyanBtn = document.getElementById('saiyan-btn');
     if (saiyanBtn) {
         saiyanBtn.addEventListener('click', triggerSaiyanMode);
