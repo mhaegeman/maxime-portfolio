@@ -41,11 +41,10 @@ function triggerSaiyanMode() {
     // 1. Change Border to Yellow/Gold using the new class
     frame.classList.add('saiyan-mode');
 
-    // 2. Prepare the UI: Disable button to prevent double clicks
+    // 2. Disable button during transformation to prevent double clicks
     btn.disabled = true;
     btn.style.opacity = '0.5';
     btn.style.cursor = 'not-allowed';
-    btn.innerText = "max_evolution_reached";
 
     // 3. Start preloading GIF now (while video plays) to avoid blank frame later
     if (!gif.src && gif.dataset.src) {
@@ -57,11 +56,36 @@ function triggerSaiyanMode() {
     video.currentTime = 0;
     video.play().catch(error => console.log("Video play error:", error));
 
-    // 5. When video ends, crossfade to GIF
+    // 5. When video ends, crossfade to GIF and show reset button
     video.onended = function () {
         video.classList.remove('active');
         gif.classList.add('active');
+        btn.disabled = false;
+        btn.style.opacity = '1';
+        btn.style.cursor = 'pointer';
+        btn.innerText = "Return_to_Base()";
+        btn.onclick = resetToOriginal;
     };
+}
+
+function resetToOriginal() {
+    const frame = document.getElementById('hero-frame');
+    const video = document.getElementById('saiyan-video');
+    const gif = document.getElementById('saiyan-gif');
+    const btn = document.getElementById('saiyan-btn');
+
+    if (!frame || !video || !gif || !btn) return;
+
+    // Restore original frame border
+    frame.classList.remove('saiyan-mode');
+
+    // Crossfade back to BW profile pic
+    gif.classList.remove('active');
+    video.classList.add('active');
+
+    // Reset button to original state
+    btn.innerText = "Super_Saiyan_Mode()";
+    btn.onclick = triggerSaiyanMode;
 }
 
 // Initialize
