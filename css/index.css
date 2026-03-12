@@ -86,13 +86,15 @@
     font-family: 'Fira Code', monospace;
     font-size: 0.88rem;
     line-height: 1.75;
-    overflow-x: auto;               /* horizontal scroll if content overflows */
+    overflow-x: hidden;
     text-align: left !important;    /* hard override */
 }
 
 .code-box-body p {
     margin: 0;
-    white-space: nowrap;            /* preserve spacing / alignment */
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: break-word;
     text-align: left !important;
 }
 
@@ -171,9 +173,12 @@
     }
 
     .code-box-body {
-        font-size: 0.78rem;
+        font-size: 0.72rem;
         padding: 12px 14px;
     }
+
+    .py-l1 { padding-left: 1em; }
+    .py-l2 { padding-left: 2em; }
 
     .hero-heading {
         font-size: 2rem;
