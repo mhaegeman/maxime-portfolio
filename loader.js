@@ -223,6 +223,12 @@ function extractFirstImage(html) {
     return match ? match[1] : null;
 }
 
+function extractTagContent(block, tagName) {
+    const pattern = new RegExp(`<${tagName}[^>]*>(?:<!\\[CDATA\\[)?([\\s\\S]*?)(?:\\]\\]>)?<\\/${tagName}>`, 'i');
+    const match = block.match(pattern);
+    return match ? match[1] : '';
+}
+
 function articleTagClass(label) {
     const l = label.toLowerCase();
     if (['llm', 'gpt', 'generative', 'nlp', 'natural language', 'text classification', 'rag', 'transformer', 'diffusion', 'chatgpt', 'openai', 'reasoning'].some(k => l.includes(k))) return 'tag-nlp';
@@ -285,9 +291,13 @@ async function loadMedium() {
         // Pre-extract content:encoded per item from raw XML to avoid namespace issues.
         // Split on <item> so each block belongs to exactly one item (no index drift).
         const rawItemBlocks = xmlText.split(/<item[\s>]/).slice(1);
-        const encodedBlocks = rawItemBlocks.map(block => {
-            const m = block.match(/<content:encoded>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/content:encoded>/);
-            return m ? m[1] : '';
+        const contentBlocks = rawItemBlocks.map(block => {
+            // Medium feeds can use either <content:encoded> or <description> for image markup.
+            const encoded = extractTagContent(block, 'content:encoded');
+            if (encoded) return encoded;
+
+            const description = extractTagContent(block, 'description');
+            return description || '';
         });
 
         container.innerHTML = '';
@@ -302,8 +312,8 @@ async function loadMedium() {
             const dateStr = pubDate.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: 'numeric' });
 
             // Extract featured image from pre-parsed content:encoded block
-            const encoded = encodedBlocks[idx] || '';
-            const imgUrl = extractFirstImage(encoded);
+            const contentHtml = contentBlocks[idx] || '';
+            const imgUrl = extractFirstImage(contentHtml);
 
             // Extract categories/tags
             const categories = Array.from(item.querySelectorAll('category'))
