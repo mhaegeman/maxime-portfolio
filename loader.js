@@ -282,13 +282,13 @@ async function loadMedium() {
 
         if (!items.length) throw new Error('No articles found in feed');
 
-        // Pre-extract content:encoded blocks from raw XML to avoid namespace issues
-        const encodedBlocks = [];
-        const encodedRegex = /<content:encoded>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/content:encoded>/g;
-        let encMatch;
-        while ((encMatch = encodedRegex.exec(xmlText)) !== null) {
-            encodedBlocks.push(encMatch[1]);
-        }
+        // Pre-extract content:encoded per item from raw XML to avoid namespace issues.
+        // Split on <item> so each block belongs to exactly one item (no index drift).
+        const rawItemBlocks = xmlText.split(/<item[\s>]/).slice(1);
+        const encodedBlocks = rawItemBlocks.map(block => {
+            const m = block.match(/<content:encoded>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/content:encoded>/);
+            return m ? m[1] : '';
+        });
 
         container.innerHTML = '';
 
