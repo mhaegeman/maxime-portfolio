@@ -6,26 +6,54 @@
     <meta http-equiv="Content-Security-Policy"
         content="default-src 'self'; script-src 'self' https://api.github.com; connect-src 'self' https://api.github.com https://corsproxy.io https://api.allorigins.win https://api.codetabs.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' https:;">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maxime | System Logs</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Maxime | Blog</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Fira+Code:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <div class="container">
         <nav>
-            <button id="menu-toggle" class="menu-toggle" aria-label="Toggle navigation">☰</button>
+            <a href="index.html" class="nav-brand">
+                <span class="nav-brand-name">Maxime Haegeman</span>
+                <span class="nav-brand-tagline">Data Engineer // Copenhagen</span>
+            </a>
             <div class="nav-links">
-                <a href="index.html">_home</a>
-                <a href="projects.html">_git_repos</a>
-                <a href="blog.html">_medium_logs</a>
-                <a href="cv.html">_sys_profile</a>
+                <a href="index.html">About</a>
+                <a href="projects.html">Projects</a>
+                <a href="blog.html">Blog</a>
+                <a href="cv.html">CV</a>
             </div>
-            <button id="theme-toggle" title="Switch Theme">☀</button>
+            <div class="nav-controls">
+                <button id="menu-toggle" class="menu-toggle" aria-label="Toggle navigation">☰</button>
+                <button id="theme-toggle" title="Switch Theme">☀</button>
+            </div>
         </nav>
 
         <section class="section">
-            <h2 class="section-title">self.blog()</h2>
+            <div class="page-hero">
+                <div class="page-hero-left">
+                    <span class="page-hero-label">Publication Feed // Medium RSS</span>
+                    <h1 class="page-hero-title">ARTICLES<br>& ANALYSES</h1>
+                    <p class="page-hero-subtitle">Writing on data engineering, machine learning, and the systems that power modern AI products.</p>
+                </div>
+                <div class="page-hero-meta">
+                    <span class="page-hero-meta-label">System Briefing</span>
+                    <p class="page-hero-meta-text">Articles on scalable data pipelines, ML engineering, and production AI systems.</p>
+                    <div class="page-hero-stats">
+                        <div>
+                            <span class="page-hero-stat-label">Channel</span>
+                            <span class="page-hero-stat-value">Medium</span>
+                        </div>
+                        <div>
+                            <span class="page-hero-stat-label">Status</span>
+                            <span class="page-hero-stat-value" style="font-family: var(--font-code); font-size: 0.9rem; font-style: normal; color: var(--accent-color);">Online</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div id="blog-list" class="blog-grid">
                 <p style="color: var(--accent-color); font-family: var(--font-code);">_establishing_connection_to_rss_feed...</p>
@@ -33,7 +61,7 @@
         </section>
 
         <footer>
-            <div style="margin-top: 50px; opacity: 0.5; text-align: center;">
+            <div style="margin-top: 50px; opacity: 0.5; text-align: center; font-family: var(--font-code); font-size: 0.8rem;">
                 &copy; 2025 Maxime Haegeman. Built with code.
             </div>
         </footer>

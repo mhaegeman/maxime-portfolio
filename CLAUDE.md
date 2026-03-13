@@ -1,7 +1,7 @@
 # CLAUDE.md
 
 ## Project
-Maxime Haegeman's personal portfolio — terminal/cyberpunk-themed static site. No build step.
+Maxime Haegeman's personal portfolio — editorial dark aesthetic with terminal elements. No build step.
 
 ## Stack
 - Vanilla HTML/CSS/JS
@@ -24,6 +24,6 @@ python -m http.server 8000
 
 ## Conventions
 - No frameworks, no build tools — keep it vanilla
-- Dark terminal aesthetic: black bg, white/teal text, monospace fonts
+- Editorial dark aesthetic: deep green-black bg (`#0a0f00`), neon yellow-green accent (`#ccff00`), serif display headings (`Playfair Display`) + monospace terminals (`Fira Code`)
 - Theme toggle: `[data-theme="light"]` selector overrides in CSS
 - Branch prefix: `claude/`
