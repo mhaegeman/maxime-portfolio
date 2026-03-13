@@ -1,5 +1,5 @@
 // Typewriter Effect
-const text = "Hi, I'm Maxime.";
+const text = "Hi, I am Maxime!";
 const speed = 100;
 let i = 0;
 
