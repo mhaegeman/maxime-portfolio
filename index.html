@@ -22,7 +22,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&family=Inter:wght@400;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Fira+Code:wght@300;400;600&family=Inter:wght@400;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="css/index.css">
@@ -32,24 +32,28 @@
 
     <div class="container">
         <nav>
-            <button id="menu-toggle" class="menu-toggle" aria-label="Toggle navigation">☰</button>
+            <a href="index.html" class="nav-brand">
+                <span class="nav-brand-name">Maxime Haegeman</span>
+                <span class="nav-brand-tagline">Data Engineer // Copenhagen</span>
+            </a>
             <div class="nav-links">
-                <a href="index.html">_home</a>
-                <a href="projects.html">_git_repos</a>
-                <a href="blog.html">_medium_logs</a>
-                <a href="cv.html">_sys_profile</a>
+                <a href="index.html">About</a>
+                <a href="projects.html">Projects</a>
+                <a href="blog.html">Blog</a>
+                <a href="cv.html">CV</a>
             </div>
-            <button id="theme-toggle" title="Switch Theme">☀</button>
+            <div class="nav-controls">
+                <button id="menu-toggle" class="menu-toggle" aria-label="Toggle navigation">☰</button>
+                <button id="theme-toggle" title="Switch Theme">☀</button>
+            </div>
         </nav>
 
-        <section id="hero" style="min-height: 90vh; display: flex; align-items: center;">
-            <div class="container hero-layout">
+        <section id="hero">
+            <div class="hero-layout">
 
-                <div class="hero-text">
-                    <h1 class="hero-heading">
-                        <span style="color: var(--accent-color); margin-right: 10px;">>>></span>
-                        <span id="typewriter"></span><span class="cursor">_</span>
-                    </h1>
+                <div class="hero-panel-left">
+                    <p class="section-label">Maxime Haegeman // Data Engineer // Copenhagen</p>
+                    <h1 class="hero-display-name">MAXIME<br>HAEGEMAN</h1>
 
                     <!-- Unified Python code box -->
                     <div class="code-box">
@@ -77,27 +81,24 @@
                         </div>
                     </div>
 
+                    <h2 class="hero-subtitle">LEAD DATA / ML ENGINEER //<br>SCALABLE PIPELINES //<br>AI PRODUCT DEVELOPMENT</h2>
                 </div>
 
-                <!-- Hero Visual: Flex column to stack Image + Button -->
-                <div class="hero-visual" style="display: flex; flex-direction: column; align-items: center; gap: 40px;">
-                    <a href="cv.html" class="profile-link">
-                        <div class="video-frame" id="hero-frame">
-                            <!-- Video Element: Autoplay/Loop removed so it waits for trigger -->
-                            <video id="saiyan-video" muted playsinline poster="content/profile_bnw.jpg">
-                                <source src="content/profile_supersaian.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
+                <!-- Hero Visual: photo + Super Saiyan button -->
+                <div class="hero-panel-right">
+                    <div class="video-frame-wrapper">
+                        <a href="cv.html" class="profile-link">
+                            <div class="video-frame" id="hero-frame">
+                                <video id="saiyan-video" muted playsinline poster="content/profile_bnw.jpg">
+                                    <source src="content/profile_supersaian.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <img id="saiyan-gif" data-src="content/super_saian.gif" alt="Super Saiyan Mode">
+                                <div class="profile-hover-overlay"><span>View_Profile()</span></div>
+                            </div>
+                        </a>
+                    </div>
 
-                            <!-- Hidden GIF Element: Shown after video ends -->
-                            <img id="saiyan-gif" data-src="content/super_saian.gif" alt="Super Saiyan Mode">
-
-                            <!-- Hover overlay -->
-                            <div class="profile-hover-overlay"><span>View_Profile()</span></div>
-                        </div>
-                    </a>
-
-                    <!-- Super Saiyan Button Moved Here - center it on image-->
                     <div class="saiyan-btn-wrapper">
                         <button id="saiyan-btn" type="button" class="btn-saiyan">Super_Saiyan_Mode()</button>
                     </div>
@@ -106,6 +107,7 @@
         </section>
 
         <section class="section" id="skills">
+            <span class="section-label">Status: Active // Skills</span>
             <h2 class="section-title">self.skills()</h2>
             <div class="skills-code-block">
                 <p class="py-comment"># Skills parsed from ./cv.json — sorted by usage</p>
@@ -168,6 +170,7 @@
         </section>
 
         <section class="section" id="projects">
+            <span class="section-label">Repository Feed // Featured</span>
             <h2 class="section-title">self.projects()</h2>
             <div class="proj-list">
 
@@ -214,12 +217,13 @@
         </section>
 
         <section class="section" id="contact">
+            <span class="section-label">Status: Online // Contact</span>
             <h2 class="section-title">self.contact()</h2>
-            <div style="padding: 20px;">
-                <p style="margin-bottom: 20px; color: var(--text-secondary);">
+            <div style="padding: 20px 0;">
+                <p style="margin-bottom: 20px; color: var(--text-secondary); font-family: var(--font-code); font-size: 0.9rem;">
                     // Interested in collaboration? Execute the command below.
                 </p>
-                <a href="mailto:contact@maximehaegeman.dev" style="font-size: 1.2rem; color: var(--accent-color);">
+                <a href="mailto:contact@maximehaegeman.dev" style="font-size: 1.2rem; color: var(--accent-color); font-family: var(--font-code); border-bottom: none;">
                     > mailto:contact@maximehaegeman.dev
                 </a>
                 <div class="social-links">
@@ -243,7 +247,7 @@
                 <span>|</span>
                 <span id="cph-time">Copenhagen: Loading...</span>
             </div>
-            <div style="margin-top: 15px; opacity: 0.5;">
+            <div style="margin-top: 15px; opacity: 0.5; font-family: var(--font-code); font-size: 0.8rem;">
                 &copy; 2025 Maxime Haegeman. Built with code.
             </div>
         </footer>

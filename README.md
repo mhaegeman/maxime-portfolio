@@ -1,10 +1,10 @@
 # \~/maxime\_haegeman | Personal Data Science Portfolio
 
-A minimal, terminal-themed personal website designed for Data Scientists and Engineers. This static site features a cyberpunk aesthetic and dynamically fetches content from external APIs to keep your portfolio up-to-date automatically.
+A minimal, editorial-dark personal website designed for Data Scientists and Engineers. This static site features a deep green-black aesthetic with serif display headings, terminal code elements, and neon yellow-green accents — and dynamically fetches content from external APIs to keep your portfolio up-to-date automatically.
 
 ## ⚡ Features
 
-  * **Terminal Aesthetic:** Dark mode, monospace fonts, and typewriter effects.
+  * **Editorial Dark Aesthetic:** Deep green-black background, neon yellow-green accents, and a blend of serif display headings with monospace terminal elements.
   * **Dynamic GitHub Integration:** Automatically fetches and displays your latest top repositories using the GitHub API.
   * **Dynamic Blog Integration:** Fetches your latest Medium articles via RSS-to-JSON.
   * **JSON-Driven CV:** Update your work experience by editing a simple `experience.json` file—no HTML editing required for updates.
@@ -105,8 +105,8 @@ This site is designed to be hosted on **GitHub Pages**.
 
 ## 🎨 Customization
 
-  * **Colors:** Edit the CSS Variables in `:root` inside `style.css` to change the accent color (currently Terminal Green `#00ff41`).
-  * **Fonts:** The site uses *Fira Code* via Google Fonts. You can change this in the `<head>` of the HTML files and `style.css`.
+  * **Colors:** Edit the CSS Variables in `:root` inside `style.css`. Accent color is neon yellow-green `#ccff00`; background is `#0a0f00`.
+  * **Fonts:** The site uses *Playfair Display* (serif display headings) and *Fira Code* (monospace terminals) via Google Fonts. Update both in the `<head>` of HTML files and `style.css`.
 
 -----
 

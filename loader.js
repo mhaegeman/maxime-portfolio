@@ -326,9 +326,16 @@ async function loadMedium() {
 
             const card = document.createElement('article');
             card.className = 'blog-card';
+            const firstCategory = categories[0] || '';
+            const overlayTag = firstCategory
+                ? `<span class="blog-card-tag-overlay">${firstCategory}</span>`
+                : '';
+
             card.innerHTML = `
                 <a href="${linkUrl}" target="_blank" class="blog-card-link">
-                    ${imgUrl ? `<div class="blog-card-img"><img src="${imgUrl}" alt="${title}" loading="lazy"></div>` : '<div class="blog-card-img blog-card-img--empty"></div>'}
+                    ${imgUrl
+                        ? `<div class="blog-card-img">${overlayTag}<img src="${imgUrl}" alt="${title}" loading="lazy"></div>`
+                        : `<div class="blog-card-img blog-card-img--empty">${overlayTag}</div>`}
                     <div class="blog-card-body">
                         <span class="blog-date">${dateStr}</span>
                         <h3 class="blog-title">${title}</h3>

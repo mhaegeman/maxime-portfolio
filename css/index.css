@@ -20,7 +20,7 @@
 .py-comment { color: #8b949e; font-style: italic; }    /* # comments */
 
 .py-blank { display: block; height: 0.6em; }           /* blank line between blocks */
-.py-l1    { padding-left: 1.5em; }                     /* 1 indent = 4 spaces in monospace */
+.py-l1    { padding-left: 1.5em; }                     /* 1 indent */
 .py-l2    { padding-left: 3em; }                       /* 2 indents */
 
 /* =============================================
@@ -32,23 +32,38 @@
 }
 
 .hero-heading {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     margin-bottom: 20px;
+    font-family: var(--font-code);
+    color: var(--text-secondary);
+}
+
+/* Hero subtitle (tagline below display name) */
+.hero-subtitle {
+    font-family: var(--font-code);
+    font-size: 0.78rem;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-top: 24px;
+    line-height: 1.8;
 }
 
 /* =============================================
    CODE BOX  (IDE-style window)
    ============================================= */
 .code-box {
-    display: inline-block;          /* shrink-wrap to content on desktop */
+    display: inline-block;
     width: 100%;
     max-width: 520px;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.35);
+    border-radius: 0;
+    border: 1px solid rgba(204, 255, 0, 0.15);
+    background: rgba(0, 0, 0, 0.4);
     overflow: hidden;
-    text-align: left !important;    /* override mobile center-align */
+    text-align: left !important;
     margin-top: 4px;
+    margin-bottom: 0;
 }
 
 /* Title bar with traffic-light dots + filename */
@@ -57,8 +72,8 @@
     align-items: center;
     gap: 10px;
     padding: 8px 14px;
-    background: rgba(255, 255, 255, 0.05);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid rgba(204, 255, 0, 0.1);
     font-family: 'Fira Code', monospace;
     font-size: 0.75rem;
     color: var(--text-secondary);
@@ -87,7 +102,7 @@
     font-size: 0.88rem;
     line-height: 1.75;
     overflow-x: hidden;
-    text-align: left !important;    /* hard override */
+    text-align: left !important;
 }
 
 .code-box-body p {
@@ -110,7 +125,7 @@
 .skill-row {
     display: flex;
     align-items: flex-start;
-    flex-wrap: nowrap;   /* key+eq never drop below the chips */
+    flex-wrap: nowrap;
     gap: 0;
     margin-bottom: 10px;
 }
@@ -120,7 +135,7 @@
     min-width: 140px;
     flex-shrink: 0;
     white-space: nowrap;
-    padding-top: 4px;    /* align text baseline with chip top */
+    padding-top: 4px;
 }
 
 .skill-eq {
@@ -134,14 +149,14 @@
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
-    min-width: 0;        /* allow shrinking so chips wrap inside their own box */
+    min-width: 0;
 }
 
 /* Base chip */
 .skill-chip {
     display: inline-block;
     padding: 3px 10px;
-    border-radius: 4px;
+    border-radius: 0;
     font-size: 0.78rem;
     font-family: 'Fira Code', monospace;
     border: 1px solid;
@@ -181,8 +196,13 @@
     .py-l2 { padding-left: 2em; }
 
     .hero-heading {
-        font-size: 2rem;
-        text-align: center;         /* keep heading centered on mobile */
+        font-size: 1.6rem;
+        text-align: center;
+    }
+
+    .hero-subtitle {
+        text-align: center;
+        font-size: 0.7rem;
     }
 
     .skill-key { min-width: unset; font-size: 0.78rem; white-space: nowrap; }

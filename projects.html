@@ -6,37 +6,66 @@
     <meta http-equiv="Content-Security-Policy"
         content="default-src 'self'; script-src 'self' https://api.github.com https://api.rss2json.com; connect-src 'self' https://api.github.com https://api.rss2json.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com;">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maxime | Repositories</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Maxime | Projects</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Fira+Code:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <div class="container">
         <nav>
-            <button id="menu-toggle" class="menu-toggle" aria-label="Toggle navigation">☰</button>
+            <a href="index.html" class="nav-brand">
+                <span class="nav-brand-name">Maxime Haegeman</span>
+                <span class="nav-brand-tagline">Data Engineer // Copenhagen</span>
+            </a>
             <div class="nav-links">
-                <a href="index.html">_home</a>
-                <a href="projects.html">_git_repos</a>
-                <a href="blog.html">_medium_logs</a>
-                <a href="cv.html">_sys_profile</a>
+                <a href="index.html">About</a>
+                <a href="projects.html">Projects</a>
+                <a href="blog.html">Blog</a>
+                <a href="cv.html">CV</a>
             </div>
-            <button id="theme-toggle" title="Switch Theme">☀</button>
+            <div class="nav-controls">
+                <button id="menu-toggle" class="menu-toggle" aria-label="Toggle navigation">☰</button>
+                <button id="theme-toggle" title="Switch Theme">☀</button>
+            </div>
         </nav>
 
         <section class="section">
-            <h2 class="section-title">self.repos()</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 30px; font-family: var(--font-code);">
+            <div class="page-hero">
+                <div class="page-hero-left">
+                    <span class="page-hero-label">Repository Feed // GitHub API</span>
+                    <h1 class="page-hero-title">OPEN SOURCE<br>/ PROJECTS</h1>
+                    <p class="page-hero-subtitle">A collection of data engineering, ML, and analytics projects — sorted by stars.</p>
+                </div>
+                <div class="page-hero-meta">
+                    <span class="page-hero-meta-label">System Briefing</span>
+                    <p class="page-hero-meta-text">Repositories fetched live from GitHub API, sorted by community interest.</p>
+                    <div class="page-hero-stats">
+                        <div>
+                            <span class="page-hero-stat-label">Source</span>
+                            <span class="page-hero-stat-value">GitHub</span>
+                        </div>
+                        <div>
+                            <span class="page-hero-stat-label">Status</span>
+                            <span class="page-hero-stat-value" style="font-family: var(--font-code); font-size: 0.9rem; font-style: normal; color: var(--accent-color);">Online</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p style="color: var(--text-secondary); margin-bottom: 24px; font-family: var(--font-code); font-size: 0.82rem;">
                 > git fetch origin master --sort=stars
             </p>
 
             <div class="proj-list" id="repo-grid">
-                <p style="color: var(--accent-color);">_fetching_data_from_github...</p>
+                <p style="color: var(--accent-color); font-family: var(--font-code);">_fetching_data_from_github...</p>
             </div>
         </section>
 
         <footer>
-            <div style="margin-top: 50px; opacity: 0.5; text-align: center;">
+            <div style="margin-top: 50px; opacity: 0.5; text-align: center; font-family: var(--font-code); font-size: 0.8rem;">
                 &copy; 2025 Maxime Haegeman. Built with code.
             </div>
         </footer>
