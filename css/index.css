@@ -171,6 +171,7 @@
 .chip-data  { color: #ffa657; border-color: rgba(255, 166, 87,  0.35); background: rgba(255, 166, 87,  0.08); }
 .chip-ml    { color: #3fb950; border-color: rgba(63,  185,  80,  0.35); background: rgba(63,  185,  80,  0.08); }
 .chip-mon   { color: #8b949e; border-color: rgba(139, 148, 158, 0.35); background: rgba(139, 148, 158, 0.08); }
+.chip-pm    { color: #ff7b72; border-color: rgba(255, 123, 114, 0.35); background: rgba(255, 123, 114, 0.08); }
 
 /* Light-mode chip adjustments */
 [data-theme="light"] .chip-lang  { background: rgba(121, 192, 255, 0.12); }
@@ -178,23 +179,11 @@
 [data-theme="light"] .chip-data  { background: rgba(255, 166, 87,  0.12); }
 [data-theme="light"] .chip-ml    { background: rgba(63,  185,  80,  0.12); }
 [data-theme="light"] .chip-mon   { background: rgba(139, 148, 158, 0.12); }
+[data-theme="light"] .chip-pm    { background: rgba(255, 123, 114, 0.12); }
 
 /* =============================================
-   SKILLS VERSION PICKER LABEL
-   ============================================= */
-.skills-version-tag {
-    font-family: 'Fira Code', monospace;
-    font-size: 0.72rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--accent-color);
-    margin: 48px 0 16px;
-    opacity: 0.7;
-}
-
-/* =============================================
-   VERSION A — Newspaper Grid
-   5-cell tight grid, borders as 1px lines
+   SKILLS — Newspaper Grid
+   6-cell tight grid, borders as 1px lines
    ============================================= */
 .skills-va {
     display: grid;
@@ -236,112 +225,9 @@
     gap: 6px;
 }
 
-/* =============================================
-   VERSION B — Spec Sheet
-   Two-column table, skills as plain text
-   ============================================= */
-.skills-vb {
-    border: 1px solid var(--nav-border);
-}
-
-.skills-vb-row {
-    display: grid;
-    grid-template-columns: 180px 1fr;
-    border-bottom: 1px solid var(--nav-border);
-    min-height: 56px;
-    align-items: stretch;
-    transition: background 0.2s;
-}
-
-.skills-vb-row:last-child {
-    border-bottom: none;
-}
-
-.skills-vb-row:hover {
-    background: var(--surface-color);
-}
-
-.skills-vb-cat {
-    font-family: 'Fira Code', monospace;
-    font-size: 0.72rem;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    padding: 18px 20px;
-    border-right: 1px solid var(--nav-border);
-    background: var(--surface-color);
-    display: flex;
-    align-items: center;
-    /* inherits chip color */
-    background: none !important;
-    border-color: var(--nav-border) !important;
-}
-
-.skills-vb-row:hover .skills-vb-cat {
-    background: none !important;
-}
-
-.skills-vb-items {
-    font-family: 'Fira Code', monospace;
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    padding: 18px 28px;
-    display: flex;
-    align-items: center;
-    letter-spacing: 0.5px;
-}
-
-/* =============================================
-   VERSION C — Accent Bars
-   Full-width stacked bars with left color accent
-   ============================================= */
-.skills-vc {
-    display: flex;
-    flex-direction: column;
-}
-
-.skills-vc-bar {
-    display: grid;
-    grid-template-columns: 160px 1fr;
-    border: 1px solid var(--nav-border);
-    margin-bottom: -1px;
-    position: relative;
-    transition: border-color 0.25s, z-index 0s;
-}
-
-.skills-vc-bar:hover {
-    border-color: var(--accent-color);
-    z-index: 1;
-}
-
-.skills-vc-left {
-    font-family: 'Fira Code', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    padding: 20px 20px;
-    display: flex;
-    align-items: center;
-    border-right: 3px solid currentColor;
-    /* inherits chip color */
-    background: none !important;
-    border-radius: 0 !important;
-}
-
-.skills-vc-right {
-    padding: 16px 24px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-items: center;
-}
-
-/* Mobile adjustments for all 3 versions */
+/* Mobile adjustments */
 @media (max-width: 768px) {
     .skills-va { grid-template-columns: 1fr 1fr; }
-    .skills-vb-row { grid-template-columns: 120px 1fr; }
-    .skills-vb-items { font-size: 0.72rem; padding: 14px 16px; }
-    .skills-vc-bar { grid-template-columns: 110px 1fr; }
-    .skills-vc-left { font-size: 0.6rem; padding: 14px 12px; }
 }
 
 /* =============================================
