@@ -101,24 +101,23 @@
         <section class="section" id="skills">
             <span class="section-label">Status: Active // Skills</span>
             <h2 class="section-title">self.skills()</h2>
-            <div class="skills-code-block">
-                <p class="py-comment"># Skills parsed from ./cv.json — sorted by usage</p>
-                <p class="py-blank"></p>
 
-                <div class="skill-row">
-                    <span class="skill-key">languages</span>
-                    <span class="skill-eq">&nbsp;=&nbsp;</span>
-                    <div class="skill-chips">
+            <!-- ═══════════════════════════════════════════════ -->
+            <!-- VERSION A — Newspaper Grid                      -->
+            <!-- ═══════════════════════════════════════════════ -->
+            <p class="skills-version-tag">— Version A: Grid</p>
+            <div class="skills-va">
+                <div class="skills-va-cell">
+                    <span class="skills-va-label chip-lang">Languages</span>
+                    <div class="skills-va-chips">
                         <span class="skill-chip chip-lang">Python</span>
                         <span class="skill-chip chip-lang">SQL</span>
                         <span class="skill-chip chip-lang">Bash</span>
                     </div>
                 </div>
-
-                <div class="skill-row">
-                    <span class="skill-key">cloud_infra</span>
-                    <span class="skill-eq">&nbsp;=&nbsp;</span>
-                    <div class="skill-chips">
+                <div class="skills-va-cell">
+                    <span class="skills-va-label chip-cloud">Cloud &amp; Infra</span>
+                    <div class="skills-va-chips">
                         <span class="skill-chip chip-cloud">Azure</span>
                         <span class="skill-chip chip-cloud">Databricks</span>
                         <span class="skill-chip chip-cloud">GCP</span>
@@ -126,33 +125,105 @@
                         <span class="skill-chip chip-cloud">Docker</span>
                     </div>
                 </div>
-
-                <div class="skill-row">
-                    <span class="skill-key">data_eng</span>
-                    <span class="skill-eq">&nbsp;=&nbsp;</span>
-                    <div class="skill-chips">
+                <div class="skills-va-cell">
+                    <span class="skills-va-label chip-data">Data Engineering</span>
+                    <div class="skills-va-chips">
                         <span class="skill-chip chip-data">PySpark</span>
                         <span class="skill-chip chip-data">Airflow</span>
                         <span class="skill-chip chip-data">Delta Lake</span>
                         <span class="skill-chip chip-data">CI/CD</span>
                     </div>
                 </div>
-
-                <div class="skill-row">
-                    <span class="skill-key">ml_stack</span>
-                    <span class="skill-eq">&nbsp;=&nbsp;</span>
-                    <div class="skill-chips">
+                <div class="skills-va-cell">
+                    <span class="skills-va-label chip-ml">ML Stack</span>
+                    <div class="skills-va-chips">
                         <span class="skill-chip chip-ml">TensorFlow</span>
                         <span class="skill-chip chip-ml">PyTorch</span>
                         <span class="skill-chip chip-ml">HuggingFace</span>
                         <span class="skill-chip chip-ml">SpaCy</span>
                     </div>
                 </div>
+                <div class="skills-va-cell">
+                    <span class="skills-va-label chip-mon">Monitoring</span>
+                    <div class="skills-va-chips">
+                        <span class="skill-chip chip-mon">Grafana</span>
+                        <span class="skill-chip chip-mon">Tableau</span>
+                        <span class="skill-chip chip-mon">PowerBI</span>
+                    </div>
+                </div>
+            </div>
 
-                <div class="skill-row">
-                    <span class="skill-key">monitoring</span>
-                    <span class="skill-eq">&nbsp;=&nbsp;</span>
-                    <div class="skill-chips">
+            <!-- ═══════════════════════════════════════════════ -->
+            <!-- VERSION B — Spec Sheet                          -->
+            <!-- ═══════════════════════════════════════════════ -->
+            <p class="skills-version-tag">— Version B: Spec Sheet</p>
+            <div class="skills-vb">
+                <div class="skills-vb-row">
+                    <span class="skills-vb-cat chip-lang">Languages</span>
+                    <span class="skills-vb-items">Python&nbsp;&nbsp;/&nbsp;&nbsp;SQL&nbsp;&nbsp;/&nbsp;&nbsp;Bash</span>
+                </div>
+                <div class="skills-vb-row">
+                    <span class="skills-vb-cat chip-cloud">Cloud &amp; Infra</span>
+                    <span class="skills-vb-items">Azure&nbsp;&nbsp;/&nbsp;&nbsp;Databricks&nbsp;&nbsp;/&nbsp;&nbsp;GCP&nbsp;&nbsp;/&nbsp;&nbsp;AWS&nbsp;&nbsp;/&nbsp;&nbsp;Docker</span>
+                </div>
+                <div class="skills-vb-row">
+                    <span class="skills-vb-cat chip-data">Data Eng</span>
+                    <span class="skills-vb-items">PySpark&nbsp;&nbsp;/&nbsp;&nbsp;Airflow&nbsp;&nbsp;/&nbsp;&nbsp;Delta Lake&nbsp;&nbsp;/&nbsp;&nbsp;CI/CD</span>
+                </div>
+                <div class="skills-vb-row">
+                    <span class="skills-vb-cat chip-ml">ML Stack</span>
+                    <span class="skills-vb-items">TensorFlow&nbsp;&nbsp;/&nbsp;&nbsp;PyTorch&nbsp;&nbsp;/&nbsp;&nbsp;HuggingFace&nbsp;&nbsp;/&nbsp;&nbsp;SpaCy</span>
+                </div>
+                <div class="skills-vb-row">
+                    <span class="skills-vb-cat chip-mon">Monitoring</span>
+                    <span class="skills-vb-items">Grafana&nbsp;&nbsp;/&nbsp;&nbsp;Tableau&nbsp;&nbsp;/&nbsp;&nbsp;PowerBI</span>
+                </div>
+            </div>
+
+            <!-- ═══════════════════════════════════════════════ -->
+            <!-- VERSION C — Accent Bars                         -->
+            <!-- ═══════════════════════════════════════════════ -->
+            <p class="skills-version-tag">— Version C: Accent Bars</p>
+            <div class="skills-vc">
+                <div class="skills-vc-bar">
+                    <div class="skills-vc-left chip-lang">Languages</div>
+                    <div class="skills-vc-right">
+                        <span class="skill-chip chip-lang">Python</span>
+                        <span class="skill-chip chip-lang">SQL</span>
+                        <span class="skill-chip chip-lang">Bash</span>
+                    </div>
+                </div>
+                <div class="skills-vc-bar">
+                    <div class="skills-vc-left chip-cloud">Cloud &amp; Infra</div>
+                    <div class="skills-vc-right">
+                        <span class="skill-chip chip-cloud">Azure</span>
+                        <span class="skill-chip chip-cloud">Databricks</span>
+                        <span class="skill-chip chip-cloud">GCP</span>
+                        <span class="skill-chip chip-cloud">AWS</span>
+                        <span class="skill-chip chip-cloud">Docker</span>
+                    </div>
+                </div>
+                <div class="skills-vc-bar">
+                    <div class="skills-vc-left chip-data">Data Eng</div>
+                    <div class="skills-vc-right">
+                        <span class="skill-chip chip-data">PySpark</span>
+                        <span class="skill-chip chip-data">Airflow</span>
+                        <span class="skill-chip chip-data">Delta Lake</span>
+                        <span class="skill-chip chip-data">CI/CD</span>
+                    </div>
+                </div>
+                <div class="skills-vc-bar">
+                    <div class="skills-vc-left chip-ml">ML Stack</div>
+                    <div class="skills-vc-right">
+                        <span class="skill-chip chip-ml">TensorFlow</span>
+                        <span class="skill-chip chip-ml">PyTorch</span>
+                        <span class="skill-chip chip-ml">HuggingFace</span>
+                        <span class="skill-chip chip-ml">SpaCy</span>
+                    </div>
+                </div>
+                <div class="skills-vc-bar">
+                    <div class="skills-vc-left chip-mon">Monitoring</div>
+                    <div class="skills-vc-right">
                         <span class="skill-chip chip-mon">Grafana</span>
                         <span class="skill-chip chip-mon">Tableau</span>
                         <span class="skill-chip chip-mon">PowerBI</span>
