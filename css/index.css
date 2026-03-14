@@ -1,3 +1,18 @@
+/* =============================================
+   HOMEPAGE SECTION SPACING — tighter than global
+   ============================================= */
+#hero {
+    padding-top: 32px;
+    padding-bottom: 16px;
+}
+
+.section {
+    padding: 36px 0;
+}
+
+/* =============================================
+   BLINKING CURSOR
+   ============================================= */
 /* Blinking Cursor Animation */
 .cursor {
     animation: blink 1s infinite;
@@ -46,7 +61,7 @@
     letter-spacing: 1.5px;
     text-transform: uppercase;
     color: var(--text-secondary);
-    margin-top: 24px;
+    margin-top: 16px;
     line-height: 1.8;
 }
 
