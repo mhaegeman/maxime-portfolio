@@ -119,15 +119,6 @@ a:hover {
     box-shadow: 0 0 15px var(--accent-color);
 }
 
-/* --- EMBEDDING SPACE BACKGROUND CANVAS --- */
-#embedding-bg {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    z-index: 0;
-    pointer-events: none;
-}
-
 /* --- LAYOUT UTILITIES --- */
 .container {
     max-width: 1200px;
@@ -543,74 +534,6 @@ section + section::before {
     padding: 0; /* override section padding — panels control their own spacing */
     position: relative;
     isolation: isolate;
-}
-
-/* ── HERO ATMOSPHERIC GRADIENT MESH ───────────────────── */
-.hero-mesh {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    overflow: hidden;
-}
-
-.hero-mesh-blob {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(90px);
-    will-change: transform;
-}
-
-.hero-mesh-blob:nth-child(1) {
-    width: 620px;
-    height: 520px;
-    background: var(--atm-emerald);
-    top: -10%;
-    right: 5%;
-    animation: blobDrift1 22s ease-in-out infinite alternate;
-}
-
-.hero-mesh-blob:nth-child(2) {
-    width: 420px;
-    height: 520px;
-    background: var(--atm-teal);
-    bottom: -5%;
-    left: 0%;
-    animation: blobDrift2 28s ease-in-out infinite alternate;
-}
-
-.hero-mesh-blob:nth-child(3) {
-    width: 360px;
-    height: 320px;
-    background: var(--atm-lime);
-    top: 35%;
-    right: 22%;
-    animation: blobDrift3 19s ease-in-out infinite alternate;
-}
-
-@keyframes blobDrift1 {
-    0%   { transform: translate(0, 0) scale(1); }
-    50%  { transform: translate(-40px, 30px) scale(1.08); }
-    100% { transform: translate(20px, -20px) scale(0.95); }
-}
-@keyframes blobDrift2 {
-    0%   { transform: translate(0, 0) scale(1); }
-    50%  { transform: translate(50px, -25px) scale(1.05); }
-    100% { transform: translate(-30px, 40px) scale(0.92); }
-}
-@keyframes blobDrift3 {
-    0%   { transform: translate(0, 0) scale(1); }
-    50%  { transform: translate(-20px, 40px) scale(1.12); }
-    100% { transform: translate(35px, -15px) scale(0.97); }
-}
-
-.hero-layout {
-    position: relative;
-    z-index: 1;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .hero-mesh-blob { animation: none !important; }
 }
 
 .hero-layout {
