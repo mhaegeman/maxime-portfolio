@@ -74,7 +74,9 @@
     max-width: 520px;
     border-radius: 0;
     border: 1px solid rgba(204, 255, 0, 0.15);
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(8, 12, 8, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     overflow: hidden;
     text-align: left !important;
     margin-top: 4px;
@@ -201,7 +203,7 @@
 
 /* --- LIGHT THEME: Code box overrides --- */
 [data-theme="light"] .code-box {
-    background: rgba(0, 0, 0, 0.03);
+    background: rgba(248, 246, 240, 0.88);
     border-color: rgba(61, 122, 0, 0.2);
 }
 [data-theme="light"] .code-box-tab {
@@ -231,7 +233,9 @@
 }
 
 .skills-va-cell {
-    background: var(--bg-color);
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     padding: 28px 24px;
     display: flex;
     flex-direction: column;
@@ -240,7 +244,7 @@
 }
 
 .skills-va-cell:hover {
-    background: var(--surface-color);
+    background: var(--glass-hover);
 }
 
 .skills-va-label {
