@@ -133,18 +133,18 @@ done
 echo ""
 echo "=== Asset Reference Checks ==="
 
-# Verify particles.js exists and is loaded on all pages
-if [ -f "$REPO_ROOT/js/particles.js" ]; then
-    pass "js/particles.js exists"
+# Verify background script (vanta-bg.js) exists and is loaded on all pages
+if [ -f "$REPO_ROOT/js/vanta-bg.js" ]; then
+    pass "js/vanta-bg.js exists"
 else
-    fail "js/particles.js is missing"
+    fail "js/vanta-bg.js is missing"
 fi
 
 for f in "${HTML_FILES[@]}"; do
-    if grep -q 'js/particles.js' "$REPO_ROOT/$f"; then
-        pass "$f loads particles.js"
+    if grep -q 'js/vanta-bg.js' "$REPO_ROOT/$f"; then
+        pass "$f loads vanta-bg.js"
     else
-        fail "$f missing particles.js script tag"
+        fail "$f missing vanta-bg.js script tag"
     fi
 done
 
