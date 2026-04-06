@@ -295,3 +295,87 @@
 
     .skill-key { min-width: unset; font-size: 0.78rem; white-space: nowrap; }
 }
+
+/* =============================================
+   HERO TYPOGRAPHY — More dramatic
+   ============================================= */
+.hero-display-name {
+    font-size: clamp(3.2rem, 5.5vw, 5.2rem);
+    letter-spacing: -3px;
+    line-height: 0.92;
+}
+
+/* =============================================
+   SKILL CHIP HOVER UPGRADE
+   ============================================= */
+.skill-chip {
+    transition:
+        opacity var(--dur-fast) ease,
+        transform var(--dur-fast) var(--ease-out-expo),
+        box-shadow var(--dur-fast) ease;
+}
+.skill-chip:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* =============================================
+   SCROLL REVEAL SYSTEM
+   ============================================= */
+.reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+        opacity var(--dur-slow) var(--ease-out-expo),
+        transform var(--dur-slow) var(--ease-out-expo);
+    transition-delay: calc(var(--stagger-index, 0) * 80ms);
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* =============================================
+   HERO LOAD REVEAL (staged on page load)
+   ============================================= */
+.section-label,
+.hero-display-name,
+.code-box,
+.hero-subtitle,
+.hero-panel-right {
+    opacity: 0;
+    transform: translateY(36px);
+    transition:
+        opacity 0.8s var(--ease-out-expo),
+        transform 0.9s var(--ease-out-expo);
+}
+
+.hero-loaded {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+/* =============================================
+   REDUCED MOTION SAFETY
+   ============================================= */
+@media (prefers-reduced-motion: reduce) {
+    .hero-mesh-blob {
+        animation: none !important;
+    }
+    .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+    .section-label,
+    .hero-display-name,
+    .code-box,
+    .hero-subtitle,
+    .hero-panel-right {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}

@@ -211,6 +211,11 @@ async function loadRepos() {
             container.appendChild(card);
         });
 
+        // Trigger scroll reveal on dynamically injected cards
+        if (typeof window.observeRevealItems === 'function') {
+            window.observeRevealItems(container);
+        }
+
     } catch (error) {
         container.innerHTML = `<p style="color: #ff5f56;">Error fetching repos: ${error.message}</p>`;
     }
@@ -347,6 +352,11 @@ async function loadMedium() {
             container.appendChild(card);
         });
 
+        // Trigger scroll reveal on dynamically injected blog cards
+        if (typeof window.observeRevealItems === 'function') {
+            window.observeRevealItems(container);
+        }
+
     } catch (error) {
         container.innerHTML = `<p style="color: #ff5f56;">[ERROR] Connection refused: ${error.message}</p>`;
     }
@@ -428,7 +438,7 @@ function initHamburgerMenu() {
 
 // Initialize all dynamic loading and functionality
 document.addEventListener('DOMContentLoaded', () => {
-    initParticleNetwork();
+    if (typeof initParticleNetwork === 'function') initParticleNetwork();
     initThemeToggle();
     initHamburgerMenu();
     initNavEnhancements();
