@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; script-src 'self' https://api.github.com https://api.rss2json.com; connect-src 'self' https://api.github.com https://api.rss2json.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com;">
+        content="default-src 'self'; script-src 'self' https://api.github.com https://api.rss2json.com https://cdn.jsdelivr.net; connect-src 'self' https://api.github.com https://api.rss2json.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com;">
     <meta name="description"
         content="Portfolio of Maxime Haegeman - Data Engineer & Python Developer specializing in scalable data and ML pipelines.">
     <meta name="keywords" content="Data Scientist, Python, Machine Learning, Data Engineer, Maxime Haegeman">
@@ -253,6 +253,9 @@
         </footer>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.net.min.js" defer></script>
+    <script src="js/vanta-bg.js" defer></script>
     <script src="js/embedding.js"></script>
     <script src="loader.js"></script>
     <script src="js/index.js"></script>
