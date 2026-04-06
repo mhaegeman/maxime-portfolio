@@ -361,9 +361,6 @@
    REDUCED MOTION SAFETY
    ============================================= */
 @media (prefers-reduced-motion: reduce) {
-    .hero-mesh-blob {
-        animation: none !important;
-    }
     .reveal {
         opacity: 1;
         transform: none;
