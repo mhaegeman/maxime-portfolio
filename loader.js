@@ -428,6 +428,7 @@ function initHamburgerMenu() {
 
 // Initialize all dynamic loading and functionality
 document.addEventListener('DOMContentLoaded', () => {
+    initParticleNetwork();
     initThemeToggle();
     initHamburgerMenu();
     initNavEnhancements();
