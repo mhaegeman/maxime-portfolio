@@ -28,9 +28,99 @@ function updateTime() {
     timeContainer.innerText = `Copenhagen: ${now}`;
 }
 
-// Initialize
+// ── HERO LOAD REVEAL ──────────────────────────────────────
+// Staggers hero elements in on page load (not scroll-triggered)
+function initHeroReveal() {
+    const targets = [
+        { selector: '.section-label',     delay: 0   },
+        { selector: '.hero-display-name', delay: 120 },
+        { selector: '.hero-panel-right',  delay: 160 },
+        { selector: '.code-box',          delay: 280 },
+        { selector: '.hero-subtitle',     delay: 420 },
+    ];
+
+    targets.forEach(({ selector, delay }) => {
+        const el = document.querySelector(selector);
+        if (!el) return;
+        requestAnimationFrame(() => {
+            setTimeout(() => el.classList.add('hero-loaded'), delay);
+        });
+    });
+}
+
+// ── STAGGER INDEX ─────────────────────────────────────────
+// Sets --stagger-index on each child so CSS can delay them sequentially
+function applyStaggerIndex(parentSelector, childSelector) {
+    document.querySelectorAll(parentSelector).forEach(parent => {
+        parent.querySelectorAll(childSelector).forEach((child, idx) => {
+            child.style.setProperty('--stagger-index', idx);
+        });
+    });
+}
+
+// ── SCROLL REVEAL ─────────────────────────────────────────
+// Uses IntersectionObserver — adds .reveal (hidden) then .visible (shown)
+function initScrollReveal() {
+    const selectors = [
+        '.skills-va-cell',
+        '.proj-card',
+        '.card',
+        '.blog-card',
+        '.timeline-item',
+        '.page-hero-left',
+        '.page-hero-meta',
+    ];
+
+    const elements = document.querySelectorAll(selectors.join(','));
+    elements.forEach(el => {
+        // Don't double-animate elements already handled by hero reveal
+        if (!el.closest('#hero')) {
+            el.classList.add('reveal');
+        }
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -40px 0px'
+    });
+
+    elements.forEach(el => {
+        if (!el.closest('#hero')) {
+            observer.observe(el);
+        }
+    });
+
+    // Expose for loader.js to call after dynamic card injection
+    window._revealObserver = observer;
+}
+
+// ── OBSERVE DYNAMIC CARDS ─────────────────────────────────
+// Called by loader.js after GitHub/Medium cards are injected into DOM
+window.observeRevealItems = function(containerEl) {
+    if (!window._revealObserver) return;
+    containerEl.querySelectorAll('.card, .proj-card, .blog-card, .timeline-item').forEach(el => {
+        el.classList.add('reveal');
+        window._revealObserver.observe(el);
+    });
+};
+
+// ── INITIALIZE ────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
     typeWriter();
     updateTime();
     setInterval(updateTime, 1000);
+
+    initHeroReveal();
+    initScrollReveal();
+
+    applyStaggerIndex('.skills-va', '.skills-va-cell');
+    applyStaggerIndex('.proj-list', '.proj-card');
+    applyStaggerIndex('.blog-grid', '.blog-card');
 });
