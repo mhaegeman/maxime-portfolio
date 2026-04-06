@@ -17,19 +17,19 @@
     --font-display: 'Playfair Display', serif;
 }
 
-/* --- LIGHT THEME (Creme/Beach Vibes) --- */
+/* --- LIGHT THEME (Warm Editorial) --- */
 [data-theme="light"] {
-    --bg-color: #fdfcf0;       /* Warm Cream/Sand */
-    --surface-color: #f4f1ea;  /* Slightly darker sand for cards */
-    --text-primary: #4a4036;   /* Dark Coffee Brown */
-    --text-secondary: #8b7e74; /* Warm Grey */
+    --bg-color: #f8f6f0;       /* Warm ivory/parchment */
+    --surface-color: #efece4;  /* Slightly darker warm grey for cards */
+    --text-primary: #1a1f16;   /* Near-black with green undertone */
+    --text-secondary: #5c6358; /* Muted olive-grey */
 
-    --accent-color: #6aab00;   /* Darker green for readability on light bg */
-    --accent-glow: rgba(106, 171, 0, 0.2);
-    /* Light Mode Nav (Translucent Sand/Creme) */
-    --nav-bg: rgba(253, 252, 240, 0.92);
-    --nav-border: rgba(74, 64, 54, 0.1);
-    --nav-text: #4a4036;
+    --accent-color: #3d7a00;   /* Deep forest green — print-ready lime */
+    --accent-glow: rgba(61, 122, 0, 0.12);
+    /* Light Mode Nav (Translucent Ivory) */
+    --nav-bg: rgba(248, 246, 240, 0.92);
+    --nav-border: rgba(26, 31, 22, 0.10);
+    --nav-text: #1a1f16;
 }
 
 /* --- GLOBAL RESET & BASE --- */
@@ -608,7 +608,48 @@ nav {
 }
 
 [data-theme="light"] .social-icon svg {
-    fill: #1a1a1a;
+    fill: #1a1f16;
+}
+
+/* --- LIGHT THEME: Tag overrides --- */
+[data-theme="light"] .tag {
+    background: rgba(61, 122, 0, 0.06);
+    border-color: rgba(61, 122, 0, 0.25);
+}
+
+[data-theme="light"] .tag-ml {
+    color: #7c3aed;
+    background: rgba(124, 58, 237, 0.08);
+    border-color: rgba(124, 58, 237, 0.25);
+}
+
+[data-theme="light"] .tag-nlp {
+    color: #0d7346;
+    background: rgba(13, 115, 70, 0.08);
+    border-color: rgba(13, 115, 70, 0.25);
+}
+
+[data-theme="light"] .tag-analytics {
+    color: #b45309;
+    background: rgba(180, 83, 9, 0.08);
+    border-color: rgba(180, 83, 9, 0.25);
+}
+
+[data-theme="light"] .tag-engineering {
+    color: #1d4ed8;
+    background: rgba(29, 78, 216, 0.08);
+    border-color: rgba(29, 78, 216, 0.25);
+}
+
+[data-theme="light"] .tag-cloud {
+    color: #0e7490;
+    background: rgba(14, 116, 144, 0.08);
+    border-color: rgba(14, 116, 144, 0.25);
+}
+
+/* --- LIGHT THEME: Ghost project card --- */
+[data-theme="light"] .proj-card-ghost {
+    border-color: rgba(61, 122, 0, 0.25);
 }
 
 /* --- FOOTER STATUS BAR --- */

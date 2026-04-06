@@ -188,13 +188,35 @@
 .chip-mon   { color: #8b949e; border-color: rgba(139, 148, 158, 0.35); background: rgba(139, 148, 158, 0.08); }
 .chip-pm    { color: #ff7b72; border-color: rgba(255, 123, 114, 0.35); background: rgba(255, 123, 114, 0.08); }
 
-/* Light-mode chip adjustments */
-[data-theme="light"] .chip-lang  { background: rgba(121, 192, 255, 0.12); }
-[data-theme="light"] .chip-cloud { background: rgba(210, 168, 255, 0.12); }
-[data-theme="light"] .chip-data  { background: rgba(255, 166, 87,  0.12); }
-[data-theme="light"] .chip-ml    { background: rgba(63,  185,  80,  0.12); }
-[data-theme="light"] .chip-mon   { background: rgba(139, 148, 158, 0.12); }
-[data-theme="light"] .chip-pm    { background: rgba(255, 123, 114, 0.12); }
+/* --- LIGHT THEME: Skill chip overrides (darkened for readability) --- */
+[data-theme="light"] .chip-lang  { color: #0550ae; border-color: rgba(5, 80, 174, 0.3);   background: rgba(5, 80, 174, 0.08); }
+[data-theme="light"] .chip-cloud { color: #6639ba; border-color: rgba(102, 57, 186, 0.3);  background: rgba(102, 57, 186, 0.08); }
+[data-theme="light"] .chip-data  { color: #953800; border-color: rgba(149, 56, 0, 0.3);    background: rgba(149, 56, 0, 0.08); }
+[data-theme="light"] .chip-ml    { color: #1a7f37; border-color: rgba(26, 127, 55, 0.3);   background: rgba(26, 127, 55, 0.08); }
+[data-theme="light"] .chip-mon   { color: #57606a; border-color: rgba(87, 96, 106, 0.3);   background: rgba(87, 96, 106, 0.08); }
+[data-theme="light"] .chip-pm    { color: #a0111f; border-color: rgba(160, 17, 31, 0.3);   background: rgba(160, 17, 31, 0.08); }
+
+/* --- LIGHT THEME: Skill key override --- */
+[data-theme="light"] .skill-key  { color: #953800; }
+
+/* --- LIGHT THEME: Code box overrides --- */
+[data-theme="light"] .code-box {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(61, 122, 0, 0.2);
+}
+[data-theme="light"] .code-box-tab {
+    background: rgba(0, 0, 0, 0.04);
+    border-bottom-color: rgba(61, 122, 0, 0.12);
+}
+
+/* --- LIGHT THEME: Python syntax (GitHub Light palette) --- */
+[data-theme="light"] .py-kw      { color: #a0111f; }
+[data-theme="light"] .py-fn      { color: #6639ba; }
+[data-theme="light"] .py-self    { color: #953800; }
+[data-theme="light"] .py-type    { color: #0550ae; }
+[data-theme="light"] .py-str     { color: #0a3069; }
+[data-theme="light"] .py-num     { color: #0550ae; }
+[data-theme="light"] .py-comment { color: #6e7781; }
 
 /* =============================================
    SKILLS — Newspaper Grid
