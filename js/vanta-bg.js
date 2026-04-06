@@ -31,6 +31,9 @@
     function initVanta() {
         if (typeof VANTA === 'undefined' || !VANTA.NET) return;
 
+        // Skip if embedding.js already provides a full-screen background animation
+        if (document.getElementById('embedding-bg')) return;
+
         var el = document.getElementById('vanta-bg');
         if (!el) {
             el = document.createElement('div');
