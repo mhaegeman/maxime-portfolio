@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; script-src 'self' https://api.github.com; connect-src 'self' https://api.github.com https://corsproxy.io https://api.allorigins.win https://api.codetabs.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' https:;">
+        content="default-src 'self'; script-src 'self' https://api.github.com https://cdn.jsdelivr.net; connect-src 'self' https://api.github.com https://corsproxy.io https://api.allorigins.win https://api.codetabs.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' https:;">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maxime | Blog</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -67,6 +67,9 @@
         </footer>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.net.min.js" defer></script>
+    <script src="js/vanta-bg.js" defer></script>
     <script src="js/embedding.js"></script>
     <script src="loader.js"></script>
 </body>

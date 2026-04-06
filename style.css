@@ -83,6 +83,17 @@ body {
     background-size: 200px 200px;
 }
 
+/* --- VANTA BACKGROUND --- */
+#vanta-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
 /* --- TYPOGRAPHY --- */
 h1, h2, h3, h4 {
     font-family: var(--font-code);
