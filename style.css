@@ -108,6 +108,15 @@ a:hover {
     box-shadow: 0 0 15px var(--accent-color);
 }
 
+/* --- EMBEDDING SPACE BACKGROUND CANVAS --- */
+#embedding-bg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
 /* --- LAYOUT UTILITIES --- */
 .container {
     max-width: 1200px;
