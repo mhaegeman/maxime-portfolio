@@ -44,25 +44,26 @@
 
 /* --- LIGHT THEME (Warm Editorial) --- */
 [data-theme="light"] {
-    --bg-color:      #f8f6f0;
-    --surface-color: #efece4;
-    --surface-2:     #e6e2d8;
-    --text-primary:  #1a1f16;
-    --text-secondary: #5c6358;
-    --text-muted:    #8a9086;
+    --bg-color:      #f5f2eb;
+    --surface-color: #eae6dc;
+    --surface-2:     #dedad0;
+    /* Darker text for high contrast on warm ivory — WCAG AAA on bg */
+    --text-primary:  #0c0f0a;
+    --text-secondary: #353d30;
+    --text-muted:    #5c6458;
 
-    --accent-color:  #3d7a00;
-    --accent-dim:    rgba(61, 122, 0, 0.6);
-    --accent-glow:   rgba(61, 122, 0, 0.12);
-    --accent-subtle: rgba(61, 122, 0, 0.05);
+    --accent-color:  #1a5c00;
+    --accent-dim:    rgba(26, 92, 0, 0.65);
+    --accent-glow:   rgba(26, 92, 0, 0.14);
+    --accent-subtle: rgba(26, 92, 0, 0.06);
 
-    --atm-emerald:   rgba(16, 140, 80, 0.08);
-    --atm-teal:      rgba(20, 130, 120, 0.06);
-    --atm-lime:      rgba(80, 140, 10, 0.07);
+    --atm-emerald:   rgba(16, 140, 80, 0.07);
+    --atm-teal:      rgba(20, 130, 120, 0.05);
+    --atm-lime:      rgba(80, 140, 10, 0.06);
 
-    --nav-bg:        rgba(248, 246, 240, 0.92);
-    --nav-border:    rgba(26, 31, 22, 0.10);
-    --nav-text:      #1a1f16;
+    --nav-bg:        rgba(245, 242, 235, 0.94);
+    --nav-border:    rgba(12, 15, 10, 0.12);
+    --nav-text:      #0c0f0a;
 
     --glass:         rgba(239, 236, 228, 0.70);
     --glass-hover:   rgba(230, 226, 216, 0.78);

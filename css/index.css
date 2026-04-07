@@ -343,22 +343,54 @@
 
 /* =============================================
    HERO LOAD REVEAL (staged on page load)
+   Progressive enhancement: JS adds .hero-entry to enable the animation.
+   Without JS, or before JS runs, elements are fully visible.
    ============================================= */
-.section-label,
-.hero-display-name,
-.code-box,
-.hero-subtitle,
-.hero-panel-right {
+.hero-entry {
     opacity: 0;
-    transform: translateY(36px);
+    transform: translateY(28px);
     transition:
-        opacity 0.8s var(--ease-out-expo),
-        transform 0.9s var(--ease-out-expo);
+        opacity 0.7s var(--ease-out-expo),
+        transform 0.8s var(--ease-out-expo);
 }
 
-.hero-loaded {
-    opacity: 1 !important;
-    transform: translateY(0) !important;
+.hero-entry.hero-loaded {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* =============================================
+   LIGHT THEME — EXPLICIT HIGH-CONTRAST OVERRIDES
+   Guarantees readability on real screens regardless of inheritance.
+   ============================================= */
+[data-theme="light"] .hero-display-name {
+    color: #0c0f0a;
+}
+
+[data-theme="light"] .section-label {
+    color: #1a5c00;
+    opacity: 1;
+}
+
+[data-theme="light"] .hero-subtitle {
+    color: #353d30;
+}
+
+[data-theme="light"] .hero-panel-left .code-box {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(26, 92, 0, 0.22);
+}
+
+/* Ensure nav text stays fully dark on light bg */
+[data-theme="light"] nav,
+[data-theme="light"] .nav-brand-name,
+[data-theme="light"] .nav-brand-tagline,
+[data-theme="light"] .nav-links a {
+    color: #0c0f0a;
+}
+
+[data-theme="light"] .nav-links a {
+    border-bottom-color: transparent;
 }
 
 /* =============================================
@@ -370,13 +402,10 @@
         transform: none;
         transition: none;
     }
-    .section-label,
-    .hero-display-name,
-    .code-box,
-    .hero-subtitle,
-    .hero-panel-right {
-        opacity: 1;
-        transform: none;
-        transition: none;
+    /* Disable hero entry animation — show immediately */
+    .hero-entry {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
     }
 }

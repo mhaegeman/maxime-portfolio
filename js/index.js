@@ -29,16 +29,25 @@ function updateTime() {
 }
 
 // ── HERO LOAD REVEAL ──────────────────────────────────────
-// Staggers hero elements in on page load (not scroll-triggered)
+// Progressive enhancement: JS first adds .hero-entry (enables opacity:0),
+// then adds .hero-loaded to trigger the transition.
+// If JS is slow or fails, elements remain fully visible — no blank page.
 function initHeroReveal() {
     const targets = [
         { selector: '.section-label',     delay: 0   },
-        { selector: '.hero-display-name', delay: 120 },
-        { selector: '.hero-panel-right',  delay: 160 },
-        { selector: '.code-box',          delay: 280 },
-        { selector: '.hero-subtitle',     delay: 420 },
+        { selector: '.hero-display-name', delay: 100 },
+        { selector: '.hero-panel-right',  delay: 140 },
+        { selector: '.code-box',          delay: 240 },
+        { selector: '.hero-subtitle',     delay: 360 },
     ];
 
+    // First pass: hide all targets immediately (synchronous, before paint)
+    targets.forEach(({ selector }) => {
+        const el = document.querySelector(selector);
+        if (el) el.classList.add('hero-entry');
+    });
+
+    // Second pass: reveal each with staggered delay
     targets.forEach(({ selector, delay }) => {
         const el = document.querySelector(selector);
         if (!el) return;
