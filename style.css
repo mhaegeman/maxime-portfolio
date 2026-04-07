@@ -240,7 +240,6 @@ section {
 
 /* --- NAVIGATION: 3-column layout --- */
 nav {
-    padding: 18px 40px;
     position: sticky;
     top: 0;
     background: var(--nav-bg);
@@ -253,8 +252,9 @@ nav {
     align-items: center;
     transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
     /* Break out of .container to span full viewport width */
-    margin-left: -40px;
-    margin-right: -40px;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    padding: 18px calc(50vw - 50% + 40px);
 }
 
 /* Brand: left column */
@@ -1263,9 +1263,7 @@ section + section::before {
     nav {
         grid-template-columns: 1fr auto;
         grid-template-rows: auto auto;
-        padding: 12px 20px;
-        margin-left: -20px;
-        margin-right: -20px;
+        padding: 12px calc(50vw - 50% + 20px);
         flex-wrap: wrap;
     }
 
@@ -1391,10 +1389,7 @@ section + section::before {
     }
 
     nav {
-        padding-left: 16px;
-        padding-right: 16px;
-        margin-left: -16px;
-        margin-right: -16px;
+        padding: 12px calc(50vw - 50% + 16px);
     }
 
     .hero-display-name {
