@@ -1,5 +1,6 @@
 /* --- VARIABLES: Design system --- */
 :root {
+    color-scheme: dark;
     /* ── Base palette ─────────────────────────────────── */
     --bg-color:       #080c08;
     --surface-color:  #0e1410;
@@ -66,6 +67,7 @@
 
     --glass:         rgba(239, 236, 228, 0.70);
     --glass-hover:   rgba(230, 226, 216, 0.78);
+    color-scheme: light;
 }
 
 /* --- GLOBAL RESET & BASE --- */
@@ -792,6 +794,21 @@ section + section::before {
 /* --- LIGHT THEME: Ghost project card --- */
 [data-theme="light"] .proj-card-ghost {
     border-color: rgba(61, 122, 0, 0.25);
+}
+
+/* --- LIGHT THEME: Hero text readability --- */
+[data-theme="light"] .hero-display-name {
+    color: #111410;
+    text-shadow: 0 1px 4px rgba(248, 246, 240, 0.8);
+}
+
+[data-theme="light"] .section-label {
+    text-shadow: 0 1px 3px rgba(248, 246, 240, 0.9);
+}
+
+[data-theme="light"] .hero-subtitle {
+    color: #3a4238;
+    text-shadow: 0 1px 3px rgba(248, 246, 240, 0.9);
 }
 
 /* --- FOOTER STATUS BAR --- */

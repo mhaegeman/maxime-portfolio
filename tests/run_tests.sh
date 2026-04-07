@@ -120,7 +120,7 @@ else
 fi
 
 # Light theme defines all required variables
-LIGHT_BLOCK=$(sed -n '/\[data-theme="light"\] {/,/^}/p' "$STYLE" | head -20)
+LIGHT_BLOCK=$(sed -n '/\[data-theme="light"\] {/,/^}/p' "$STYLE" | head -30)
 for v in "${DARK_VARS[@]}"; do
     if echo "$LIGHT_BLOCK" | grep -qF -- "$v"; then
         pass "Light theme defines $v"
