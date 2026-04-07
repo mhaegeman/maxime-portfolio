@@ -2,11 +2,11 @@
   <img src="content/icon.svg" width="80" alt="mh">
 </p>
 
-<h3 align="center">maximehaegeman.dev</h3>
+<h3 align="center">maximehaegeman.com</h3>
 <p align="center">Personal portfolio — Data Engineer & ML Engineer based in Copenhagen</p>
 
 <p align="center">
-  <a href="https://www.maximehaegeman.dev">Live Site</a> &middot;
+  <a href="https://www.maximehaegeman.com">Live Site</a> &middot;
   <a href="https://linkedin.com/in/maxime-haegeman">LinkedIn</a> &middot;
   <a href="https://medium.com/@maximehaegeman">Blog</a>
 </p>
