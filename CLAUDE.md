@@ -15,7 +15,7 @@ python -m http.server 8000
 ```
 
 ## Structure
-- `index.html` / `js/index.js` / `css/index.css` — homepage (hero, saiyan animation, contact)
+- `index.html` / `js/index.js` / `css/index.css` — homepage (hero, contact)
 - `projects.html` — GitHub repos via API
 - `blog.html` — Medium posts via RSS
 - `cv.html` — work history from `content/experience.json`
