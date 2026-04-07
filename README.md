@@ -1,6 +1,6 @@
 # \~/maxime\_haegeman | Personal Data Science Portfolio
 
-A minimal, editorial-dark personal website designed for Data Scientists and Engineers. This static site features a deep green-black aesthetic with serif display headings, terminal code elements, and neon yellow-green accents — and dynamically fetches content from external APIs to keep your portfolio up-to-date automatically.
+A minimal, editorial-dark personal website used as portfolio. This static site features a deep green-black aesthetic with serif display headings, terminal code elements, and neon yellow-green accents — and dynamically fetches content from external APIs to keep your portfolio up-to-date automatically.
 
 ## ⚡ Features
 
