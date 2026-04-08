@@ -63,6 +63,8 @@
     color: var(--text-secondary);
     margin-top: 16px;
     line-height: 1.8;
+    width: 100%;
+    max-width: 620px;
 }
 
 /* =============================================
@@ -71,7 +73,7 @@
 .code-box {
     display: inline-block;
     width: 100%;
-    max-width: 520px;
+    max-width: 620px;
     border-radius: 0;
     border: 1px solid rgba(204, 255, 0, 0.15);
     background: rgba(8, 12, 8, 0.88);
@@ -304,9 +306,10 @@
    HERO TYPOGRAPHY — More dramatic
    ============================================= */
 .hero-display-name {
-    font-size: clamp(3.2rem, 5.5vw, 5.2rem);
-    letter-spacing: -3px;
+    font-size: clamp(2.8rem, 4.8vw, 4.6rem);
+    letter-spacing: -2px;
     line-height: 0.92;
+    white-space: nowrap;
 }
 
 /* =============================================
