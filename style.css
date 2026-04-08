@@ -553,11 +553,16 @@ section + section::before {
 
 .hero-layout {
     display: grid;
+<<<<<<< codex/improve-ui-spacing-for-images-and-text-6s7hjg
     grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
     gap: 8px;
     max-width: 1280px;
     margin: 0 auto;
     align-items: start;
+=======
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: 16px;
+>>>>>>> main
 }
 
 /* Left text panel */
@@ -574,7 +579,11 @@ section + section::before {
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
+<<<<<<< codex/improve-ui-spacing-for-images-and-text-6s7hjg
     padding: 48px 0 48px 0;
+=======
+    padding: 48px 0 48px 12px;
+>>>>>>> main
 }
 
 /* Large display name */
@@ -1351,12 +1360,20 @@ section + section::before {
     }
 
     .video-frame {
+<<<<<<< codex/improve-ui-spacing-for-images-and-text-6s7hjg
         aspect-ratio: 3 / 4;
+=======
+        aspect-ratio: 1 / 1;
+>>>>>>> main
     }
 
     .video-frame video,
     .video-frame img {
+<<<<<<< codex/improve-ui-spacing-for-images-and-text-6s7hjg
         object-position: 50% 50%;
+=======
+        object-position: center;
+>>>>>>> main
     }
 
     .hero-display-name {
