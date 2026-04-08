@@ -554,10 +554,10 @@ section + section::before {
 .hero-layout {
     display: grid;
     grid-template-columns: minmax(0, 1fr) clamp(190px, 34vw, 380px);
-    gap: clamp(12px, 2vw, 24px);
+    gap: clamp(8px, 1.4vw, 16px);
     max-width: 1280px;
     margin: 0 auto;
-    align-items: start;
+    align-items: end;
 }
 
 /* Left text panel */
@@ -1333,7 +1333,7 @@ section + section::before {
     /* --- HERO: keep both panels side-by-side and scale down fluidly --- */
     .hero-layout {
         grid-template-columns: minmax(0, 1fr) clamp(150px, 34vw, 260px);
-        gap: 10px;
+        gap: 6px;
     }
 
     .hero-panel-right {
