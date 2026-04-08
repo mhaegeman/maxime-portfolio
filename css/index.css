@@ -279,10 +279,12 @@
 @media (max-width: 768px) {
     .code-box {
         max-width: 100%;
+        width: 100%;
+        margin-top: 12px;
     }
 
     .code-box-body {
-        font-size: 0.72rem;
+        font-size: 0.84rem;
         padding: 12px 14px;
     }
 
@@ -295,8 +297,9 @@
     }
 
     .hero-subtitle {
-        text-align: center;
+        text-align: left;
         font-size: 0.7rem;
+        margin-top: 12px;
     }
 
     .skill-key { min-width: unset; font-size: 0.78rem; white-space: nowrap; }

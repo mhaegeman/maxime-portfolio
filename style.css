@@ -1330,19 +1330,44 @@ section + section::before {
         width: 100%;
     }
 
-    /* --- HERO: keep both panels side-by-side and scale down fluidly --- */
+    /* --- HERO: title + image row, then full-width code block --- */
     .hero-layout {
         grid-template-columns: minmax(0, 1fr) clamp(150px, 34vw, 260px);
         gap: 6px;
+        align-items: start;
     }
 
+    .hero-panel-left,
     .hero-panel-right {
-        order: 0;
-        padding: 16px 0 16px 0;
+        display: contents;
     }
 
-    .hero-panel-left {
-        padding: 16px 0 24px 0;
+    .hero-panel-left > .section-label {
+        grid-column: 1;
+        grid-row: 1;
+        align-self: end;
+    }
+
+    .hero-panel-left > .hero-display-name {
+        grid-column: 1;
+        grid-row: 2;
+        margin-bottom: 8px;
+    }
+
+    .hero-panel-right > .video-frame-wrapper {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+        align-self: start;
+    }
+
+    .hero-panel-left > .code-box {
+        grid-column: 1 / -1;
+        grid-row: 3;
+    }
+
+    .hero-panel-left > .hero-subtitle {
+        grid-column: 1 / -1;
+        grid-row: 4;
     }
 
     .video-frame-wrapper {
@@ -1427,12 +1452,8 @@ section + section::before {
         gap: 8px;
     }
 
-    .hero-panel-right {
-        padding: 12px 0;
-    }
-
-    .hero-panel-left {
-        padding: 12px 0 20px 0;
+    .hero-panel-left > .hero-display-name {
+        margin-bottom: 4px;
     }
 
     .video-frame-wrapper {
