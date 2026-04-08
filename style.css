@@ -553,16 +553,11 @@ section + section::before {
 
 .hero-layout {
     display: grid;
-<<<<<<< codex/improve-ui-spacing-for-images-and-text-6s7hjg
-    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
-    gap: 8px;
+    grid-template-columns: minmax(0, 1fr) clamp(190px, 34vw, 380px);
+    gap: clamp(12px, 2vw, 24px);
     max-width: 1280px;
     margin: 0 auto;
     align-items: start;
-=======
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-    gap: 16px;
->>>>>>> main
 }
 
 /* Left text panel */
@@ -577,13 +572,9 @@ section + section::before {
 .hero-panel-right {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: flex-end;
     justify-content: center;
-<<<<<<< codex/improve-ui-spacing-for-images-and-text-6s7hjg
     padding: 48px 0 48px 0;
-=======
-    padding: 48px 0 48px 12px;
->>>>>>> main
 }
 
 /* Large display name */
@@ -601,7 +592,7 @@ section + section::before {
 .video-frame-wrapper {
     position: relative;
     width: 100%;
-    max-width: 380px;
+    max-width: clamp(190px, 34vw, 380px);
 }
 
 /* Corner accents */
@@ -1339,41 +1330,32 @@ section + section::before {
         width: 100%;
     }
 
-    /* --- HERO: stack vertically --- */
+    /* --- HERO: keep both panels side-by-side and scale down fluidly --- */
     .hero-layout {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        gap: 0;
+        grid-template-columns: minmax(0, 1fr) clamp(150px, 34vw, 260px);
+        gap: 10px;
     }
 
     .hero-panel-right {
-        order: -1;
-        padding: 24px 0 10px 0;
+        order: 0;
+        padding: 16px 0 16px 0;
     }
 
     .hero-panel-left {
-        padding: 10px 0 48px 0;
+        padding: 16px 0 24px 0;
     }
 
     .video-frame-wrapper {
-        max-width: min(68vw, 240px);
+        max-width: clamp(150px, 34vw, 260px);
     }
 
     .video-frame {
-<<<<<<< codex/improve-ui-spacing-for-images-and-text-6s7hjg
         aspect-ratio: 3 / 4;
-=======
-        aspect-ratio: 1 / 1;
->>>>>>> main
     }
 
     .video-frame video,
     .video-frame img {
-<<<<<<< codex/improve-ui-spacing-for-images-and-text-6s7hjg
         object-position: 50% 50%;
-=======
-        object-position: center;
->>>>>>> main
     }
 
     .hero-display-name {
@@ -1440,8 +1422,21 @@ section + section::before {
         font-size: 1.8rem;
     }
 
+    .hero-layout {
+        grid-template-columns: minmax(0, 1fr) clamp(118px, 36vw, 156px);
+        gap: 8px;
+    }
+
+    .hero-panel-right {
+        padding: 12px 0;
+    }
+
+    .hero-panel-left {
+        padding: 12px 0 20px 0;
+    }
+
     .video-frame-wrapper {
-        max-width: 160px;
+        max-width: clamp(118px, 36vw, 156px);
     }
 
     .btn-saiyan {
