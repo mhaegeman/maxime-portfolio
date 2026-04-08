@@ -120,6 +120,45 @@ window.observeRevealItems = function(containerEl) {
     });
 };
 
+// ── PROFILE IMAGE ROTATION ────────────────────────────────
+function initProfileRotation() {
+    const frame = document.getElementById('hero-frame');
+    if (!frame) return;
+
+    function isDark() {
+        return document.documentElement.getAttribute('data-theme') !== 'light';
+    }
+
+    function getActiveSet() {
+        return frame.querySelectorAll(isDark() ? '.dark-img' : '.light-img');
+    }
+
+    let currentIndex = 0;
+
+    function rotate() {
+        const imgs = getActiveSet();
+        if (imgs.length === 0) return;
+        imgs.forEach(img => img.classList.remove('active'));
+        currentIndex = (currentIndex + 1) % imgs.length;
+        imgs[currentIndex].classList.add('active');
+    }
+
+    setInterval(rotate, 3000);
+
+    // Reset on theme change
+    const observer = new MutationObserver(() => {
+        currentIndex = 0;
+        const allImgs = frame.querySelectorAll('.profile-img');
+        allImgs.forEach(img => img.classList.remove('active'));
+        const imgs = getActiveSet();
+        if (imgs.length > 0) imgs[0].classList.add('active');
+    });
+    observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['data-theme']
+    });
+}
+
 // ── INITIALIZE ────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
     typeWriter();
@@ -128,6 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initHeroReveal();
     initScrollReveal();
+    initProfileRotation();
 
     applyStaggerIndex('.skills-va', '.skills-va-cell');
     applyStaggerIndex('.proj-list', '.proj-card');
