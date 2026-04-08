@@ -589,7 +589,7 @@ section + section::before {
 .video-frame-wrapper {
     position: relative;
     width: 100%;
-    max-width: 440px;
+    max-width: 300px;
 }
 
 /* Corner accents */
@@ -616,7 +616,7 @@ section + section::before {
 
 .video-frame {
     width: 100%;
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 9 / 16;
     border-radius: 0;
     padding: 0;
     background: var(--glass);
@@ -658,6 +658,19 @@ section + section::before {
 
 .video-frame:hover img.active {
     filter: brightness(0.88) saturate(0.85) contrast(1.12);
+}
+
+/* Theme-based profile images: classic for dark, scandinavia for light */
+.video-frame .light-img {
+    display: none;
+}
+
+[data-theme="light"] .video-frame .dark-img {
+    display: none;
+}
+
+[data-theme="light"] .video-frame .light-img {
+    display: block;
 }
 
 /* Profile link */
@@ -1330,7 +1343,7 @@ section + section::before {
     }
 
     .video-frame-wrapper {
-        max-width: 260px;
+        max-width: 200px;
     }
 
     .hero-display-name {
@@ -1398,7 +1411,7 @@ section + section::before {
     }
 
     .video-frame-wrapper {
-        max-width: 220px;
+        max-width: 160px;
     }
 
     .btn-saiyan {
