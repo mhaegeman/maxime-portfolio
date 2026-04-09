@@ -375,22 +375,36 @@ async function loadExperience() {
 
         data.forEach(job => {
             // Create the timeline item wrapper
-            const item = document.createElement('div');
+            const item = document.createElement('article');
             item.className = 'timeline-item';
 
             // Generate the bullets HTML
-            // We map over the array of strings and turn them into <li> tags
             const achievementsList = job.achievements
                 .map(ach => `<li>${ach}</li>`)
                 .join('');
 
+            const companyName = job.companyDisplay || job.company;
+            const companyNote = job.companyNote ? `<span class="company-note">(${job.companyNote})</span>` : '';
+            const companyLink = job.companyUrl
+                ? `<a href="${job.companyUrl}" target="_blank" rel="noopener noreferrer" class="company-link" aria-label="Visit ${companyName} website">${companyName}</a>`
+                : `<span class="company-link company-link--text">${companyName}</span>`;
+
             item.innerHTML = `
                 <span class="job-date">${job.period}</span>
-                <h3 style="margin-top: 5px;">${job.role} <span style="color: var(--text-secondary);">@ ${job.company}</span></h3>
-                <p class="card-desc" style="margin-top: 10px; margin-bottom: 10px;">
+                <div class="job-header">
+                    <img src="${job.logo}" alt="${companyName} logo" class="company-logo" loading="lazy" decoding="async">
+                    <div>
+                        <h3 class="job-title">${job.role}</h3>
+                        <p class="company-meta">
+                            @ ${companyLink}
+                            ${companyNote}
+                        </p>
+                    </div>
+                </div>
+                <p class="card-desc">
                     ${job.description}
                 </p>
-                <ul style="list-style: disc; margin-left: 20px; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6;">
+                <ul class="job-achievements">
                     ${achievementsList}
                 </ul>
             `;

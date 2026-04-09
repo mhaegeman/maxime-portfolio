@@ -2,7 +2,11 @@
     {
         "period": "2024 - Present",
         "role": "Data Engineer",
-        "company": "Massive Entertainment - A Ubisoft Studio",
+        "company": "Massive Entertainment",
+        "companyDisplay": "Massive Entertainment",
+        "companyNote": "A Ubisoft Studio",
+        "companyUrl": "https://www.massive.se/",
+        "logo": "content/company-logos/massive-entertainment.svg",
         "description": "Leading the data engineering efforts for live game analytics and ML pipelines.",
         "achievements": [
             "Data ingestion and preprocessing for ML projects. ",
@@ -14,7 +18,11 @@
     {
         "period": "2023 - 2024",
         "role": "Data Scientist / ML Engineer",
-        "company": "MvH Media - Online marketing bureau",
+        "company": "MvH Media",
+        "companyDisplay": "MvH Media",
+        "companyNote": "now Follo",
+        "companyUrl": "https://folloagency.com/",
+        "logo": "content/company-logos/follo.svg",
         "description": "Active python developer in the data team, building data products for clients in online marketing.",
         "achievements": [
             "Built ETL pipelines for data collection and preprocessing using Airflow and Pandas.",
@@ -28,6 +36,10 @@
         "period": "2022 - 2023",
         "role": "Data Scientist",
         "company": "BNZSA",
+        "companyDisplay": "BNZSA",
+        "companyNote": "now Anteriad",
+        "companyUrl": "https://anteriad.com/",
+        "logo": "content/company-logos/anteriad.svg",
         "description": "Member of the Decision Science team, focusing on building data-driven solutions for business challenges.",
         "achievements": [
             "Creation of a global data pipeline to collect, structure, validate, and clean data from our CRM and ERP systems using Python and SQL.",
@@ -39,7 +51,10 @@
     {
         "period": "2020 - 2022",
         "role": "Junior Data Scientist",
-        "company": "BECQUET",
+        "company": "Becquet",
+        "companyDisplay": "Becquet",
+        "companyUrl": "https://www.becquet.fr/",
+        "logo": "content/company-logos/becquet.svg",
         "description": "Part of the Online Marketing team, responsible for client scoring, data analysis and reporting.",
         "achievements": [
             "Development of a customer scoring model and segmentation for marketing campaign targeting with the objective to reduce marketing communication costs by 10%.",
