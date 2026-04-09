@@ -1079,6 +1079,62 @@ section + section::before {
     padding-left: 30px;
 }
 
+.job-header {
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.company-logo {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+    border-radius: 12px;
+    border: 1px solid var(--nav-border);
+    background: color-mix(in srgb, var(--card-bg) 90%, transparent);
+    padding: 8px;
+    flex-shrink: 0;
+}
+
+.job-title {
+    margin: 0;
+}
+
+.company-meta {
+    margin: 4px 0 0;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.company-link {
+    color: inherit;
+    text-underline-offset: 3px;
+    transition: color 0.2s ease;
+}
+
+.company-link:hover,
+.company-link:focus-visible {
+    color: var(--accent-color);
+}
+
+.company-note {
+    margin-left: 6px;
+    font-size: 0.8rem;
+    font-family: var(--font-code);
+    color: var(--accent-color);
+}
+
+.timeline-item .card-desc {
+    margin-top: 12px;
+    margin-bottom: 10px;
+}
+
+.job-achievements {
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
 .timeline-item::before {
     content: '';
     position: absolute;
@@ -1126,6 +1182,21 @@ section + section::before {
     left: 0;
     color: var(--accent-color);
     font-family: var(--font-code);
+}
+
+@media (max-width: 640px) {
+    .job-header {
+        align-items: flex-start;
+    }
+
+    .company-logo {
+        width: 46px;
+        height: 46px;
+    }
+
+    .company-meta {
+        font-size: 0.88rem;
+    }
 }
 
 /* --- BLOG CARD GRID: 2-col, borderless --- */
