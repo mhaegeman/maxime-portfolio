@@ -410,7 +410,16 @@ function initPrintButton() {
     if (!printBtn) return;
 
     printBtn.addEventListener('click', () => {
-        window.print();
+        const resumePdfPath = printBtn.dataset.resumePdf || 'content/resume_2026.pdf';
+
+        const tempLink = document.createElement('a');
+        tempLink.href = resumePdfPath;
+        tempLink.setAttribute('download', 'Maxime_Haegeman_2026.pdf');
+        tempLink.setAttribute('target', '_blank');
+        tempLink.setAttribute('rel', 'noopener');
+        document.body.appendChild(tempLink);
+        tempLink.click();
+        tempLink.remove();
     });
 }
 
