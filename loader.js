@@ -390,23 +390,29 @@ async function loadExperience() {
                 : `<span class="company-link company-link--text">${companyName}</span>`;
 
             item.innerHTML = `
-                <span class="job-date">${job.period}</span>
-                <div class="job-header">
-                    <img src="${job.logo}" alt="${companyName} logo" class="company-logo" loading="lazy" decoding="async">
-                    <div>
-                        <h3 class="job-title">${job.role}</h3>
-                        <p class="company-meta">
-                            @ ${companyLink}
-                            ${companyNote}
+                <div class="timeline-content">
+                    <div class="timeline-text">
+                        <span class="job-date">${job.period}</span>
+                        <div class="job-header">
+                            <div>
+                                <h3 class="job-title">${job.role}</h3>
+                                <p class="company-meta">
+                                    @ ${companyLink}
+                                    ${companyNote}
+                                </p>
+                            </div>
+                        </div>
+                        <p class="card-desc">
+                            ${job.description}
                         </p>
+                        <ul class="job-achievements">
+                            ${achievementsList}
+                        </ul>
+                    </div>
+                    <div class="timeline-logo">
+                        <img src="${job.logo}" alt="${companyName} logo" class="company-logo" loading="lazy" decoding="async">
                     </div>
                 </div>
-                <p class="card-desc">
-                    ${job.description}
-                </p>
-                <ul class="job-achievements">
-                    ${achievementsList}
-                </ul>
             `;
 
             container.appendChild(item);
