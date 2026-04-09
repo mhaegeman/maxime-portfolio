@@ -1092,16 +1092,12 @@ section + section::before {
 
 .timeline-logo {
     flex-shrink: 0;
-    width: 160px;
-    height: 100px;
+    width: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid var(--nav-border);
-    border-radius: 12px;
-    background: color-mix(in srgb, var(--card-bg) 90%, transparent);
-    padding: 16px;
     margin-top: 6px;
+    color: var(--text-primary);
 }
 
 .company-logo {
@@ -1211,9 +1207,7 @@ section + section::before {
     }
 
     .timeline-logo {
-        width: 120px;
-        height: 70px;
-        padding: 12px;
+        width: 140px;
     }
 
     .job-header {
