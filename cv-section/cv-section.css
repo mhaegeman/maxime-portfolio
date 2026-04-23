@@ -1,0 +1,272 @@
+/* CV section — Density Map layout
+   Inherits tokens from the main site's style.css. */
+
+:root {
+    --cv-logo-chip: color-mix(in oklab, var(--surface-2) 70%, transparent);
+}
+
+/* Tech chips */
+.cv-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    font-family: var(--font-code);
+    font-size: 0.68rem;
+    letter-spacing: 0.5px;
+    border-radius: 2px;
+    border: 1px solid var(--nav-border);
+    color: var(--text-secondary);
+    background: color-mix(in oklab, var(--surface-color) 60%, transparent);
+    white-space: nowrap;
+}
+.cv-chip.c-ml          { color: #ff79c6; border-color: rgba(255,121,198,.3); }
+.cv-chip.c-nlp         { color: #bd93f9; border-color: rgba(189,147,249,.3); }
+.cv-chip.c-engineering { color: var(--accent-color); border-color: rgba(204,255,0,.25); }
+.cv-chip.c-cloud       { color: #8be9fd; border-color: rgba(139,233,253,.3); }
+.cv-chip.c-analytics   { color: #50fa7b; border-color: rgba(80,250,123,.3); }
+
+[data-theme="light"] .cv-chip.c-ml          { color: #b23078; border-color: rgba(178,48,120,.35); }
+[data-theme="light"] .cv-chip.c-nlp         { color: #5a3bb0; border-color: rgba(90,59,176,.35); }
+[data-theme="light"] .cv-chip.c-engineering { color: var(--accent-color); border-color: rgba(26,92,0,.35); }
+[data-theme="light"] .cv-chip.c-cloud       { color: #0f6b8a; border-color: rgba(15,107,138,.35); }
+[data-theme="light"] .cv-chip.c-analytics   { color: #1e7a3a; border-color: rgba(30,122,58,.35); }
+
+/* Duration pill */
+.cv-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 9px;
+    font-family: var(--font-code);
+    font-size: 0.68rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    border-radius: 2px;
+    background: color-mix(in oklab, var(--accent-color) 8%, transparent);
+}
+.cv-pill::before {
+    content: "";
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent-color);
+    box-shadow: 0 0 8px var(--accent-color);
+}
+
+/* Logo rendering */
+.cv-logo-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* Reveal on scroll */
+.cv-reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1);
+}
+.cv-reveal.is-visible { opacity: 1; transform: none; }
+
+/* ============================================================
+   DENSITY MAP (skills matrix + compact role list)
+   ============================================================ */
+.cv-section { padding: 8px 0; }
+
+.cv-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    gap: 28px;
+    align-items: start;
+}
+
+.cv-section-label {
+    font-family: var(--font-code);
+    font-size: 0.68rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent-color);
+    margin-bottom: 10px;
+    display: block;
+}
+
+/* Matrix */
+.cv-matrix {
+    background: color-mix(in oklab, var(--surface-color) 60%, transparent);
+    border: 1px solid var(--nav-border);
+    border-radius: 3px;
+    padding: 16px 18px;
+    position: sticky;
+    top: 100px;
+}
+.cv-matrix-grid {
+    display: grid;
+    gap: 2px;
+}
+.cv-matrix-group-label {
+    font-family: var(--font-code);
+    font-size: 0.62rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent-color);
+    padding: 10px 0 4px;
+    border-bottom: 1px dashed color-mix(in oklab, var(--accent-color) 30%, transparent);
+    margin-bottom: 4px;
+    grid-column: 1 / -1;
+}
+.cv-matrix-group-label:first-child { padding-top: 0; }
+.cv-matrix-row {
+    display: grid;
+    grid-template-columns: 130px repeat(var(--years), 1fr);
+    gap: 2px;
+    align-items: center;
+}
+.cv-matrix-row .cell-label {
+    font-family: var(--font-code);
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+    padding-right: 10px;
+    text-align: right;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.cv-matrix-row .cell-header {
+    font-family: var(--font-code);
+    font-size: 0.66rem;
+    color: var(--text-muted);
+    text-align: center;
+    padding: 2px 0;
+}
+.cv-cell {
+    height: 16px;
+    border-radius: 2px;
+    background: color-mix(in oklab, var(--accent-color) calc(var(--v) * 20%), transparent);
+    border: 1px solid color-mix(in oklab, var(--accent-color) calc(var(--v) * 30%), transparent);
+    transition: transform .2s ease;
+    position: relative;
+}
+.cv-cell[data-v="0"] {
+    background: transparent;
+    border: 1px dashed var(--nav-border);
+}
+.cv-cell:hover { transform: scale(1.1); z-index: 2; }
+.cv-cell[data-v="4"]::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: var(--accent-color);
+    opacity: 0.15;
+    border-radius: 2px;
+}
+
+.cv-legend {
+    display: flex; align-items: center; gap: 10px;
+    margin-top: 14px;
+    font-family: var(--font-code);
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+}
+.cv-legend .scale {
+    display: inline-flex; gap: 2px;
+}
+.cv-legend .scale span {
+    width: 14px; height: 14px;
+    border-radius: 2px;
+    border: 1px solid var(--nav-border);
+}
+
+/* Role list — primary left column */
+.cv-roles {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.cv-role {
+    display: grid;
+    grid-template-columns: 120px 1fr auto;
+    gap: 20px;
+    align-items: center;
+    padding: 20px 22px;
+    background: color-mix(in oklab, var(--surface-color) 55%, transparent);
+    border: 1px solid var(--nav-border);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all .25s ease;
+}
+.cv-role:hover {
+    border-color: color-mix(in oklab, var(--accent-color) 50%, var(--nav-border));
+    transform: translateX(3px);
+}
+.cv-role[aria-expanded="true"] {
+    border-color: color-mix(in oklab, var(--accent-color) 65%, var(--nav-border));
+    box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.cv-role-logo {
+    height: 60px;
+    display: flex; align-items: center; justify-content: center;
+    padding: 6px 10px;
+    background: var(--cv-logo-chip);
+    border: 1px solid var(--nav-border);
+    border-radius: 3px;
+}
+.cv-role-logo img { max-height: 46px; max-width: 110px; object-fit: contain; }
+.cv-role-main .year {
+    font-family: var(--font-code);
+    font-size: 0.72rem;
+    letter-spacing: 1px;
+    color: var(--accent-color);
+    display: block;
+    margin-bottom: 4px;
+}
+.cv-role-main .title {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    line-height: 1.15;
+    color: var(--text-primary);
+    margin: 0;
+    font-weight: 700;
+}
+.cv-role-main .company {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    margin: 4px 0 0;
+}
+
+.cv-role-detail {
+    grid-column: 1 / -1;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .4s ease;
+}
+.cv-role[aria-expanded="true"] .cv-role-detail {
+    max-height: 600px;
+}
+.cv-role-detail-inner {
+    padding-top: 12px;
+    margin-top: 12px;
+    border-top: 1px dashed var(--nav-border);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+.cv-role-detail ul { list-style: none; padding: 0; margin: 8px 0 0; }
+.cv-role-detail li {
+    padding-left: 1.4em; position: relative; margin-bottom: 6px;
+}
+.cv-role-detail li::before {
+    content: '>'; position: absolute; left: 0;
+    color: var(--accent-color); font-family: var(--font-code);
+}
+.cv-role-stack {
+    display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px;
+}
+
+/* Responsive */
+@media (max-width: 760px) {
+    .cv-grid { grid-template-columns: 1fr; }
+    .cv-matrix { position: static; }
+    .cv-role { grid-template-columns: 80px 1fr; }
+    .cv-role .cv-pill { grid-column: 2; justify-self: start; }
+}

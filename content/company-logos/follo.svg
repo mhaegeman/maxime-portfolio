@@ -1,8 +1,8 @@
 <svg width="240" height="72" viewBox="0 0 240 72" fill="none" xmlns="http://www.w3.org/2000/svg">
   <g fill="currentColor">
-    <rect x="14" y="14" width="14" height="44" rx="7"/>
-    <rect x="14" y="14" width="34" height="14" rx="7"/>
-    <rect x="14" y="33" width="28" height="14" rx="7"/>
+    <rect x="14" y="14" width="14" height="44" rx="7"></rect>
+    <rect x="14" y="14" width="34" height="14" rx="7"></rect>
+    <rect x="14" y="33" width="28" height="14" rx="7"></rect>
   </g>
   <text x="60" y="46" fill="currentColor" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="34" letter-spacing="1">FOLLO</text>
 </svg>
