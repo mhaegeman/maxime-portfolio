@@ -81,6 +81,79 @@ const REPO_TAGS = {
     ],
 };
 
+
+// ─── Curated display metadata (for the Editorial projects cards) ───
+// name → { title, desc, cats: [string] }
+const PROJECT_META = {
+    'Python-Object-Clasifier': {
+        title: 'Topic Modeling Classifier',
+        desc: 'Latent Dirichlet Allocation pipeline that discovers topics from raw text and routes documents to the right bucket. Classic NLP foundation work.',
+        cats: ['NLP', 'ML'],
+    },
+    'seo-content-generator': {
+        title: 'SEO Content Generator',
+        desc: 'Automated content generation tool optimized for SEO performance. LLM-powered pipeline that researches keywords, drafts copy, and scores readability against competitor SERPs.',
+        cats: ['NLP', 'GENERATIVE AI', 'FULL STACK'],
+    },
+    'scoring-bank-project': {
+        title: 'Bank Credit Scoring',
+        desc: 'End-to-end credit risk model with imbalanced learning. LightGBM + SHAP explainability, served through a Streamlit dashboard where loan officers can interrogate any prediction.',
+        cats: ['ML', 'ANALYTICS', 'FINANCE'],
+    },
+    'openweather': {
+        title: 'OpenWeather Integration',
+        desc: 'Lightweight Python client for the OpenWeather API. Fetches and normalizes real-time meteorological data for downstream pipelines.',
+        cats: ['ENGINEERING', 'API'],
+    },
+    'fruit-classifier-aws': {
+        title: 'Distributed Fruit Classifier',
+        desc: 'Image classification at scale on AWS EMR. PySpark broadcasts a TensorFlow model across executors to process 50k+ images in parallel — distributed deep learning on cloud infra.',
+        cats: ['ML', 'CLOUD', 'DISTRIBUTED'],
+    },
+    'Nutriscore-Prediction': {
+        title: 'Nutriscore Prediction',
+        desc: 'Linear regression to predict the Nutri-Score of food products from nutritional facts. Showcases predictive modeling on a public OpenFoodFacts dataset.',
+        cats: ['ML', 'ANALYTICS'],
+    },
+    'python-client-segmentation': {
+        title: 'Customer Segmentation',
+        desc: 'K-Means clustering on customer behavior data to surface actionable marketing personas. Pandas-driven feature engineering and silhouette-based cluster validation.',
+        cats: ['ML', 'ANALYTICS', 'MARKETING'],
+    },
+    'Energy-consumption-prediction': {
+        title: 'Energy Consumption Prediction',
+        desc: 'Regression models forecasting building energy use from weather and occupancy features. Scikit-learn pipelines with full EDA and visualization of feature importance.',
+        cats: ['ML', 'ANALYTICS', 'FORECASTING'],
+    },
+    'Verba': {
+        title: 'Verba RAG Chatbot',
+        desc: 'Open-source retrieval-augmented chatbot with Weaviate vector store. Indexes any document corpus and answers questions with citations — pluggable LLM backends.',
+        cats: ['NLP', 'RAG', 'FULL STACK'],
+    },
+    'sgtm-cloud-run-shell': {
+        title: 'Server-side GTM on Cloud Run',
+        desc: 'Shell scaffolding to deploy a server-side Google Tag Manager container on GCP Cloud Run. DevOps recipe for privacy-friendly tracking infra.',
+        cats: ['CLOUD', 'DEVOPS', 'GCP'],
+    },
+    'docker-stacks-pyspark': {
+        title: 'Docker PySpark Stacks',
+        desc: 'Reproducible Docker images bundling Jupyter + PySpark for local distributed-data prototyping. Works as a base for ML notebooks needing Spark.',
+        cats: ['ENGINEERING', 'DEVOPS'],
+    },
+};
+
+// Ordered list of repos to feature on the projects page. Edit to curate.
+const FEATURED_ORDER = [
+    'Python-Object-Clasifier',
+    'seo-content-generator',
+    'scoring-bank-project',
+    'openweather',
+    'fruit-classifier-aws',
+    'Nutriscore-Prediction',
+    'python-client-segmentation',
+    'Energy-consumption-prediction',
+];
+
 const CONFIG = {
     githubUser: 'mhaegeman', // Replace with your actual GitHub username
     mediumUser: 'maximehaegeman', // Replace with your actual Medium username
@@ -164,48 +237,62 @@ async function loadRepos() {
     if (!container) return; // Stop if we aren't on the projects page
 
     try {
-        // 1. Fetch repos (we get up to 100 to ensure we find the most starred ones)
-        // We cannot sort by stars in the API url, so we just fetch the list.
+        // 1. Fetch all repos so we can look up star counts + html_url by name.
         const response = await fetch(`https://api.github.com/users/${CONFIG.githubUser}/repos?per_page=100&type=owner`);
-        let data = await response.json();
+        const data = await response.json();
+        const byName = Object.fromEntries(data.map(r => [r.name, r]));
 
-        // 2. Manually sort by stars (Descending: High -> Low)
-        data.sort((a, b) => b.stargazers_count - a.stargazers_count);
+        // 2. Build the featured list in the order defined by FEATURED_ORDER.
+        //    Fall back to GitHub description if PROJECT_META is missing.
+        const featured = FEATURED_ORDER
+            .map(name => {
+                const repo = byName[name];
+                if (!repo) return null;
+                const meta = PROJECT_META[name] || {};
+                return {
+                    name,
+                    title: meta.title || name,
+                    desc: meta.desc || repo.description || 'No description provided.',
+                    cats: meta.cats || [(repo.language || 'Code').toUpperCase()],
+                    tags: REPO_TAGS[name] || [],
+                    html_url: repo.html_url,
+                    homepage: repo.homepage,
+                    stars: repo.stargazers_count,
+                    forks: repo.forks_count,
+                };
+            })
+            .filter(Boolean);
 
-        // Clear the "Loading..." text
         container.innerHTML = '';
 
-        // 3. Slice to limit number of repos
-        data.slice(0, CONFIG.maxRepos).forEach(repo => {
-            // Skip forked repos if you want only your own work
-            // if (repo.fork) return; 
-
+        // 3. Render each as an Editorial V1 card.
+        featured.forEach(p => {
             const card = document.createElement('article');
-            card.className = 'card proj-card';
+            card.className = 'v1-card';
 
-            const lang = repo.language || 'Code';
-            const desc = repo.description
-                ? (repo.description.length > 120 ? repo.description.slice(0, 117) + '…' : repo.description)
-                : 'No description provided.';
+            const catsHtml = p.cats
+                .map((c, i) => (i === 0 ? '' : '<span class="v1-cats-sep">·</span>') + `<span class="v1-cat">${c}</span>`)
+                .join('');
 
-            const skillTags = (REPO_TAGS[repo.name] || [])
+            const tagsHtml = (p.tags || [])
                 .map(t => `<span class="tag-${t.category}">${t.label}</span>`)
                 .join('');
 
+            const liveLink = (p.homepage && p.homepage.trim())
+                ? `<a href="${p.homepage}" target="_blank" rel="noopener" class="v1-link">Live&nbsp;↗</a>`
+                : '';
+            const sourceLink = `<a href="${p.html_url}" target="_blank" rel="noopener" class="v1-link">GitHub&nbsp;↗</a>`;
+
             card.innerHTML = `
-                <div class="proj-header">
-                    <h3 class="card-header">
-                        <span class="proj-prompt">~/</span>${repo.name}
-                    </h3>
-                    <a href="${repo.html_url}" target="_blank" class="btn-link">git_clone&nbsp;→</a>
-                </div>
-                <div class="card-tags">
-                    <span class="tag">${lang}</span>
-                    <span class="proj-stat">★ ${repo.stargazers_count}</span>
-                    <span class="proj-stat">⑂ ${repo.forks_count}</span>
-                </div>
-                ${skillTags ? `<div class="card-skill-tags">${skillTags}</div>` : ''}
-                <p class="card-desc">${desc}</p>
+                <div class="v1-corner v1-corner-tl">+</div>
+                <div class="v1-corner v1-corner-br">+</div>
+                <header class="v1-header">
+                    <div class="v1-cats">${catsHtml}</div>
+                    <div class="v1-links">${liveLink}${sourceLink}</div>
+                </header>
+                <h3 class="v1-title">${p.title}</h3>
+                <p class="v1-desc">${p.desc}</p>
+                ${tagsHtml ? `<div class="v1-tags">${tagsHtml}</div>` : ''}
             `;
 
             container.appendChild(card);

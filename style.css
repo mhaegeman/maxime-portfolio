@@ -1579,3 +1579,142 @@ section + section::before {
         font-size: 1.7rem;
     }
 }
+
+
+/* ═══════════════════════════════════════════════════════════
+   PROJECTS — EDITORIAL V1 CARDS (new /projects grid)
+   Replaces the legacy .proj-list / .proj-card styles for
+   repos rendered inside #repo-grid.
+   ═══════════════════════════════════════════════════════════ */
+
+/* Grid: 2-col on desktop, 1-col on mobile (handled below) */
+#repo-grid.proj-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+    flex-direction: initial;
+}
+
+.v1-card {
+    position: relative;
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--nav-border);
+    padding: 28px 26px 24px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition:
+        transform var(--dur-mid) var(--ease-out-expo),
+        border-color var(--dur-mid) ease,
+        box-shadow var(--dur-mid) ease;
+}
+
+.v1-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(204, 255, 0, 0.25);
+    box-shadow:
+        0 0 0 1px rgba(204, 255, 0, 0.15),
+        0 12px 40px -10px rgba(0, 0, 0, 0.65);
+}
+
+.v1-corner {
+    position: absolute;
+    font-family: var(--font-code);
+    font-size: 1rem;
+    color: var(--accent-color);
+    line-height: 1;
+    z-index: 2;
+    pointer-events: none;
+}
+.v1-corner-tl { top: -7px; left: -7px; }
+.v1-corner-br { bottom: -7px; right: -7px; }
+
+.v1-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.v1-cats {
+    font-family: var(--font-code);
+    font-size: 0.72rem;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent-color);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    line-height: 1.4;
+}
+
+.v1-cats-sep {
+    color: var(--accent-dim);
+    opacity: 0.6;
+}
+
+.v1-links {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.v1-link {
+    font-family: var(--font-code);
+    font-size: 0.72rem;
+    color: var(--text-primary);
+    border: 1px solid var(--nav-border);
+    border-bottom: 1px solid var(--nav-border);
+    padding: 4px 10px;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+}
+
+.v1-link:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+    background: transparent;
+    box-shadow: 0 0 12px var(--accent-glow);
+}
+
+.v1-title {
+    font-family: var(--font-display);
+    font-size: 1.85rem;
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.5px;
+    color: var(--text-primary);
+    margin: 4px 0 0;
+}
+
+.v1-desc {
+    font-family: var(--font-body);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin: 0;
+    text-wrap: pretty;
+}
+
+.v1-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: auto;
+    padding-top: 4px;
+}
+
+/* Mobile: single column + slightly tighter type */
+@media (max-width: 900px) {
+    #repo-grid.proj-list {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+    .v1-title { font-size: 1.55rem; }
+    .v1-card { padding: 24px 22px 20px; }
+}
