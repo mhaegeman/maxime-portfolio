@@ -809,11 +809,20 @@
     };
 
 
+    // Inline SVG flags (4:3 viewBox) — render identically across all OSes,
+    // unlike emoji flags which Windows Chrome refuses to draw.
+    const FLAG_SVG = {
+        gb: '<svg class="lang-flag-svg" viewBox="0 0 60 45" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><clipPath id="fg-uk"><path d="M0 0v45h60V0z"/></clipPath><clipPath id="fg-uk-t"><path d="M30 22.5L60 0v45L30 22.5 0 45V0z"/></clipPath><g clip-path="url(#fg-uk)"><path fill="#012169" d="M0 0h60v45H0z"/><path stroke="#fff" stroke-width="9" d="M0 0l60 45m0-45L0 45"/><path stroke="#C8102E" stroke-width="6" clip-path="url(#fg-uk-t)" d="M0 0l60 45m0-45L0 45"/><path stroke="#fff" stroke-width="15" d="M30 0v45M0 22.5h60"/><path stroke="#C8102E" stroke-width="9" d="M30 0v45M0 22.5h60"/></g></svg>',
+        es: '<svg class="lang-flag-svg" viewBox="0 0 60 45" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="#AA151B" d="M0 0h60v45H0z"/><path fill="#F1BF00" d="M0 11.25h60v22.5H0z"/></svg>',
+        fr: '<svg class="lang-flag-svg" viewBox="0 0 60 45" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="#fff" d="M0 0h60v45H0z"/><path fill="#002654" d="M0 0h20v45H0z"/><path fill="#CE1126" d="M40 0h20v45H40z"/></svg>',
+        dk: '<svg class="lang-flag-svg" viewBox="0 0 60 45" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="#C8102E" d="M0 0h60v45H0z"/><path fill="#fff" d="M18 0h6v45h-6z"/><path fill="#fff" d="M0 19.5h60v6H0z"/></svg>',
+    };
+
     const LANGS = [
-        { code: 'en', label: 'EN', name: 'English', flag: '🇬🇧' },
-        { code: 'es', label: 'ES', name: 'Español', flag: '🇪🇸' },
-        { code: 'fr', label: 'FR', name: 'Français', flag: '🇫🇷' },
-        { code: 'da', label: 'DA', name: 'Dansk',    flag: '🇩🇰' },
+        { code: 'en', label: 'EN', name: 'English',  flag: FLAG_SVG.gb },
+        { code: 'es', label: 'ES', name: 'Español',  flag: FLAG_SVG.es },
+        { code: 'fr', label: 'FR', name: 'Français', flag: FLAG_SVG.fr },
+        { code: 'da', label: 'DA', name: 'Dansk',    flag: FLAG_SVG.dk },
     ];
 
     const DEFAULT_LANG = 'en';
@@ -947,6 +956,7 @@
             li.setAttribute('data-lang', l.code);
             li.className = 'lang-option';
             li.innerHTML = `<span class="lang-flag">${l.flag}</span><span class="lang-code">${l.label}</span><span class="lang-name">${l.name}</span>`;
+            // l.flag is trusted (inline SVG defined in this file, not user input).
             li.addEventListener('click', (ev) => {
                 ev.stopPropagation();
                 setLang(l.code);

@@ -474,8 +474,27 @@ nav {
 }
 
 .lang-option .lang-flag {
-    font-size: 1.05rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 15px;
     line-height: 1;
+}
+
+.lang-option .lang-flag-svg,
+.lang-flag-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 2px;
+    box-sizing: border-box;
+}
+
+[data-theme="dark"] .lang-option .lang-flag-svg,
+[data-theme="dark"] .lang-flag-svg {
+    border-color: rgba(255, 255, 255, 0.15);
 }
 
 .lang-option .lang-code {
