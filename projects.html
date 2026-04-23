@@ -6,7 +6,7 @@
     <meta http-equiv="Content-Security-Policy"
         content="default-src 'self'; script-src 'self' https://api.github.com https://api.rss2json.com https://cdn.jsdelivr.net; connect-src 'self' https://api.github.com https://api.rss2json.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com;">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maxime | Projects</title>
+    <title data-i18n="title.projects">Maxime | Projects</title>
     <link rel="icon" type="image/svg+xml" href="content/icon.svg">
     <script src="theme-init.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,54 +20,54 @@
         <nav>
             <a href="index.html" class="nav-brand">
                 <span class="nav-brand-name">Maxime Haegeman</span>
-                <span class="nav-brand-tagline">Data Engineer // Copenhagen</span>
+                <span class="nav-brand-tagline" data-i18n="nav.tagline">Data Engineer // Copenhagen</span>
             </a>
             <div class="nav-links">
-                <a href="index.html">About</a>
-                <a href="projects.html">Projects</a>
-                <a href="blog.html">Blog</a>
-                <a href="cv.html">Resume</a>
+                <a href="index.html" data-i18n="nav.about">About</a>
+                <a href="projects.html" data-i18n="nav.projects">Projects</a>
+                <a href="blog.html" data-i18n="nav.blog">Blog</a>
+                <a href="cv.html" data-i18n="nav.resume">Resume</a>
             </div>
             <div class="nav-controls">
-                <button id="menu-toggle" class="menu-toggle" aria-label="Toggle navigation">☰</button>
-                <button id="theme-toggle" title="Switch Theme">☀</button>
+                <button id="menu-toggle" class="menu-toggle" data-i18n-attr="aria-label:nav.menu_aria" aria-label="Toggle navigation">☰</button>
+                <button id="theme-toggle" data-i18n-attr="title:nav.theme_title" title="Switch Theme">☀</button>
             </div>
         </nav>
 
         <section class="section">
             <div class="page-hero">
                 <div class="page-hero-left">
-                    <span class="page-hero-label">Repository Feed // GitHub API</span>
-                    <h1 class="page-hero-title">OPEN SOURCE<br>/ PROJECTS</h1>
-                    <p class="page-hero-subtitle">A collection of data engineering, ML, and analytics projects — sorted by stars.</p>
+                    <span class="page-hero-label" data-i18n="projects.label">Repository Feed // GitHub API</span>
+                    <h1 class="page-hero-title"><span data-i18n="projects.title_line1">OPEN SOURCE</span><br><span data-i18n="projects.title_line2">/ PROJECTS</span></h1>
+                    <p class="page-hero-subtitle" data-i18n="projects.subtitle">A collection of data engineering, ML, and analytics projects — sorted by stars.</p>
                 </div>
                 <div class="page-hero-meta">
-                    <span class="page-hero-meta-label">System Briefing</span>
-                    <p class="page-hero-meta-text">Repositories fetched live from GitHub API, sorted by community interest.</p>
+                    <span class="page-hero-meta-label" data-i18n="projects.briefing_label">System Briefing</span>
+                    <p class="page-hero-meta-text" data-i18n="projects.briefing_text">Repositories fetched live from GitHub API, sorted by community interest.</p>
                     <div class="page-hero-stats">
                         <div>
-                            <span class="page-hero-stat-label">Source</span>
+                            <span class="page-hero-stat-label" data-i18n="projects.source">Source</span>
                             <span class="page-hero-stat-value">GitHub</span>
                         </div>
                         <div>
-                            <span class="page-hero-stat-label">Status</span>
-                            <span class="page-hero-stat-value" style="font-family: var(--font-code); font-size: 0.9rem; font-style: normal; color: var(--accent-color);">Online</span>
+                            <span class="page-hero-stat-label" data-i18n="projects.status">Status</span>
+                            <span class="page-hero-stat-value" style="font-family: var(--font-code); font-size: 0.9rem; font-style: normal; color: var(--accent-color);" data-i18n="projects.status_online">Online</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <p style="color: var(--text-secondary); margin-bottom: 24px; font-family: var(--font-code); font-size: 0.82rem;">
+            <p style="color: var(--text-secondary); margin-bottom: 24px; font-family: var(--font-code); font-size: 0.82rem;" data-i18n="projects.git_cmd">
                 > git fetch origin master --sort=stars
             </p>
 
             <div class="proj-list" id="repo-grid">
-                <p style="color: var(--accent-color); font-family: var(--font-code);">_fetching_data_from_github...</p>
+                <p style="color: var(--accent-color); font-family: var(--font-code);" data-i18n="projects.loading">_fetching_data_from_github...</p>
             </div>
         </section>
 
         <footer>
-            <div style="margin-top: 50px; opacity: 0.5; text-align: center; font-family: var(--font-code); font-size: 0.8rem;">
+            <div style="margin-top: 50px; opacity: 0.5; text-align: center; font-family: var(--font-code); font-size: 0.8rem;" data-i18n="footer.copy">
                 &copy; 2025 Maxime Haegeman. Built with code.
             </div>
         </footer>
@@ -76,6 +76,7 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.net.min.js" defer></script>
     <script src="js/vanta-bg.js" defer></script>
+    <script src="js/i18n.js"></script>
     <script src="loader.js"></script>
 </body>
 

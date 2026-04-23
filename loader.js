@@ -232,6 +232,84 @@ function initNavEnhancements() {
 }
 
 // --- GITHUB FETCHER ---
+
+// Cache of raw GitHub data + a reference to the container so we can
+// re-render in place when the language changes without re-hitting the API.
+let _reposCache = null;
+
+function renderRepos() {
+    const container = document.getElementById('repo-grid');
+    if (!container || !_reposCache) return;
+
+    const byName = _reposCache;
+
+    const featured = FEATURED_ORDER
+        .map(name => {
+            const repo = byName[name];
+            if (!repo) return null;
+            const meta = PROJECT_META[name] || {};
+            // Prefer localized title/desc from i18n; fall back to meta then repo.
+            const loc = (window.i18n && window.i18n.getProject)
+                ? window.i18n.getProject(name)
+                : null;
+            return {
+                name,
+                title: (loc && loc.title) || meta.title || name,
+                desc:  (loc && loc.desc)  || meta.desc  || repo.description || 'No description provided.',
+                cats: meta.cats || [(repo.language || 'Code').toUpperCase()],
+                tags: REPO_TAGS[name] || [],
+                html_url: repo.html_url,
+                homepage: repo.homepage,
+                stars: repo.stargazers_count,
+                forks: repo.forks_count,
+            };
+        })
+        .filter(Boolean);
+
+    container.innerHTML = '';
+
+    // Link labels are themselves localizable.
+    const liveLabel   = (window.i18n && window.i18n.t) ? window.i18n.t('projects.live_link')   : 'Live\u00a0\u2197';
+    const sourceLabel = (window.i18n && window.i18n.t) ? window.i18n.t('projects.source_link') : 'GitHub\u00a0\u2197';
+
+    featured.forEach(p => {
+        const card = document.createElement('article');
+        card.className = 'v1-card';
+
+        const catsHtml = p.cats
+            .map((c, i) => (i === 0 ? '' : '<span class="v1-cats-sep">·</span>') + `<span class="v1-cat">${c}</span>`)
+            .join('');
+
+        const tagsHtml = (p.tags || [])
+            .map(t => `<span class="tag-${t.category}">${t.label}</span>`)
+            .join('');
+
+        const liveLink = (p.homepage && p.homepage.trim())
+            ? `<a href="${p.homepage}" target="_blank" rel="noopener" class="v1-link">${liveLabel}</a>`
+            : '';
+        const sourceLink = `<a href="${p.html_url}" target="_blank" rel="noopener" class="v1-link">${sourceLabel}</a>`;
+
+        card.innerHTML = `
+            <div class="v1-corner v1-corner-tl">+</div>
+            <div class="v1-corner v1-corner-br">+</div>
+            <header class="v1-header">
+                <div class="v1-cats">${catsHtml}</div>
+                <div class="v1-links">${liveLink}${sourceLink}</div>
+            </header>
+            <h3 class="v1-title">${p.title}</h3>
+            <p class="v1-desc">${p.desc}</p>
+            ${tagsHtml ? `<div class="v1-tags">${tagsHtml}</div>` : ''}
+        `;
+
+        container.appendChild(card);
+    });
+
+    // Trigger scroll reveal on dynamically injected cards
+    if (typeof window.observeRevealItems === 'function') {
+        window.observeRevealItems(container);
+    }
+}
+
 async function loadRepos() {
     const container = document.getElementById('repo-grid');
     if (!container) return; // Stop if we aren't on the projects page
@@ -240,68 +318,9 @@ async function loadRepos() {
         // 1. Fetch all repos so we can look up star counts + html_url by name.
         const response = await fetch(`https://api.github.com/users/${CONFIG.githubUser}/repos?per_page=100&type=owner`);
         const data = await response.json();
-        const byName = Object.fromEntries(data.map(r => [r.name, r]));
+        _reposCache = Object.fromEntries(data.map(r => [r.name, r]));
 
-        // 2. Build the featured list in the order defined by FEATURED_ORDER.
-        //    Fall back to GitHub description if PROJECT_META is missing.
-        const featured = FEATURED_ORDER
-            .map(name => {
-                const repo = byName[name];
-                if (!repo) return null;
-                const meta = PROJECT_META[name] || {};
-                return {
-                    name,
-                    title: meta.title || name,
-                    desc: meta.desc || repo.description || 'No description provided.',
-                    cats: meta.cats || [(repo.language || 'Code').toUpperCase()],
-                    tags: REPO_TAGS[name] || [],
-                    html_url: repo.html_url,
-                    homepage: repo.homepage,
-                    stars: repo.stargazers_count,
-                    forks: repo.forks_count,
-                };
-            })
-            .filter(Boolean);
-
-        container.innerHTML = '';
-
-        // 3. Render each as an Editorial V1 card.
-        featured.forEach(p => {
-            const card = document.createElement('article');
-            card.className = 'v1-card';
-
-            const catsHtml = p.cats
-                .map((c, i) => (i === 0 ? '' : '<span class="v1-cats-sep">·</span>') + `<span class="v1-cat">${c}</span>`)
-                .join('');
-
-            const tagsHtml = (p.tags || [])
-                .map(t => `<span class="tag-${t.category}">${t.label}</span>`)
-                .join('');
-
-            const liveLink = (p.homepage && p.homepage.trim())
-                ? `<a href="${p.homepage}" target="_blank" rel="noopener" class="v1-link">Live&nbsp;↗</a>`
-                : '';
-            const sourceLink = `<a href="${p.html_url}" target="_blank" rel="noopener" class="v1-link">GitHub&nbsp;↗</a>`;
-
-            card.innerHTML = `
-                <div class="v1-corner v1-corner-tl">+</div>
-                <div class="v1-corner v1-corner-br">+</div>
-                <header class="v1-header">
-                    <div class="v1-cats">${catsHtml}</div>
-                    <div class="v1-links">${liveLink}${sourceLink}</div>
-                </header>
-                <h3 class="v1-title">${p.title}</h3>
-                <p class="v1-desc">${p.desc}</p>
-                ${tagsHtml ? `<div class="v1-tags">${tagsHtml}</div>` : ''}
-            `;
-
-            container.appendChild(card);
-        });
-
-        // Trigger scroll reveal on dynamically injected cards
-        if (typeof window.observeRevealItems === 'function') {
-            window.observeRevealItems(container);
-        }
+        renderRepos();
 
     } catch (error) {
         container.innerHTML = `<p style="color: #ff5f56;">Error fetching repos: ${error.message}</p>`;
@@ -450,65 +469,72 @@ async function loadMedium() {
 }
 
 // --- EXPERIENCE FETCHER ---
-async function loadExperience() {
+// Pulls localized entries from window.i18n.getExperience() and re-renders on langchange.
+function renderExperience() {
     const container = document.getElementById('cv-timeline');
-    if (!container) return; // Stop if we aren't on the CV page
+    if (!container) return;
 
-    try {
-        const response = await fetch('content/experience.json');
-        const data = await response.json();
+    const data = (window.i18n && window.i18n.getExperience)
+        ? window.i18n.getExperience()
+        : [];
 
-        container.innerHTML = '';
-
-        data.forEach(job => {
-            // Create the timeline item wrapper
-            const item = document.createElement('article');
-            item.className = 'timeline-item';
-
-            // Generate the bullets HTML
-            const achievementsList = job.achievements
-                .map(ach => `<li>${ach}</li>`)
-                .join('');
-
-            const companyName = job.companyDisplay || job.company;
-            const companyNote = job.companyNote ? `<span class="company-note">(${job.companyNote})</span>` : '';
-            const companyLink = job.companyUrl
-                ? `<a href="${job.companyUrl}" target="_blank" rel="noopener noreferrer" class="company-link" aria-label="Visit ${companyName} website">${companyName}</a>`
-                : `<span class="company-link company-link--text">${companyName}</span>`;
-
-            item.innerHTML = `
-                <div class="timeline-content">
-                    <div class="timeline-text">
-                        <span class="job-date">${job.period}</span>
-                        <div class="job-header">
-                            <div>
-                                <h3 class="job-title">${job.role}</h3>
-                                <p class="company-meta">
-                                    @ ${companyLink}
-                                    ${companyNote}
-                                </p>
-                            </div>
-                        </div>
-                        <p class="card-desc">
-                            ${job.description}
-                        </p>
-                        <ul class="job-achievements">
-                            ${achievementsList}
-                        </ul>
-                    </div>
-                    <div class="timeline-logo">
-                        <img src="${job.logo}" alt="${companyName} logo" class="company-logo" loading="lazy" decoding="async">
-                    </div>
-                </div>
-            `;
-
-            container.appendChild(item);
-        });
-
-    } catch (error) {
+    if (!data.length) {
         container.innerHTML = `<p style="color: #ff5f56;">Error loading experience data.</p>`;
-        console.error(error);
+        return;
     }
+
+    container.innerHTML = '';
+
+    data.forEach(job => {
+        const item = document.createElement('article');
+        item.className = 'timeline-item';
+
+        const achievementsList = (job.achievements || [])
+            .map(ach => `<li>${ach}</li>`)
+            .join('');
+
+        const companyName = job.companyDisplay || job.company;
+        const companyNote = job.companyNote ? `<span class="company-note">(${job.companyNote})</span>` : '';
+        const companyLink = job.companyUrl
+            ? `<a href="${job.companyUrl}" target="_blank" rel="noopener noreferrer" class="company-link" aria-label="Visit ${companyName} website">${companyName}</a>`
+            : `<span class="company-link company-link--text">${companyName}</span>`;
+
+        item.innerHTML = `
+            <div class="timeline-content">
+                <div class="timeline-text">
+                    <span class="job-date">${job.period}</span>
+                    <div class="job-header">
+                        <div>
+                            <h3 class="job-title">${job.role}</h3>
+                            <p class="company-meta">
+                                @ ${companyLink}
+                                ${companyNote}
+                            </p>
+                        </div>
+                    </div>
+                    <p class="card-desc">
+                        ${job.description}
+                    </p>
+                    <ul class="job-achievements">
+                        ${achievementsList}
+                    </ul>
+                </div>
+                <div class="timeline-logo">
+                    <img src="${job.logo}" alt="${companyName} logo" class="company-logo" loading="lazy" decoding="async">
+                </div>
+            </div>
+        `;
+
+        container.appendChild(item);
+    });
+
+    if (typeof window.observeRevealItems === 'function') {
+        window.observeRevealItems(container);
+    }
+}
+
+function loadExperience() {
+    renderExperience();
 }
 
 // --- PRINT BUTTON LOGIC ---
@@ -562,4 +588,11 @@ document.addEventListener('DOMContentLoaded', () => {
     loadMedium();
     loadExperience();
     initPrintButton();
+});
+
+// Re-render language-dependent sections when the user switches language.
+// GitHub data is cached, so repo re-render is free; experience is synchronous.
+window.addEventListener('langchange', () => {
+    renderRepos();
+    renderExperience();
 });

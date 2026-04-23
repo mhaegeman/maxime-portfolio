@@ -6,7 +6,7 @@
     <meta http-equiv="Content-Security-Policy"
         content="default-src 'self'; script-src 'self' https://api.github.com https://api.rss2json.com https://cdn.jsdelivr.net; connect-src 'self' https://api.github.com https://api.rss2json.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com;">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maxime | Resume</title>
+    <title data-i18n="title.resume">Maxime | Resume</title>
     <link rel="icon" type="image/svg+xml" href="content/icon.svg">
     <script src="theme-init.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,37 +20,37 @@
         <nav>
             <a href="index.html" class="nav-brand">
                 <span class="nav-brand-name">Maxime Haegeman</span>
-                <span class="nav-brand-tagline">Data Engineer // Copenhagen</span>
+                <span class="nav-brand-tagline" data-i18n="nav.tagline">Data Engineer // Copenhagen</span>
             </a>
             <div class="nav-links">
-                <a href="index.html">About</a>
-                <a href="projects.html">Projects</a>
-                <a href="blog.html">Blog</a>
-                <a href="cv.html">Resume</a>
+                <a href="index.html" data-i18n="nav.about">About</a>
+                <a href="projects.html" data-i18n="nav.projects">Projects</a>
+                <a href="blog.html" data-i18n="nav.blog">Blog</a>
+                <a href="cv.html" data-i18n="nav.resume">Resume</a>
             </div>
             <div class="nav-controls">
-                <button id="menu-toggle" class="menu-toggle" aria-label="Toggle navigation">☰</button>
-                <button id="theme-toggle" title="Switch Theme">☀</button>
+                <button id="menu-toggle" class="menu-toggle" data-i18n-attr="aria-label:nav.menu_aria" aria-label="Toggle navigation">☰</button>
+                <button id="theme-toggle" data-i18n-attr="title:nav.theme_title" title="Switch Theme">☀</button>
             </div>
         </nav>
 
         <section class="section">
             <div class="page-hero">
                 <div class="page-hero-left">
-                    <span class="page-hero-label">System Profile // Work History</span>
-                    <h1 class="page-hero-title">CAREER /<br>EXPERIENCE</h1>
-                    <p class="page-hero-subtitle">5 years building data and ML systems at scale — from pipelines to production models.</p>
+                    <span class="page-hero-label" data-i18n="cv.label">System Profile // Work History</span>
+                    <h1 class="page-hero-title"><span data-i18n="cv.title_line1">CAREER /</span><br><span data-i18n="cv.title_line2">EXPERIENCE</span></h1>
+                    <p class="page-hero-subtitle" data-i18n="cv.subtitle">5 years building data and ML systems at scale — from pipelines to production models.</p>
                 </div>
                 <div class="page-hero-meta">
-                    <span class="page-hero-meta-label">System Briefing</span>
-                    <p class="page-hero-meta-text">Work history loaded from experience.json — roles, achievements, and tech stacks.</p>
+                    <span class="page-hero-meta-label" data-i18n="cv.briefing_label">System Briefing</span>
+                    <p class="page-hero-meta-text" data-i18n="cv.briefing_text">Work history loaded from experience.json — roles, achievements, and tech stacks.</p>
                     <div class="page-hero-stats">
                         <div>
-                            <span class="page-hero-stat-label">Experience</span>
-                            <span class="page-hero-stat-value">5 yrs</span>
+                            <span class="page-hero-stat-label" data-i18n="cv.experience">Experience</span>
+                            <span class="page-hero-stat-value" data-i18n="cv.years">5 yrs</span>
                         </div>
                         <div>
-                            <span class="page-hero-stat-label">Base</span>
+                            <span class="page-hero-stat-label" data-i18n="cv.base">Base</span>
                             <span class="page-hero-stat-value" style="font-family: var(--font-code); font-size: 0.85rem; font-style: normal;">CPH</span>
                         </div>
                     </div>
@@ -58,11 +58,11 @@
             </div>
 
             <div class="timeline" id="cv-timeline">
-                <p style="color: var(--accent-color); font-family: var(--font-code);">_fetching_experience_data...</p>
+                <p style="color: var(--accent-color); font-family: var(--font-code);" data-i18n="cv.loading">_fetching_experience_data...</p>
             </div>
 
             <div style="margin-top: 40px; text-align: center;">
-                <button id="print-btn" class="btn" data-resume-pdf="content/resume_2026.pdf">
+                <button id="print-btn" class="btn" data-resume-pdf="content/resume_2026.pdf" data-i18n="cv.download">
                     [ DOWNLOAD_RESUME_PDF ]
                 </button>
             </div>
@@ -70,7 +70,7 @@
         </section>
 
         <footer>
-            <div style="margin-top: 50px; opacity: 0.5; text-align: center; font-family: var(--font-code); font-size: 0.8rem;">
+            <div style="margin-top: 50px; opacity: 0.5; text-align: center; font-family: var(--font-code); font-size: 0.8rem;" data-i18n="footer.copy">
                 &copy; 2025 Maxime Haegeman. Built with code.
             </div>
         </footer>
@@ -79,6 +79,7 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.net.min.js" defer></script>
     <script src="js/vanta-bg.js" defer></script>
+    <script src="js/i18n.js"></script>
     <script src="loader.js"></script>
 </body>
 

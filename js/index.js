@@ -1,16 +1,6 @@
-// Typewriter Effect
-const text = "Hi, I am Maxime !";
-const speed = 100;
-let i = 0;
-
-function typeWriter() {
-    const typewriterElement = document.getElementById("typewriter");
-    if (typewriterElement && i < text.length) {
-        typewriterElement.innerHTML += text.charAt(i);
-        i++;
-        setTimeout(typeWriter, speed);
-    }
-}
+// Typewriter Effect is handled by js/i18n.js (cycles through multiple languages).
+// Kept here as a no-op so any existing call sites stay safe.
+function typeWriter() { /* delegated to i18n.js */ }
 
 // Time Update
 function updateTime() {
@@ -25,7 +15,7 @@ function updateTime() {
         timeZoneName: 'short'
     });
 
-    timeContainer.innerText = `Copenhagen: ${now}`;
+    timeContainer.innerText = `${(window.i18n ? window.i18n.t('status.copenhagen') : 'Copenhagen')}: ${now}`;
 }
 
 // ── HERO LOAD REVEAL ──────────────────────────────────────
@@ -161,7 +151,7 @@ function initProfileRotation() {
 
 // ── INITIALIZE ────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
-    typeWriter();
+    // typeWriter now handled by i18n.js (cycles languages)
     updateTime();
     setInterval(updateTime, 1000);
 

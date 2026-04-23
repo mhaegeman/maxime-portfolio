@@ -387,6 +387,120 @@ nav {
     box-shadow: 0 0 10px var(--accent-glow);
 }
 
+/* --- LANGUAGE SWITCHER --- */
+.lang-switcher {
+    position: relative;
+    display: inline-flex;
+}
+
+.lang-toggle {
+    background: transparent;
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    padding: 6px 10px;
+    cursor: pointer;
+    font-family: var(--font-code);
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    line-height: 1;
+    min-width: 54px;
+    text-align: center;
+}
+
+.lang-toggle:hover,
+.lang-toggle[aria-expanded="true"] {
+    background: var(--accent-color);
+    color: var(--bg-color);
+    box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.lang-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    min-width: 180px;
+    margin: 0;
+    padding: 6px 0;
+    list-style: none;
+    background: var(--bg-color);
+    border: 1px solid var(--accent-color);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4), 0 0 14px var(--accent-glow);
+    font-family: var(--font-code);
+    font-size: 0.85rem;
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(-4px);
+    pointer-events: none;
+    transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.lang-menu.open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.lang-option {
+    display: grid;
+    grid-template-columns: 28px 40px 1fr;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    cursor: pointer;
+    color: var(--text-color);
+    transition: background 0.15s ease, color 0.15s ease;
+    user-select: none;
+}
+
+.lang-option:hover {
+    background: var(--accent-color);
+    color: var(--bg-color);
+}
+
+.lang-option.active {
+    color: var(--accent-color);
+}
+
+.lang-option.active::before {
+    content: '>';
+    position: absolute;
+    margin-left: -12px;
+    color: var(--accent-color);
+}
+
+.lang-option.active:hover {
+    color: var(--bg-color);
+}
+
+.lang-option .lang-flag {
+    font-size: 1.05rem;
+    line-height: 1;
+}
+
+.lang-option .lang-code {
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.lang-option .lang-name {
+    opacity: 0.75;
+    font-size: 0.8rem;
+}
+
+/* RTL support for Arabic greeting in the typewriter */
+#typewriter[dir="rtl"] {
+    direction: rtl;
+    unicode-bidi: embed;
+}
+
+@media (max-width: 768px) {
+    .lang-menu {
+        right: 0;
+        min-width: 160px;
+    }
+}
+
 /* --- SECTION HEADINGS: Hybrid style --- */
 .section-label {
     font-family: var(--font-code);
