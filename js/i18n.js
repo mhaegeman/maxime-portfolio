@@ -833,16 +833,16 @@
     // Order matches the user's request.
     // ─────────────────────────────────────────────────────────────
     const GREETINGS = [
-        { lang: 'en', text: 'Hi, I am Maxime !',      dir: 'ltr' },
-        { lang: 'es', text: '¡Hola, soy Maxime!',     dir: 'ltr' },
+        { lang: 'en', text: 'Hi, I am Maxime !',       dir: 'ltr' },
+        { lang: 'es', text: '¡Hola, soy Maxime !',     dir: 'ltr' },
         { lang: 'fr', text: 'Salut, je suis Maxime !', dir: 'ltr' },
-        { lang: 'de', text: 'Hallo, ich bin Maxime!', dir: 'ltr' },
-        { lang: 'it', text: 'Ciao, sono Maxime!',     dir: 'ltr' },
-        { lang: 'pt', text: 'Olá, eu sou o Maxime!',  dir: 'ltr' },
-        { lang: 'zh', text: '你好，我是 Maxime！',     dir: 'ltr' },
-        { lang: 'ja', text: 'こんにちは、Maximeです！', dir: 'ltr' },
-        { lang: 'da', text: 'Hej, jeg hedder Maxime!', dir: 'ltr' },
-        { lang: 'ar', text: 'مرحبًا، أنا مكسيم!',     dir: 'rtl' },
+        { lang: 'de', text: 'Hallo, ich bin Maxime !', dir: 'ltr' },
+        { lang: 'it', text: 'Ciao, sono Maxime !',     dir: 'ltr' },
+        { lang: 'pt', text: 'Olá, eu sou o Maxime !',  dir: 'ltr' },
+        { lang: 'zh', text: '你好，我是 Maxime ！',     dir: 'ltr' },
+        { lang: 'ja', text: 'こんにちは、Maximeです ！', dir: 'ltr' },
+        { lang: 'da', text: 'Hej, jeg hedder Maxime !', dir: 'ltr' },
+        { lang: 'ar', text: 'مرحبًا، أنا مكسيم !',     dir: 'rtl' },
     ];
 
     // ─────────────────────────────────────────────────────────────

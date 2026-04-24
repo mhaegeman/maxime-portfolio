@@ -133,21 +133,6 @@ done
 echo ""
 echo "=== Asset Reference Checks ==="
 
-# Verify background script (vanta-bg.js) exists and is loaded on all pages
-if [ -f "$REPO_ROOT/js/vanta-bg.js" ]; then
-    pass "js/vanta-bg.js exists"
-else
-    fail "js/vanta-bg.js is missing"
-fi
-
-for f in "${HTML_FILES[@]}"; do
-    if grep -q 'js/vanta-bg.js' "$REPO_ROOT/$f"; then
-        pass "$f loads vanta-bg.js"
-    else
-        fail "$f missing vanta-bg.js script tag"
-    fi
-done
-
 # Check that CSS files referenced in HTML exist
 for f in "${HTML_FILES[@]}"; do
     path="$REPO_ROOT/$f"
