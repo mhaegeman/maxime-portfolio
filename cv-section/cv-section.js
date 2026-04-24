@@ -1,18 +1,17 @@
 // CV section — vanilla JS renderer.
 // Builds the density-map layout (roles timeline + skill heatmap) into #cv-timeline.
+// Pulls localized entries from window.i18n.getExperience() and re-renders on langchange.
 
 (function () {
-    // Normalize legacy "../content/..." logo paths (from the canvas preview) to
-    // the live site's root-relative form.
-    if (window.CV_EXPERIENCE) {
-        window.CV_EXPERIENCE = window.CV_EXPERIENCE.map(j => ({
-            ...j,
-            logo: (j.logo || '').replace(/^\.\.\//, ''),
-        }));
-    }
-
     // Disable loader.js's legacy timeline renderer on this page.
     window.renderExperience = function () {};
+
+    function getJobs() {
+        if (window.i18n && typeof window.i18n.getExperience === 'function') {
+            return window.i18n.getExperience();
+        }
+        return [];
+    }
 
     function h(tag, attrs, children) {
         const el = document.createElement(tag);
@@ -154,7 +153,7 @@
         return h('div', { class: 'cv-matrix' }, [grid, legend]);
     }
 
-    function buildSection() {
+    function buildSection(jobs) {
         const state = { openEl: null };
         const matrix = window.CV_SKILL_MATRIX;
 
@@ -163,7 +162,7 @@
                 h('div', { class: 'cv-reveal' }, [
                     h('span', { class: 'cv-section-label' }, ['_roles.timeline']),
                     h('div', { class: 'cv-roles' },
-                        (window.CV_EXPERIENCE || []).map(job => buildRole(job, state))
+                        jobs.map(job => buildRole(job, state))
                     ),
                 ]),
                 h('div', { class: 'cv-reveal' }, [
@@ -177,12 +176,15 @@
     function mount() {
         const host = document.getElementById('cv-timeline');
         if (!host) return;
-        if (!window.CV_EXPERIENCE || !window.CV_SKILL_MATRIX) return;
+        if (!window.CV_SKILL_MATRIX) return;
+
+        const jobs = getJobs();
+        if (!jobs.length) return;
 
         host.innerHTML = '';
         host.classList.remove('timeline');
         host.classList.add('cv-host');
-        host.appendChild(buildSection());
+        host.appendChild(buildSection(jobs));
 
         const io = new IntersectionObserver((entries) => {
             entries.forEach(e => {
@@ -200,4 +202,7 @@
     } else {
         mount();
     }
+
+    // Re-render whenever the user switches UI language.
+    window.addEventListener('langchange', mount);
 })();
