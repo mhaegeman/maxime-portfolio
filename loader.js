@@ -13,14 +13,14 @@ const REPO_TAGS = {
         { label: 'EDA',                   category: 'analytics' },
         { label: 'Data Visualization',    category: 'analytics' },
     ],
-    'Energy-consumption-prediction': [
+    'seattle-building-energy-forecast': [
         { label: 'Regression',            category: 'ml' },
         { label: 'Predictive Modeling',   category: 'ml' },
         { label: 'Scikit-learn',          category: 'ml' },
         { label: 'EDA',                   category: 'analytics' },
         { label: 'Data Visualization',    category: 'analytics' },
     ],
-    'seo-content-generator': [
+    'nextrank': [
         { label: 'Generative AI',         category: 'nlp' },
         { label: 'LLM',                   category: 'nlp' },
         { label: 'Vertex AI',             category: 'nlp' },
@@ -48,7 +48,7 @@ const REPO_TAGS = {
         { label: 'Text Classification',   category: 'nlp' },
         { label: 'Topic Modeling',        category: 'ml' },
     ],
-    'Nutriscore-Prediction': [
+    'nutriscore-predictor': [
         { label: 'Linear Regression',     category: 'ml' },
         { label: 'Scikit-learn',          category: 'ml' },
         { label: 'Predictive Modeling',   category: 'ml' },
@@ -90,7 +90,7 @@ const PROJECT_META = {
         desc: 'Latent Dirichlet Allocation pipeline that discovers topics from raw text and routes documents to the right bucket. Classic NLP foundation work.',
         cats: ['NLP', 'ML'],
     },
-    'seo-content-generator': {
+    'nextrank': {
         title: 'SEO Content Generator',
         desc: 'Automated content generation tool optimized for SEO performance. LLM-powered pipeline that researches keywords, drafts copy, and scores readability against competitor SERPs.',
         cats: ['NLP', 'GENERATIVE AI', 'FULL STACK'],
@@ -110,7 +110,7 @@ const PROJECT_META = {
         desc: 'Image classification at scale on AWS EMR. PySpark broadcasts a TensorFlow model across executors to process 50k+ images in parallel — distributed deep learning on cloud infra.',
         cats: ['ML', 'CLOUD', 'DISTRIBUTED'],
     },
-    'Nutriscore-Prediction': {
+    'nutriscore-predictor': {
         title: 'Nutriscore Prediction',
         desc: 'Linear regression to predict the Nutri-Score of food products from nutritional facts. Showcases predictive modeling on a public OpenFoodFacts dataset.',
         cats: ['ML', 'ANALYTICS'],
@@ -120,7 +120,7 @@ const PROJECT_META = {
         desc: 'K-Means clustering on customer behavior data to surface actionable marketing personas. Pandas-driven feature engineering and silhouette-based cluster validation.',
         cats: ['ML', 'ANALYTICS', 'MARKETING'],
     },
-    'Energy-consumption-prediction': {
+    'seattle-building-energy-forecast': {
         title: 'Energy Consumption Prediction',
         desc: 'Regression models forecasting building energy use from weather and occupancy features. Scikit-learn pipelines with full EDA and visualization of feature importance.',
         cats: ['ML', 'ANALYTICS', 'FORECASTING'],
@@ -145,13 +145,13 @@ const PROJECT_META = {
 // Ordered list of repos to feature on the projects page. Edit to curate.
 const FEATURED_ORDER = [
     'Python-Object-Clasifier',
-    'seo-content-generator',
+    'nextrank',
     'scoring-bank-project',
     'openweather',
     'fruit-classifier-aws',
-    'Nutriscore-Prediction',
+    'nutriscore-predictor',
     'python-client-segmentation',
-    'Energy-consumption-prediction',
+    'seattle-building-energy-forecast',
 ];
 
 const CONFIG = {

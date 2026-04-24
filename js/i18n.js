@@ -393,7 +393,7 @@
                 desc: 'Latent Dirichlet Allocation-pipeline, der finder emner i rå tekst og sender dokumenter til den rette kategori. Klassisk NLP-fundament.',
             },
         },
-        'seo-content-generator': {
+        'nextrank': {
             en: {
                 title: 'SEO Content Generator',
                 desc: 'Automated content generation tool optimized for SEO performance. LLM-powered pipeline that researches keywords, drafts copy, and scores readability against competitor SERPs.',
@@ -465,7 +465,7 @@
                 desc: 'Billedklassifikation i stor skala på AWS EMR. PySpark broadcaster en TensorFlow-model på tværs af executors for at behandle 50k+ billeder parallelt \u2014 distribueret deep learning i skyen.',
             },
         },
-        'Nutriscore-Prediction': {
+        'nutriscore-predictor': {
             en: {
                 title: 'Nutriscore Prediction',
                 desc: 'Linear regression to predict the Nutri-Score of food products from nutritional facts. Showcases predictive modeling on a public OpenFoodFacts dataset.',
@@ -501,7 +501,7 @@
                 desc: 'K-Means-klyngning på kundeadfærdsdata for at afdække handlingsorienterede marketing-personas. Pandas-baseret feature engineering og silhouette-baseret klyngevalidering.',
             },
         },
-        'Energy-consumption-prediction': {
+        'seattle-building-energy-forecast': {
             en: {
                 title: 'Energy Consumption Prediction',
                 desc: 'Regression models forecasting building energy use from weather and occupancy features. Scikit-learn pipelines with full EDA and visualization of feature importance.',
@@ -955,7 +955,7 @@
             li.setAttribute('role', 'option');
             li.setAttribute('data-lang', l.code);
             li.className = 'lang-option';
-            li.innerHTML = `<span class="lang-flag">${l.flag}</span><span class="lang-code">${l.label}</span><span class="lang-name">${l.name}</span>`;
+            li.innerHTML = `<span class="lang-flag">${l.flag}</span><span class="lang-name">${l.name}</span>`;
             // l.flag is trusted (inline SVG defined in this file, not user input).
             li.addEventListener('click', (ev) => {
                 ev.stopPropagation();

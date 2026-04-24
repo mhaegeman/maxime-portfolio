@@ -443,9 +443,9 @@ nav {
 
 .lang-option {
     display: grid;
-    grid-template-columns: 28px 40px 1fr;
+    grid-template-columns: 28px 1fr;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     padding: 8px 14px;
     cursor: pointer;
     color: var(--text-color);
@@ -497,14 +497,8 @@ nav {
     border-color: rgba(255, 255, 255, 0.15);
 }
 
-.lang-option .lang-code {
-    letter-spacing: 1px;
-    font-weight: 600;
-}
-
 .lang-option .lang-name {
-    opacity: 0.75;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
 }
 
 /* RTL support for Arabic greeting in the typewriter */
