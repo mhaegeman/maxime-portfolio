@@ -44,8 +44,8 @@ for f in "${HTML_FILES[@]}"; do
         fail "$f missing viewport meta tag (breaks mobile)"
     fi
 
-    # title tag
-    if grep -qi '<title>' "$path"; then
+    # title tag (allow attributes, e.g. <title data-i18n="...">)
+    if grep -qiE '<title(\s[^>]*)?>' "$path"; then
         pass "$f has <title>"
     else
         fail "$f missing <title> tag"
