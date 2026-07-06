@@ -167,42 +167,74 @@ for ref in $MEDIA_REFS; do
     fi
 done
 
-# ─── 5. JSON Data Validation ─────────────────────────────────────────────────
+# ─── 5. SEO & Metadata Validation ────────────────────────────────────────────
 echo ""
-echo "=== JSON Data Validation ==="
+echo "=== SEO & Metadata Checks ==="
 
-JSON_FILES=("content/experience.json")
-
-for f in "${JSON_FILES[@]}"; do
-    path="$REPO_ROOT/$f"
-    if [ ! -f "$path" ]; then
-        fail "$f is missing"
-        continue
-    fi
-    pass "$f exists"
-
-    # Validate JSON syntax (python is available per CLAUDE.md)
-    if python3 -c "import json; json.load(open('$path'))" 2>/dev/null; then
-        pass "$f is valid JSON"
+for f in "sitemap.xml" "robots.txt" "404.html" "content/preview-card.png"; do
+    if [ -f "$REPO_ROOT/$f" ]; then
+        pass "$f exists"
     else
-        fail "$f has invalid JSON syntax"
+        fail "$f is missing"
     fi
-
-    # Check required fields in experience entries
-    MISSING=$(python3 -c "
-import json, sys
-data = json.load(open('$path'))
-required = ['period', 'role', 'company', 'description', 'achievements']
-errors = []
-for i, entry in enumerate(data):
-    for key in required:
-        if key not in entry:
-            errors.append(f'Entry {i} missing \"{key}\"')
-if errors:
-    print('\n'.join(errors))
-    sys.exit(1)
-" 2>&1) && pass "$f entries have all required fields" || fail "$f: $MISSING"
 done
+
+# sitemap.xml is well-formed XML
+if python3 -c "import xml.etree.ElementTree as ET; ET.parse('$REPO_ROOT/sitemap.xml')" 2>/dev/null; then
+    pass "sitemap.xml is valid XML"
+else
+    fail "sitemap.xml has invalid XML syntax"
+fi
+
+# Each main page has a meta description and canonical URL
+for f in "${HTML_FILES[@]}"; do
+    path="$REPO_ROOT/$f"
+    if grep -qi 'name="description"' "$path"; then
+        pass "$f has meta description"
+    else
+        fail "$f missing meta description"
+    fi
+    if grep -qi 'rel="canonical"' "$path"; then
+        pass "$f has canonical URL"
+    else
+        fail "$f missing canonical URL"
+    fi
+done
+
+# JSON-LD on the homepage is valid JSON and its CSP hash is current.
+# (The CSP meta must whitelist the exact sha256 of the JSON-LD content,
+# otherwise browsers report a violation for the structured-data block.)
+JSONLD_CHECK=$(python3 -c "
+import hashlib, base64, json, re, sys
+s = open('$REPO_ROOT/index.html').read()
+m = re.search(r'<script type=\"application/ld\+json\">(.*?)</script>', s, re.S)
+if not m:
+    print('no JSON-LD block found'); sys.exit(1)
+try:
+    json.loads(m.group(1))
+except Exception as e:
+    print(f'invalid JSON-LD: {e}'); sys.exit(1)
+h = base64.b64encode(hashlib.sha256(m.group(1).encode()).digest()).decode()
+if f'sha256-{h}' not in s:
+    print(f'CSP hash stale — expected sha256-{h}'); sys.exit(1)
+print('ok')
+" 2>&1) && pass "index.html JSON-LD is valid and CSP hash matches" || fail "index.html JSON-LD: $JSONLD_CHECK"
+
+# Regression guard: no inline style= attributes (blocked by our CSP)
+INLINE_STYLES=$(grep -n 'style="' "$REPO_ROOT"/*.html | grep -v 'stylesheet' || true)
+if [ -z "$INLINE_STYLES" ]; then
+    pass "No inline style attributes in HTML (CSP-safe)"
+else
+    fail "Inline style attributes found (blocked by CSP): $INLINE_STYLES"
+fi
+
+# Regression guard: external links opening new tabs carry rel=noopener
+UNSAFE_BLANK=$(grep -n 'target="_blank"' "$REPO_ROOT"/*.html | grep -v 'rel="noopener"' || true)
+if [ -z "$UNSAFE_BLANK" ]; then
+    pass "All target=_blank links have rel=noopener"
+else
+    fail "target=_blank without rel=noopener: $UNSAFE_BLANK"
+fi
 
 # ─── 6. CSS Light Theme Contrast Checks ──────────────────────────────────────
 echo ""

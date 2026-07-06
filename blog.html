@@ -4,8 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; script-src 'self' https://api.github.com https://cdn.jsdelivr.net; connect-src 'self' https://api.github.com https://corsproxy.io https://api.allorigins.win https://api.codetabs.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' https:;">
+        content="default-src 'self'; script-src 'self'; connect-src 'self' https://api.github.com https://corsproxy.io https://api.allorigins.win https://api.codetabs.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:;">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Articles by Maxime Haegeman on data engineering, machine learning and production AI systems.">
+    <link rel="canonical" href="https://www.maximehaegeman.com/blog.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.maximehaegeman.com/blog.html">
+    <meta property="og:title" content="Maxime Haegeman | Blog">
+    <meta property="og:description" content="Articles by Maxime Haegeman on data engineering, machine learning and production AI systems.">
+    <meta property="og:image" content="https://www.maximehaegeman.com/content/preview-card.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://www.maximehaegeman.com/content/preview-card.png">
     <title data-i18n="title.blog">Maxime | Blog</title>
     <link rel="icon" type="image/svg+xml" href="content/icon.svg">
     <script src="theme-init.js"></script>
@@ -51,26 +60,29 @@
                         </div>
                         <div>
                             <span class="page-hero-stat-label" data-i18n="blog.status">Status</span>
-                            <span class="page-hero-stat-value" style="font-family: var(--font-code); font-size: 0.9rem; font-style: normal; color: var(--accent-color);" data-i18n="blog.status_online">Online</span>
+                            <span class="page-hero-stat-value page-hero-stat-value--code" data-i18n="blog.status_online">Online</span>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div id="blog-list" class="blog-grid">
-                <p style="color: var(--accent-color); font-family: var(--font-code);" data-i18n="blog.loading">_establishing_connection_to_rss_feed...</p>
+                <p class="loading-msg" data-i18n="blog.loading">_establishing_connection_to_rss_feed...</p>
             </div>
         </section>
 
         <footer>
-            <div style="margin-top: 50px; opacity: 0.5; text-align: center; font-family: var(--font-code); font-size: 0.8rem;" data-i18n="footer.copy">
-                &copy; 2025 Maxime Haegeman. Built with code.
+            <div class="footer-copy footer-copy--center" data-i18n="footer.copy">
+                &copy; 2026 Maxime Haegeman. Built with code.
             </div>
         </footer>
     </div>
 
+    <div class="scroll-progress" aria-hidden="true"></div>
+
     <script src="js/i18n.js"></script>
     <script src="loader.js"></script>
+    <script src="js/palette.js"></script>
 </body>
 
 </html>

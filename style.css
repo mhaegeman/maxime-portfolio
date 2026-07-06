@@ -1821,3 +1821,435 @@ section + section::before {
     .v1-title { font-size: 1.55rem; }
     .v1-card { padding: 24px 22px 20px; }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   UTILITY CLASSES (replacing former inline styles — CSP-safe)
+   ═══════════════════════════════════════════════════════════ */
+.contact-body {
+    padding: 20px 0;
+}
+
+.contact-prompt {
+    margin-bottom: 20px;
+    color: var(--text-secondary);
+    font-family: var(--font-code);
+    font-size: 0.9rem;
+}
+
+.contact-email {
+    font-size: 1.2rem;
+    color: var(--accent-color);
+    font-family: var(--font-code);
+    border-bottom: none;
+}
+
+.footer-copy {
+    margin-top: 15px;
+    opacity: 0.5;
+    font-family: var(--font-code);
+    font-size: 0.8rem;
+}
+
+.footer-copy--center {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.loading-msg {
+    color: var(--accent-color);
+    font-family: var(--font-code);
+}
+
+.error-msg {
+    color: #ff5f56;
+    font-family: var(--font-code);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.error-msg a {
+    color: var(--accent-color);
+}
+
+.terminal-cmd-line {
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+    font-family: var(--font-code);
+    font-size: 0.82rem;
+}
+
+.page-hero-stat-value--code {
+    font-family: var(--font-code);
+    font-size: 0.9rem;
+    font-style: normal;
+    color: var(--accent-color);
+}
+
+.page-hero-stat-value--plain {
+    font-size: 0.85rem;
+    color: var(--text-primary);
+}
+
+.cv-download-row {
+    margin-top: 40px;
+    text-align: center;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   VIEW TRANSITIONS — smooth cross-document navigation
+   Progressive enhancement: ignored by unsupporting browsers.
+   ═══════════════════════════════════════════════════════════ */
+@view-transition {
+    navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation-duration: 0.28s;
+    animation-timing-function: var(--ease-cinematic);
+}
+
+nav {
+    view-transition-name: site-nav;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation: none;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SCROLL PROGRESS BAR — CSS scroll-driven animation,
+   JS fallback (loader.js) for browsers without support.
+   ═══════════════════════════════════════════════════════════ */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-color), var(--accent-dim));
+    transform-origin: 0 50%;
+    transform: scaleX(0);
+    z-index: 1001;
+    pointer-events: none;
+}
+
+@supports (animation-timeline: scroll()) {
+    .scroll-progress {
+        animation: scroll-progress-grow linear both;
+        animation-timeline: scroll(root);
+    }
+}
+
+@keyframes scroll-progress-grow {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .scroll-progress { display: none; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   AURORA HERO — drifting gradient blobs behind the hero.
+   CSS-only, theme-aware via the --atm-* variables.
+   ═══════════════════════════════════════════════════════════ */
+#hero::before,
+#hero::after {
+    content: '';
+    position: absolute;
+    inset: -15% -10%;
+    z-index: -1;
+    pointer-events: none;
+    filter: blur(48px);
+}
+
+#hero::before {
+    background:
+        radial-gradient(ellipse 42% 55% at 18% 30%, var(--atm-emerald) 0%, transparent 70%),
+        radial-gradient(ellipse 36% 48% at 82% 65%, var(--atm-lime) 0%, transparent 70%);
+    animation: aurora-drift-a 26s ease-in-out infinite alternate;
+}
+
+#hero::after {
+    background:
+        radial-gradient(ellipse 30% 42% at 65% 20%, var(--atm-teal) 0%, transparent 70%);
+    animation: aurora-drift-b 34s ease-in-out infinite alternate;
+}
+
+@keyframes aurora-drift-a {
+    from { transform: translate3d(-4%, -3%, 0) scale(1); }
+    to   { transform: translate3d(5%, 4%, 0) scale(1.15); }
+}
+
+@keyframes aurora-drift-b {
+    from { transform: translate3d(4%, 5%, 0) rotate(-2deg); }
+    to   { transform: translate3d(-5%, -4%, 0) rotate(3deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #hero::before,
+    #hero::after {
+        animation: none;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SKILL CHIP ENTRANCE — chips cascade in when their cell reveals
+   ═══════════════════════════════════════════════════════════ */
+.skills-va-cell.reveal .skill-chip {
+    opacity: 0;
+    transform: translateY(8px);
+}
+
+.skills-va-cell.reveal.visible .skill-chip {
+    animation: chip-in 0.45s var(--ease-out-expo) both;
+    animation-delay: calc(var(--chip-index, 0) * 45ms + 150ms);
+}
+
+@keyframes chip-in {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .skills-va-cell.reveal .skill-chip {
+        opacity: 1;
+        transform: none;
+        animation: none;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MAGNETIC BUTTONS — element follows cursor slightly (JS-driven)
+   ═══════════════════════════════════════════════════════════ */
+.magnetic {
+    transition: transform 0.25s var(--ease-out-expo);
+    will-change: transform;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   COMMAND PALETTE (⌘K)
+   ═══════════════════════════════════════════════════════════ */
+.palette-hint {
+    background: transparent;
+    border: 1px solid var(--nav-border);
+    color: var(--text-secondary);
+    padding: 6px 10px;
+    cursor: pointer;
+    font-family: var(--font-code);
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    line-height: 1;
+}
+
+.palette-hint:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+    box-shadow: 0 0 10px var(--accent-glow);
+}
+
+@media (max-width: 900px) {
+    .palette-hint { display: none; }
+}
+
+.palette-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 2000;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 12vh 20px 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.18s ease;
+}
+
+.palette-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.palette-panel {
+    width: 100%;
+    max-width: 560px;
+    background: var(--bg-color);
+    border: 1px solid var(--accent-color);
+    box-shadow: 0 0 0 1px rgba(204, 255, 0, 0.15), 0 24px 80px rgba(0, 0, 0, 0.75), 0 0 40px var(--accent-glow);
+    transform: translateY(-8px) scale(0.98);
+    transition: transform 0.18s var(--ease-out-expo);
+}
+
+.palette-overlay.open .palette-panel {
+    transform: translateY(0) scale(1);
+}
+
+.palette-input-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--nav-border);
+    font-family: var(--font-code);
+}
+
+.palette-ps1 {
+    color: var(--accent-color);
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+.palette-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-primary);
+    font-family: var(--font-code);
+    font-size: 0.95rem;
+    caret-color: var(--accent-color);
+}
+
+.palette-input::placeholder {
+    color: var(--text-muted);
+}
+
+.palette-esc {
+    font-family: var(--font-code);
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    border: 1px solid var(--nav-border);
+    padding: 2px 6px;
+    flex-shrink: 0;
+}
+
+.palette-list {
+    list-style: none;
+    margin: 0;
+    padding: 6px 0;
+    max-height: 46vh;
+    overflow-y: auto;
+}
+
+.palette-group-label {
+    font-family: var(--font-code);
+    font-size: 0.62rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 10px 16px 4px;
+}
+
+.palette-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 16px;
+    cursor: pointer;
+    font-family: var(--font-code);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.palette-item .palette-item-icon {
+    color: var(--accent-dim);
+    width: 1.4em;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.palette-item .palette-item-hint {
+    margin-left: auto;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+}
+
+.palette-item.selected,
+.palette-item:hover {
+    background: var(--accent-subtle);
+    color: var(--text-primary);
+    box-shadow: inset 2px 0 0 var(--accent-color);
+}
+
+.palette-item.selected .palette-item-icon {
+    color: var(--accent-color);
+}
+
+.palette-empty {
+    padding: 18px 16px;
+    font-family: var(--font-code);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CONTACT TERMINAL (homepage)
+   ═══════════════════════════════════════════════════════════ */
+.contact-terminal {
+    max-width: 620px;
+    margin: 0 0 28px;
+    border: 1px solid rgba(204, 255, 0, 0.15);
+    background: rgba(8, 12, 8, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    font-family: var(--font-code);
+    text-align: left;
+}
+
+[data-theme="light"] .contact-terminal {
+    background: rgba(248, 246, 240, 0.88);
+    border-color: rgba(26, 92, 0, 0.22);
+}
+
+.contact-terminal-body {
+    padding: 14px 16px 4px;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    min-height: 60px;
+    max-height: 260px;
+    overflow-y: auto;
+    color: var(--text-secondary);
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+}
+
+.contact-terminal-body .t-accent { color: var(--accent-color); }
+.contact-terminal-body .t-cmd    { color: var(--text-primary); }
+.contact-terminal-body a         { color: var(--accent-color); border-bottom: 1px solid var(--accent-dim); }
+.contact-terminal-body a:hover   { background: none; box-shadow: none; }
+
+.contact-terminal-input-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px 12px;
+}
+
+.contact-terminal-ps1 {
+    color: var(--accent-color);
+    font-size: 0.85rem;
+}
+
+.contact-terminal-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-primary);
+    font-family: var(--font-code);
+    font-size: 0.85rem;
+    caret-color: var(--accent-color);
+}
+
+.contact-terminal-input::placeholder {
+    color: var(--text-muted);
+}

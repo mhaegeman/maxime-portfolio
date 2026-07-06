@@ -4,8 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; script-src 'self' https://api.github.com https://api.rss2json.com https://cdn.jsdelivr.net; connect-src 'self' https://api.github.com https://api.rss2json.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com;">
+        content="default-src 'self'; script-src 'self'; connect-src 'self' https://api.github.com https://corsproxy.io https://api.allorigins.win https://api.codetabs.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:;">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Work history of Maxime Haegeman — Senior Data / ML Engineer in Copenhagen. Roles, achievements and tech stacks.">
+    <link rel="canonical" href="https://www.maximehaegeman.com/cv.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.maximehaegeman.com/cv.html">
+    <meta property="og:title" content="Maxime Haegeman | Resume">
+    <meta property="og:description" content="Work history of Maxime Haegeman — Senior Data / ML Engineer in Copenhagen. Roles, achievements and tech stacks.">
+    <meta property="og:image" content="https://www.maximehaegeman.com/content/preview-card.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://www.maximehaegeman.com/content/preview-card.png">
     <title data-i18n="title.resume">Maxime | Resume</title>
     <link rel="icon" type="image/svg+xml" href="content/icon.svg">
     <script src="theme-init.js"></script>
@@ -45,7 +54,7 @@
                 </div>
                 <div class="page-hero-meta">
                     <span class="page-hero-meta-label" data-i18n="cv.briefing_label">System Briefing</span>
-                    <p class="page-hero-meta-text" data-i18n="cv.briefing_text">Work history loaded from experience.json — roles, achievements, and tech stacks.</p>
+                    <p class="page-hero-meta-text" data-i18n="cv.briefing_text">Work history with roles, achievements, and tech stacks — plus a skill density heatmap.</p>
                     <div class="page-hero-stats">
                         <div>
                             <span class="page-hero-stat-label" data-i18n="cv.experience">Experience</span>
@@ -53,17 +62,17 @@
                         </div>
                         <div>
                             <span class="page-hero-stat-label" data-i18n="cv.base">Base</span>
-                            <span class="page-hero-stat-value" style="font-family: var(--font-code); font-size: 0.85rem; font-style: normal;">CPH</span>
+                            <span class="page-hero-stat-value page-hero-stat-value--code page-hero-stat-value--plain">CPH</span>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="timeline" id="cv-timeline">
-                <p style="color: var(--accent-color); font-family: var(--font-code);" data-i18n="cv.loading">_fetching_experience_data...</p>
+                <p class="loading-msg" data-i18n="cv.loading">_fetching_experience_data...</p>
             </div>
 
-            <div style="margin-top: 40px; text-align: center;">
+            <div class="cv-download-row">
                 <button id="print-btn" class="btn" data-resume-pdf="content/resume_2026.pdf" data-i18n="cv.download">
                     [ DOWNLOAD_RESUME_PDF ]
                 </button>
@@ -72,14 +81,17 @@
         </section>
 
         <footer>
-            <div style="margin-top: 50px; opacity: 0.5; text-align: center; font-family: var(--font-code); font-size: 0.8rem;" data-i18n="footer.copy">
-                &copy; 2025 Maxime Haegeman. Built with code.
+            <div class="footer-copy footer-copy--center" data-i18n="footer.copy">
+                &copy; 2026 Maxime Haegeman. Built with code.
             </div>
         </footer>
     </div>
 
+    <div class="scroll-progress" aria-hidden="true"></div>
+
     <script src="js/i18n.js"></script>
     <script src="loader.js"></script>
+    <script src="js/palette.js"></script>
     <script src="cv-section/cv-section.js"></script>
 </body>
 
