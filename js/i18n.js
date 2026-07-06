@@ -65,7 +65,7 @@
             // Footer / status
             'status.online': 'System Status: Online',
             'status.copenhagen': 'Copenhagen',
-            'footer.copy': '© 2025 Maxime Haegeman. Built with code.',
+            'footer.copy': '© 2026 Maxime Haegeman. Built with code.',
 
             // Projects page
             'projects.label': 'Repository Feed // GitHub API',
@@ -100,7 +100,7 @@
             'cv.title_line2': 'EXPERIENCE',
             'cv.subtitle': '5 years building data and ML systems at scale — from pipelines to production models.',
             'cv.briefing_label': 'System Briefing',
-            'cv.briefing_text': 'Work history loaded from experience.json — roles, achievements, and tech stacks.',
+            'cv.briefing_text': 'Work history with roles, achievements, and tech stacks — plus a skill density heatmap.',
             'cv.experience': 'Experience',
             'cv.years': '5 yrs',
             'cv.base': 'Base',
@@ -155,7 +155,7 @@
 
             'status.online': 'Estado del sistema: En línea',
             'status.copenhagen': 'Copenhague',
-            'footer.copy': '© 2025 Maxime Haegeman. Hecho con código.',
+            'footer.copy': '© 2026 Maxime Haegeman. Hecho con código.',
 
             'projects.label': 'Feed de Repositorios // GitHub API',
             'projects.title_line1': 'OPEN SOURCE',
@@ -187,7 +187,7 @@
             'cv.title_line2': 'EXPERIENCIA',
             'cv.subtitle': '5 años construyendo sistemas de datos y ML a escala — desde pipelines hasta modelos en producción.',
             'cv.briefing_label': 'Informe del sistema',
-            'cv.briefing_text': 'Historial cargado desde experience.json — roles, logros y stacks tecnológicos.',
+            'cv.briefing_text': 'Historial laboral con roles, logros y stacks tecnológicos — más un mapa de densidad de habilidades.',
             'cv.experience': 'Experiencia',
             'cv.years': '5 años',
             'cv.base': 'Base',
@@ -242,7 +242,7 @@
 
             'status.online': 'État du système : En ligne',
             'status.copenhagen': 'Copenhague',
-            'footer.copy': '© 2025 Maxime Haegeman. Conçu avec du code.',
+            'footer.copy': '© 2026 Maxime Haegeman. Conçu avec du code.',
 
             'projects.label': 'Flux de dépôts // API GitHub',
             'projects.title_line1': 'OPEN SOURCE',
@@ -274,7 +274,7 @@
             'cv.title_line2': 'EXPÉRIENCE',
             'cv.subtitle': '5 ans à construire des systèmes data et ML à grande échelle — des pipelines aux modèles en production.',
             'cv.briefing_label': 'Briefing système',
-            'cv.briefing_text': 'Historique chargé depuis experience.json — rôles, réalisations et stacks techniques.',
+            'cv.briefing_text': 'Parcours professionnel avec rôles, réalisations et stacks techniques — plus une heatmap de compétences.',
             'cv.experience': 'Expérience',
             'cv.years': '5 ans',
             'cv.base': 'Base',
@@ -329,7 +329,7 @@
 
             'status.online': 'Systemstatus: Online',
             'status.copenhagen': 'København',
-            'footer.copy': '© 2025 Maxime Haegeman. Bygget med kode.',
+            'footer.copy': '© 2026 Maxime Haegeman. Bygget med kode.',
 
             'projects.label': 'Repository-feed // GitHub API',
             'projects.title_line1': 'OPEN SOURCE',
@@ -361,7 +361,7 @@
             'cv.title_line2': 'ERFARING',
             'cv.subtitle': '5 år med at bygge data- og ML-systemer i stor skala — fra pipelines til produktionsmodeller.',
             'cv.briefing_label': 'System-briefing',
-            'cv.briefing_text': 'Arbejdshistorik indlæst fra experience.json — roller, resultater og teknologistakke.',
+            'cv.briefing_text': 'Arbejdshistorik med roller, resultater og teknologistakke — plus et skill density heatmap.',
             'cv.experience': 'Erfaring',
             'cv.years': '5 år',
             'cv.base': 'Base',

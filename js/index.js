@@ -139,4 +139,11 @@ document.addEventListener('DOMContentLoaded', () => {
     applyStaggerIndex('.skills-va', '.skills-va-cell');
     applyStaggerIndex('.proj-list', '.proj-card');
     applyStaggerIndex('.blog-grid', '.blog-card');
+
+    // Per-chip cascade inside each skills cell (CSS reads --chip-index)
+    document.querySelectorAll('.skills-va-chips').forEach(group => {
+        group.querySelectorAll('.skill-chip').forEach((chip, idx) => {
+            chip.style.setProperty('--chip-index', idx);
+        });
+    });
 });

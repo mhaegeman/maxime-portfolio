@@ -3,19 +3,21 @@
 
 <head>
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; script-src 'self' https://api.github.com https://api.rss2json.com https://cdn.jsdelivr.net; connect-src 'self' https://api.github.com https://api.rss2json.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com;">
+        content="default-src 'self'; script-src 'self' 'sha256-pTXPKjpL4VCR8kS2AskbLVCkbiFXT/lAu9iNLnOAI3Y='; connect-src 'self' https://api.github.com https://corsproxy.io https://api.allorigins.win https://api.codetabs.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:;">
     <meta name="description"
-        content="Portfolio of Maxime Haegeman - Data Engineer & Python Developer specializing in scalable data and ML pipelines.">
+        content="Portfolio of Maxime Haegeman — Data Engineer & Python Developer in Copenhagen, specializing in scalable data and ML pipelines.">
     <meta name="keywords" content="Data Scientist, Python, Machine Learning, Data Engineer, Maxime Haegeman, Haegeman, AI Engineer">
+    <link rel="canonical" href="https://www.maximehaegeman.com/">
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.maximehaegeman.com/">
     <meta property="og:title" content="Maxime Haegeman | Data Engineer">
     <meta property="og:description" content="Specializing in scalable data and ML pipelines.">
-    <meta property="og:image" content="https://www.maximehaegeman.com/assets/preview-card.png">
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="Maxime Haegeman | Data Engineer">
-    <meta property="twitter:description" content="Specializing in scalable data and ML pipelines.">
+    <meta property="og:image" content="https://www.maximehaegeman.com/content/preview-card.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Maxime Haegeman | Data Engineer">
+    <meta name="twitter:description" content="Specializing in scalable data and ML pipelines.">
+    <meta name="twitter:image" content="https://www.maximehaegeman.com/content/preview-card.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="title.home">Maxime Haegeman | Data Engineer</title>
@@ -28,6 +30,8 @@
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="css/index.css">
+    <link rel="preload" as="image" href="content/img/scandinavia/max01.webp" fetchpriority="high">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Maxime Haegeman","url":"https://www.maximehaegeman.com/","jobTitle":"Senior Data / ML Engineer","address":{"@type":"PostalAddress","addressLocality":"Copenhagen","addressCountry":"DK"},"email":"mailto:maximehaegeman@gmail.com","sameAs":["https://github.com/mhaegeman","https://linkedin.com/in/maxime-haegeman","https://medium.com/@maximehaegeman"]}</script>
 </head>
 
 <body>
@@ -91,14 +95,14 @@
                     <div class="video-frame-wrapper">
                         <a href="cv.html" class="profile-link">
                             <div class="video-frame" id="hero-frame">
-                                <img src="content/img/scandinavia/max01.png" alt="Maxime Haegeman" class="profile-img active">
-                                <img src="content/img/scandinavia/max02.png" alt="Maxime Haegeman" class="profile-img">
-                                <img src="content/img/scandinavia/max03.png" alt="Maxime Haegeman" class="profile-img">
-                                <img src="content/img/scandinavia/max04.png" alt="Maxime Haegeman" class="profile-img">
-                                <img src="content/img/scandinavia/max05.png" alt="Maxime Haegeman" class="profile-img">
-                                <img src="content/img/scandinavia/max06.png" alt="Maxime Haegeman" class="profile-img">
-                                <img src="content/img/scandinavia/max07.png" alt="Maxime Haegeman" class="profile-img">
-                                <img src="content/img/scandinavia/max08.png" alt="Maxime Haegeman" class="profile-img">
+                                <img src="content/img/scandinavia/max01.webp" alt="Maxime Haegeman" class="profile-img active" width="760" height="1351" fetchpriority="high" decoding="async">
+                                <img src="content/img/scandinavia/max02.webp" alt="Maxime Haegeman" class="profile-img" width="675" height="1200" loading="lazy" decoding="async">
+                                <img src="content/img/scandinavia/max03.webp" alt="Maxime Haegeman" class="profile-img" width="760" height="1351" loading="lazy" decoding="async">
+                                <img src="content/img/scandinavia/max04.webp" alt="Maxime Haegeman" class="profile-img" width="760" height="1351" loading="lazy" decoding="async">
+                                <img src="content/img/scandinavia/max05.webp" alt="Maxime Haegeman" class="profile-img" width="760" height="1351" loading="lazy" decoding="async">
+                                <img src="content/img/scandinavia/max06.webp" alt="Maxime Haegeman" class="profile-img" width="760" height="1351" loading="lazy" decoding="async">
+                                <img src="content/img/scandinavia/max07.webp" alt="Maxime Haegeman" class="profile-img" width="760" height="1351" loading="lazy" decoding="async">
+                                <img src="content/img/scandinavia/max08.webp" alt="Maxime Haegeman" class="profile-img" width="760" height="1351" loading="lazy" decoding="async">
                                 <div class="profile-hover-overlay"><span>View_Profile()</span></div>
                             </div>
                         </a>
@@ -183,7 +187,7 @@
                 <article class="card proj-card">
                     <div class="proj-header">
                         <h3 class="card-header"><span class="proj-prompt">~/</span>seo-content-generator</h3>
-                        <a href="https://github.com/mhaegeman/seo-content-generator" target="_blank" class="btn-link">view_source&nbsp;→</a>
+                        <a href="https://github.com/mhaegeman/seo-content-generator" target="_blank" rel="noopener" class="btn-link">view_source&nbsp;→</a>
                     </div>
                     <div class="card-tags">
                         <span class="tag">Python</span>
@@ -195,7 +199,7 @@
                 <article class="card proj-card">
                     <div class="proj-header">
                         <h3 class="card-header"><span class="proj-prompt">~/</span>openweather</h3>
-                        <a href="https://github.com/mhaegeman/openweather" target="_blank" class="btn-link">view_source&nbsp;→</a>
+                        <a href="https://github.com/mhaegeman/openweather" target="_blank" rel="noopener" class="btn-link">view_source&nbsp;→</a>
                     </div>
                     <div class="card-tags">
                         <span class="tag">API</span>
@@ -207,7 +211,7 @@
                 <article class="card proj-card">
                     <div class="proj-header">
                         <h3 class="card-header"><span class="proj-prompt">~/</span>scoring-bank-project</h3>
-                        <a href="https://github.com/mhaegeman/scoring-bank-project" target="_blank" class="btn-link">view_source&nbsp;→</a>
+                        <a href="https://github.com/mhaegeman/scoring-bank-project" target="_blank" rel="noopener" class="btn-link">view_source&nbsp;→</a>
                     </div>
                     <div class="card-tags">
                         <span class="tag">Data Science</span>
@@ -224,21 +228,36 @@
 
         <section class="section" id="contact">
             <span class="section-label" data-i18n="contact.label">Status: Online // Contact</span>
-            <div style="padding: 20px 0;">
-                <p style="margin-bottom: 20px; color: var(--text-secondary); font-family: var(--font-code); font-size: 0.9rem;" data-i18n="contact.prompt">
+            <div class="contact-body">
+                <p class="contact-prompt" data-i18n="contact.prompt">
                     // Interested in collaboration? Execute the command below.
                 </p>
-                <a href="mailto:contact@maximehaegeman.dev" style="font-size: 1.2rem; color: var(--accent-color); font-family: var(--font-code); border-bottom: none;">
-                    > mailto:contact@maximehaegeman.dev
+
+                <div class="contact-terminal" id="contact-terminal" hidden>
+                    <div class="code-box-tab">
+                        <span class="code-box-dots"><span></span><span></span><span></span></span>
+                        visitor@maximehaegeman.com: ~
+                    </div>
+                    <div class="contact-terminal-body" id="terminal-output" aria-live="polite"></div>
+                    <div class="contact-terminal-input-row">
+                        <span class="contact-terminal-ps1">$</span>
+                        <input type="text" id="terminal-input" class="contact-terminal-input"
+                            autocomplete="off" autocapitalize="off" spellcheck="false"
+                            aria-label="Terminal command input" placeholder="type 'help'">
+                    </div>
+                </div>
+
+                <a href="mailto:maximehaegeman@gmail.com" class="contact-email">
+                    > mailto:maximehaegeman@gmail.com
                 </a>
                 <div class="social-links">
-                    <a href="https://linkedin.com/in/maxime-haegeman" target="_blank" class="social-icon" aria-label="LinkedIn">
+                    <a href="https://linkedin.com/in/maxime-haegeman" target="_blank" rel="noopener" class="social-icon" aria-label="LinkedIn">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
                     </a>
-                    <a href="https://github.com/mhaegeman" target="_blank" class="social-icon" aria-label="GitHub">
+                    <a href="https://github.com/mhaegeman" target="_blank" rel="noopener" class="social-icon" aria-label="GitHub">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
                     </a>
-                    <a href="https://medium.com/@maximehaegeman" target="_blank" class="social-icon" aria-label="Medium">
+                    <a href="https://medium.com/@maximehaegeman" target="_blank" rel="noopener" class="social-icon" aria-label="Medium">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/></svg>
                     </a>
                 </div>
@@ -252,14 +271,18 @@
                 <span>|</span>
                 <span id="cph-time">Copenhagen: Loading...</span>
             </div>
-            <div style="margin-top: 15px; opacity: 0.5; font-family: var(--font-code); font-size: 0.8rem;" data-i18n="footer.copy">
-                &copy; 2025 Maxime Haegeman. Built with code.
+            <div class="footer-copy" data-i18n="footer.copy">
+                &copy; 2026 Maxime Haegeman. Built with code.
             </div>
         </footer>
     </div>
 
+    <div class="scroll-progress" aria-hidden="true"></div>
+
     <script src="js/i18n.js"></script>
     <script src="loader.js"></script>
+    <script src="js/palette.js"></script>
+    <script src="js/terminal.js"></script>
     <script src="js/index.js"></script>
 
 </body>

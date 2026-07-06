@@ -310,20 +310,68 @@ function renderRepos() {
     }
 }
 
+// Session cache helpers — avoid re-hitting APIs on every navigation and
+// survive GitHub's 60 req/h unauthenticated rate limit.
+const CACHE_TTL_MS = 60 * 60 * 1000; // 1 hour
+
+function cacheGet(key) {
+    try {
+        const raw = sessionStorage.getItem(key);
+        if (!raw) return null;
+        const { ts, data } = JSON.parse(raw);
+        if (Date.now() - ts > CACHE_TTL_MS) return null;
+        return data;
+    } catch (_) {
+        return null;
+    }
+}
+
+function cacheSet(key, data) {
+    try {
+        sessionStorage.setItem(key, JSON.stringify({ ts: Date.now(), data }));
+    } catch (_) { /* storage full/blocked — not fatal */ }
+}
+
 async function loadRepos() {
     const container = document.getElementById('repo-grid');
     if (!container) return; // Stop if we aren't on the projects page
 
-    try {
-        // 1. Fetch all repos so we can look up star counts + html_url by name.
-        const response = await fetch(`https://api.github.com/users/${CONFIG.githubUser}/repos?per_page=100&type=owner`);
-        const data = await response.json();
-        _reposCache = Object.fromEntries(data.map(r => [r.name, r]));
+    // 1. Render instantly from curated metadata — no network needed.
+    //    html_url is derivable; stars/homepage get hydrated below.
+    _reposCache = Object.fromEntries(FEATURED_ORDER.map(name => [name, {
+        name,
+        html_url: `https://github.com/${CONFIG.githubUser}/${name}`,
+        description: null,
+        homepage: null,
+        stargazers_count: null,
+        forks_count: null,
+    }]));
+    renderRepos();
 
+    // 2. Hydrate from GitHub (cache-first) for live stars + homepage links.
+    const cached = cacheGet('gh-repos-v1');
+    if (cached) {
+        _reposCache = cached;
         renderRepos();
+        return;
+    }
 
-    } catch (error) {
-        container.innerHTML = `<p style="color: #ff5f56;">Error fetching repos: ${error.message}</p>`;
+    try {
+        const response = await fetch(`https://api.github.com/users/${CONFIG.githubUser}/repos?per_page=100&type=owner`);
+        if (!response.ok) throw new Error(`GitHub API ${response.status}`);
+        const data = await response.json();
+        _reposCache = Object.fromEntries(data.map(r => [r.name, {
+            name: r.name,
+            html_url: r.html_url,
+            description: r.description,
+            homepage: r.homepage,
+            stargazers_count: r.stargazers_count,
+            forks_count: r.forks_count,
+        }]));
+        cacheSet('gh-repos-v1', _reposCache);
+        renderRepos();
+    } catch (_) {
+        // Curated render already on screen — hydration failure is invisible.
     }
 }
 
@@ -390,7 +438,11 @@ async function loadMedium() {
     const rssUrl = `https://medium.com/feed/@${CONFIG.mediumUser}`;
 
     try {
-        const xmlText = await fetchRssXml(rssUrl);
+        let xmlText = cacheGet('medium-rss-v1');
+        if (!xmlText) {
+            xmlText = await fetchRssXml(rssUrl);
+            cacheSet('medium-rss-v1', xmlText);
+        }
 
         // Parse the RSS XML directly in the browser
         const parser = new DOMParser();
@@ -443,7 +495,7 @@ async function loadMedium() {
                 : '';
 
             card.innerHTML = `
-                <a href="${linkUrl}" target="_blank" class="blog-card-link">
+                <a href="${linkUrl}" target="_blank" rel="noopener" class="blog-card-link">
                     ${imgUrl
                         ? `<div class="blog-card-img">${overlayTag}<img src="${imgUrl}" alt="${title}" loading="lazy"></div>`
                         : `<div class="blog-card-img blog-card-img--empty">${overlayTag}</div>`}
@@ -464,7 +516,11 @@ async function loadMedium() {
         }
 
     } catch (error) {
-        container.innerHTML = `<p style="color: #ff5f56;">[ERROR] Connection refused: ${error.message}</p>`;
+        container.innerHTML = '';
+        const msg = document.createElement('p');
+        msg.className = 'error-msg';
+        msg.innerHTML = `[ERROR] Could not reach the Medium feed right now.<br>Read everything directly on <a href="https://medium.com/@${CONFIG.mediumUser}" target="_blank" rel="noopener">medium.com/@${CONFIG.mediumUser} ↗</a>`;
+        container.appendChild(msg);
     }
 }
 
@@ -479,7 +535,7 @@ function renderExperience() {
         : [];
 
     if (!data.length) {
-        container.innerHTML = `<p style="color: #ff5f56;">Error loading experience data.</p>`;
+        container.innerHTML = `<p class="error-msg">Error loading experience data.</p>`;
         return;
     }
 
@@ -578,6 +634,52 @@ function initHamburgerMenu() {
     });
 }
 
+// --- MAGNETIC HOVER ---
+// Buttons/icons subtly follow the cursor. Skipped on touch devices
+// and when the user prefers reduced motion.
+function initMagneticButtons() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+
+    const STRENGTH = 5; // max px offset
+    document.querySelectorAll('.btn, .proj-card-ghost, .social-icon, #theme-toggle').forEach(el => {
+        el.classList.add('magnetic');
+        el.addEventListener('pointermove', (ev) => {
+            const r = el.getBoundingClientRect();
+            const dx = (ev.clientX - r.left - r.width / 2) / (r.width / 2);
+            const dy = (ev.clientY - r.top - r.height / 2) / (r.height / 2);
+            el.style.transform = `translate(${dx * STRENGTH}px, ${dy * STRENGTH}px)`;
+        });
+        el.addEventListener('pointerleave', () => {
+            el.style.transform = '';
+        });
+    });
+}
+
+// --- SCROLL PROGRESS FALLBACK ---
+// CSS scroll-driven animation handles this in modern browsers;
+// this JS fallback covers the rest.
+function initScrollProgressFallback() {
+    if (CSS.supports && CSS.supports('animation-timeline: scroll()')) return;
+    const bar = document.querySelector('.scroll-progress');
+    if (!bar) return;
+
+    let ticking = false;
+    function update() {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        const ratio = max > 0 ? (window.scrollY / max) : 0;
+        bar.style.transform = `scaleX(${Math.min(1, Math.max(0, ratio))})`;
+        ticking = false;
+    }
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            ticking = true;
+            requestAnimationFrame(update);
+        }
+    }, { passive: true });
+    update();
+}
+
 // Initialize all dynamic loading and functionality
 document.addEventListener('DOMContentLoaded', () => {
     if (typeof initParticleNetwork === 'function') initParticleNetwork();
@@ -588,6 +690,8 @@ document.addEventListener('DOMContentLoaded', () => {
     loadMedium();
     loadExperience();
     initPrintButton();
+    initMagneticButtons();
+    initScrollProgressFallback();
 });
 
 // Re-render language-dependent sections when the user switches language.
