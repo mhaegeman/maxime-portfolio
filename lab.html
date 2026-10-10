@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net 'wasm-unsafe-eval'; worker-src 'self' blob:; connect-src 'self' https://api.github.com https://corsproxy.io https://api.allorigins.win https://api.codetabs.com https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:;">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Maxime Haegeman's AI lab: hybrid semantic search (BM25 + embeddings + RRF) and an agent trace replay viewer, running live in the browser.">
+    <link rel="canonical" href="https://www.maximehaegeman.com/lab.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.maximehaegeman.com/lab.html">
+    <meta property="og:title" content="Maxime Haegeman | AI Lab">
+    <meta property="og:description" content="Hybrid semantic search and agent trace replay, running live in your browser. No backend.">
+    <meta property="og:image" content="https://www.maximehaegeman.com/content/preview-card.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://www.maximehaegeman.com/content/preview-card.png">
+    <title data-i18n="title.lab">Maxime | AI Lab</title>
+    <link rel="icon" type="image/svg+xml" href="content/icon.svg">
+    <script src="theme-init.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Fira+Code:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/lab.css">
+</head>
+
+<body>
+    <div class="container">
+        <nav>
+            <a href="index.html" class="nav-brand">
+                <span class="nav-brand-name">Maxime Haegeman</span>
+                <span class="nav-brand-tagline" data-i18n="nav.tagline">AI Engineer // Copenhagen</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html" data-i18n="nav.about">About</a>
+                <a href="projects.html" data-i18n="nav.projects">Projects</a>
+                <a href="lab.html" data-i18n="nav.lab">Lab</a>
+                <a href="blog.html" data-i18n="nav.blog">Blog</a>
+            </div>
+            <div class="nav-controls">
+                <button id="menu-toggle" class="menu-toggle" data-i18n-attr="aria-label:nav.menu_aria" aria-label="Toggle navigation">☰</button>
+                <button id="theme-toggle" data-i18n-attr="title:nav.theme_title" title="Switch Theme">☀</button>
+            </div>
+        </nav>
+
+        <!-- ═══ HERO ═══ -->
+        <section class="section lab-top">
+            <div class="page-hero">
+                <div class="page-hero-left">
+                    <span class="page-hero-label" data-i18n="lab.label">AI Engineering // Lab Notebook</span>
+                    <h1 class="page-hero-title"><span data-i18n="lab.title_line1">AI LAB /</span><br><span data-i18n="lab.title_line2">EXPERIMENTS</span></h1>
+                    <p class="page-hero-subtitle" data-i18n="lab.subtitle">Retrieval, agents and evaluation: small working systems you can poke at, running live in your browser.</p>
+                </div>
+                <div class="page-hero-meta">
+                    <span class="page-hero-meta-label" data-i18n="lab.briefing_label">System Briefing</span>
+                    <p class="page-hero-meta-text" data-i18n="lab.briefing_text">No backend, no API keys. Models run client-side through WebAssembly, and everything on this page can be inspected.</p>
+                    <div class="page-hero-stats">
+                        <div>
+                            <span class="page-hero-stat-label" data-i18n="lab.stat_runtime">Runtime</span>
+                            <span class="page-hero-stat-value page-hero-stat-value--code">WASM</span>
+                        </div>
+                        <div>
+                            <span class="page-hero-stat-label" data-i18n="lab.stat_server">Server calls</span>
+                            <span class="page-hero-stat-value">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lab-index" role="navigation" aria-label="Experiments">
+                <a href="#search" class="lab-index-link"><span class="lab-index-num">01</span><span data-i18n="lab.idx_search">Semantic search</span></a>
+                <a href="#traces" class="lab-index-link"><span class="lab-index-num">02</span><span data-i18n="lab.idx_traces">Agent traces</span></a>
+                <a href="#notebook" class="lab-index-link"><span class="lab-index-num">03</span><span data-i18n="lab.idx_notebook">Notebook</span></a>
+            </div>
+        </section>
+
+        <!-- ═══ EXPERIMENT 01 — SEMANTIC SEARCH ═══ -->
+        <section class="section lab-exp" id="search">
+            <header class="lab-exp-head">
+                <div class="lab-exp-intro">
+                    <span class="section-label" data-i18n="lab.search.kicker">Experiment 01 // Retrieval</span>
+                    <h2 class="lab-exp-title" data-i18n="lab.search.title">Ask the archive</h2>
+                    <p class="lab-exp-lede" data-i18n="lab.search.lede">Ask a question. BM25 answers instantly; load the embedding model and results upgrade to hybrid search, fused with reciprocal rank fusion. The map shows where every passage, and your query, lands in vector space.</p>
+                </div>
+                <aside class="lab-how">
+                    <span class="lab-how-label" data-i18n="lab.how">How it works</span>
+                    <ol class="lab-how-list">
+                        <li data-i18n="lab.search.s1">Ingest: the Medium feed, project notes and this notebook are split into passages of about 120 words.</li>
+                        <li data-i18n="lab.search.s2">Lexical: a BM25 index (k1 = 1.2, b = 0.75) builds in a few milliseconds.</li>
+                        <li data-i18n="lab.search.s3">Semantic: all-MiniLM-L6-v2 runs in a Web Worker via transformers.js and ONNX Runtime (WASM). 384 dimensions, normalized.</li>
+                        <li data-i18n="lab.search.s4">Fusion: both rankings merge with Reciprocal Rank Fusion (k = 60), so no score calibration is needed.</li>
+                        <li data-i18n="lab.search.s5">Map: PCA by power iteration projects vectors to 2-D, and the query is projected onto the same basis.</li>
+                    </ol>
+                </aside>
+            </header>
+
+            <div class="lab-window rag-app" id="rag-app">
+                <div class="lab-window-tab">
+                    <span class="code-box-dots"><span></span><span></span><span></span></span>
+                    <span class="lab-window-path">rag://maximehaegeman.com/archive</span>
+                    <span class="lab-window-status" id="rag-status"><span class="lab-dot"></span><span class="lab-window-status-text">booting</span></span>
+                </div>
+                <noscript><p class="lab-noscript">This experiment needs JavaScript. It runs entirely in your browser.</p></noscript>
+                <div class="rag-pipeline" id="rag-pipeline"></div>
+                <div class="rag-query">
+                    <label class="rag-input-wrap">
+                        <span class="rag-ps1" aria-hidden="true">&gt;</span>
+                        <input id="rag-input" class="rag-input" type="search" autocomplete="off" autocapitalize="off" spellcheck="false"
+                            data-i18n-attr="placeholder:lab.search.placeholder" placeholder="ask anything, e.g. how do you scale a data pipeline?" aria-label="Search the archive">
+                        <kbd class="rag-kbd" aria-hidden="true">/</kbd>
+                    </label>
+                    <div class="rag-modes" id="rag-modes" role="radiogroup" aria-label="Retrieval mode"></div>
+                </div>
+                <div class="rag-suggest" id="rag-suggest"></div>
+                <div class="rag-body">
+                    <div class="rag-results" id="rag-results" aria-live="polite"></div>
+                    <div class="rag-map" id="rag-map">
+                        <div class="rag-map-head">
+                            <span class="rag-map-title" data-i18n="lab.search.map_title">Embedding space</span>
+                            <span class="rag-map-space" id="rag-map-space">TF-IDF space · PCA 2-D</span>
+                        </div>
+                        <div class="rag-map-cta" id="rag-map-cta" hidden></div>
+                        <div class="rag-map-stage">
+                            <canvas id="rag-canvas" class="rag-canvas" aria-label="2-D projection of every passage; your query appears as a highlighted point" role="img"></canvas>
+                            <div class="rag-tooltip" id="rag-tooltip" hidden></div>
+                        </div>
+                        <div class="rag-legend">
+                            <span class="rag-legend-item"><i class="rag-swatch rag-swatch--blog"></i>blog</span>
+                            <span class="rag-legend-item"><i class="rag-swatch rag-swatch--project"></i>project</span>
+                            <span class="rag-legend-item"><i class="rag-swatch rag-swatch--lab"></i>lab</span>
+                            <span class="rag-legend-item"><i class="rag-swatch rag-swatch--query"></i>query</span>
+                            <span class="rag-legend-hint">hover a point · click to open</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="rag-footer" id="rag-footer"></div>
+            </div>
+        </section>
+
+        <!-- ═══ EXPERIMENT 02 — AGENT TRACES ═══ -->
+        <section class="section lab-exp" id="traces">
+            <header class="lab-exp-head">
+                <div class="lab-exp-intro">
+                    <span class="section-label" data-i18n="lab.traces.kicker">Experiment 02 // Observability</span>
+                    <h2 class="lab-exp-title" data-i18n="lab.traces.title">Agent trace replay</h2>
+                    <p class="lab-exp-lede" data-i18n="lab.traces.lede">An agent is only as debuggable as its traces. Replay three runs (a RAG copilot, a data-incident agent and a multi-agent research swarm) and inspect every LLM call, tool call, retry and eval.</p>
+                </div>
+                <aside class="lab-how">
+                    <span class="lab-how-label" data-i18n="lab.how">How it works</span>
+                    <ol class="lab-how-list">
+                        <li data-i18n="lab.traces.s1">Spans: every LLM call, tool call and eval is a span with a parent, a start, an end and a payload.</li>
+                        <li data-i18n="lab.traces.s2">Waterfall: nesting shows causality and overlap shows parallelism.</li>
+                        <li data-i18n="lab.traces.s3">Inspector: click any span to see its inputs, outputs, tokens and latency.</li>
+                        <li data-i18n="lab.traces.s4">Keys: space plays or pauses, the arrow keys step from span to span.</li>
+                    </ol>
+                </aside>
+            </header>
+
+            <div class="lab-window tr-app" id="trace-app" tabindex="-1">
+                <div class="lab-window-tab">
+                    <span class="code-box-dots"><span></span><span></span><span></span></span>
+                    <span class="lab-window-path" id="tr-path">trace://</span>
+                    <span class="lab-window-status" id="tr-status"><span class="lab-dot"></span><span class="lab-window-status-text">idle</span></span>
+                </div>
+                <noscript><p class="lab-noscript">This experiment needs JavaScript.</p></noscript>
+            </div>
+            <p class="lab-note" data-i18n="lab.traces.note">Demo traces: synthetic runs modelled on the span structure of real production traces.</p>
+        </section>
+
+        <!-- ═══ NOTEBOOK ═══ -->
+        <section class="section lab-exp" id="notebook">
+            <header class="lab-exp-head lab-exp-head--single">
+                <div class="lab-exp-intro">
+                    <span class="section-label" data-i18n="lab.nb.kicker">Notebook // Shipped &amp; ongoing</span>
+                    <h2 class="lab-exp-title" data-i18n="lab.nb.title">Lab notebook</h2>
+                    <p class="lab-exp-lede" data-i18n="lab.nb.lede">AI engineering work, newest first.</p>
+                </div>
+            </header>
+
+            <div class="nb-grid" id="nb-grid">
+                <article class="v1-card nb-card nb-card--wide" data-nb="nb1">
+                    <div class="v1-corner v1-corner-tl">+</div>
+                    <div class="v1-corner v1-corner-br">+</div>
+                    <header class="v1-header">
+                        <div class="v1-cats"><span class="nb-status nb-status--live" data-i18n="lab.nb.live">Live</span><span class="v1-cat">Retrieval</span><span class="v1-cats-sep">·</span><span class="v1-cat">Embeddings</span></div>
+                    </header>
+                    <h3 class="v1-title" data-i18n="lab.nb1.title">Hybrid search in the browser</h3>
+                    <p class="v1-desc" data-i18n="lab.nb1.desc">BM25 and MiniLM embeddings fused with RRF, served from a static site. A Web Worker keeps the interface smooth while the model indexes passages.</p>
+                    <footer class="nb-foot">
+                        <div class="v1-tags"><span class="tag-nlp">transformers.js</span><span class="tag-engineering">ONNX / WASM</span><span class="tag-ml">BM25</span><span class="tag-ml">RRF</span><span class="tag-analytics">PCA</span></div>
+                        <div class="v1-links"><a href="#search" class="v1-link" data-i18n="lab.nb.try">Try it ↓</a></div>
+                    </footer>
+                </article>
+
+                <article class="v1-card nb-card" data-nb="nb2">
+                    <div class="v1-corner v1-corner-tl">+</div>
+                    <div class="v1-corner v1-corner-br">+</div>
+                    <header class="v1-header">
+                        <div class="v1-cats"><span class="nb-status nb-status--live" data-i18n="lab.nb.live">Live</span><span class="v1-cat">Agents</span><span class="v1-cats-sep">·</span><span class="v1-cat">Observability</span></div>
+                    </header>
+                    <h3 class="v1-title" data-i18n="lab.nb2.title">Agent trace viewer</h3>
+                    <p class="v1-desc" data-i18n="lab.nb2.desc">A zero-dependency replay of agent traces with a span waterfall, a payload inspector and streamed outputs. It is the debugging loop every agent deserves.</p>
+                    <footer class="nb-foot">
+                        <div class="v1-tags"><span class="tag-nlp">Agents</span><span class="tag-engineering">Tracing</span><span class="tag-ml">Evals</span><span class="tag-analytics">Vanilla JS</span></div>
+                        <div class="v1-links"><a href="#traces" class="v1-link" data-i18n="lab.nb.try">Try it ↓</a></div>
+                    </footer>
+                </article>
+
+                <article class="v1-card nb-card" data-nb="nb3">
+                    <div class="v1-corner v1-corner-tl">+</div>
+                    <div class="v1-corner v1-corner-br">+</div>
+                    <header class="v1-header">
+                        <div class="v1-cats"><span class="nb-status nb-status--shipped" data-i18n="lab.nb.shipped">Shipped</span><span class="v1-cat">RAG</span><span class="v1-cats-sep">·</span><span class="v1-cat">Vector DB</span></div>
+                    </header>
+                    <h3 class="v1-title" data-i18n="lab.nb3.title">Verba RAG chatbot</h3>
+                    <p class="v1-desc" data-i18n="lab.nb3.desc">Retrieval-augmented chatbot on a Weaviate vector store. It indexes any document corpus and answers with citations, with pluggable LLM backends.</p>
+                    <footer class="nb-foot">
+                        <div class="v1-tags"><span class="tag-nlp">RAG</span><span class="tag-nlp">Weaviate</span><span class="tag-nlp">LLM</span><span class="tag-engineering">Python</span></div>
+                        <div class="v1-links"><a href="https://github.com/mhaegeman/Verba" target="_blank" rel="noopener" class="v1-link">GitHub ↗</a></div>
+                    </footer>
+                </article>
+
+                <article class="v1-card nb-card" data-nb="nb4">
+                    <div class="v1-corner v1-corner-tl">+</div>
+                    <div class="v1-corner v1-corner-br">+</div>
+                    <header class="v1-header">
+                        <div class="v1-cats"><span class="nb-status nb-status--shipped" data-i18n="lab.nb.shipped">Shipped</span><span class="v1-cat">Generative AI</span><span class="v1-cats-sep">·</span><span class="v1-cat">Pipelines</span></div>
+                    </header>
+                    <h3 class="v1-title" data-i18n="lab.nb4.title">NextRank, an LLM content engine</h3>
+                    <p class="v1-desc" data-i18n="lab.nb4.desc">LLM pipeline on Vertex AI that researches keywords, drafts copy and scores readability against competing pages.</p>
+                    <footer class="nb-foot">
+                        <div class="v1-tags"><span class="tag-nlp">Vertex AI</span><span class="tag-nlp">LLM</span><span class="tag-analytics">Streamlit</span></div>
+                        <div class="v1-links"><a href="https://github.com/mhaegeman/nextrank" target="_blank" rel="noopener" class="v1-link">GitHub ↗</a></div>
+                    </footer>
+                </article>
+
+                <article class="v1-card nb-card" data-nb="nb5">
+                    <div class="v1-corner v1-corner-tl">+</div>
+                    <div class="v1-corner v1-corner-br">+</div>
+                    <header class="v1-header">
+                        <div class="v1-cats"><span class="nb-status nb-status--live" data-i18n="lab.nb.live">Live</span><span class="v1-cat">LLM-ready web</span></div>
+                    </header>
+                    <h3 class="v1-title" data-i18n="lab.nb5.title">llms.txt for this site</h3>
+                    <p class="v1-desc" data-i18n="lab.nb5.desc">A machine-readable map of this website for language models and AI crawlers: the robots.txt of the agent era.</p>
+                    <footer class="nb-foot">
+                        <div class="v1-tags"><span class="tag-engineering">llms.txt</span><span class="tag-cloud">SEO for agents</span></div>
+                        <div class="v1-links"><a href="llms.txt" class="v1-link" data-i18n="lab.nb.read">Read ↗</a></div>
+                    </footer>
+                </article>
+            </div>
+        </section>
+
+        <footer>
+            <div class="footer-copy footer-copy--center" data-i18n="footer.copy">
+                &copy; 2026 Maxime Haegeman. Built with code.
+            </div>
+        </footer>
+    </div>
+
+    <div class="scroll-progress" aria-hidden="true"></div>
+
+    <script src="js/i18n.js"></script>
+    <script src="loader.js"></script>
+    <script src="js/palette.js"></script>
+    <script src="js/lab/lab.js"></script>
+    <script src="js/lab/lab-search.js"></script>
+    <script src="js/lab/traces-data.js"></script>
+    <script src="js/lab/trace-viewer.js"></script>
+</body>
+
+</html>

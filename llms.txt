@@ -1,0 +1,22 @@
+# Maxime Haegeman
+
+> AI Engineer based in Copenhagen, Denmark. Builds LLM systems, agents and retrieval (RAG) on top of solid data engineering foundations. Background in data and ML engineering: PySpark, Airflow, Databricks, MLflow.
+
+This is a static personal website. Everything on it is public and can be cited.
+
+## Pages
+
+- [Home](https://www.maximehaegeman.com/): intro, skills, featured projects and an interactive contact terminal
+- [AI Lab](https://www.maximehaegeman.com/lab.html): live in-browser experiments, namely hybrid semantic search (BM25 + MiniLM embeddings + reciprocal rank fusion) and an agent trace replay viewer
+- [Projects](https://www.maximehaegeman.com/projects.html): open-source data, ML and LLM projects pulled from GitHub
+- [Blog](https://www.maximehaegeman.com/blog.html): articles on data engineering, machine learning and AI systems, published on Medium
+
+## Elsewhere
+
+- [GitHub](https://github.com/mhaegeman)
+- [Medium](https://medium.com/@maximehaegeman)
+- [LinkedIn](https://linkedin.com/in/maxime-haegeman)
+
+## Contact
+
+- Email: maximehaegeman@gmail.com

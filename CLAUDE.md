@@ -1,7 +1,7 @@
 # CLAUDE.md
 
 ## Project
-Maxime Haegeman's personal portfolio — editorial dark aesthetic with terminal elements. No build step.
+Maxime Haegeman's personal portfolio (AI Engineer) — editorial dark aesthetic with terminal elements. No build step.
 
 ## Stack
 - Vanilla HTML/CSS/JS
@@ -19,7 +19,9 @@ bash tests/run_tests.sh   # CI test suite
 - `index.html` / `js/index.js` / `css/index.css` — homepage (hero, skills, contact terminal)
 - `projects.html` — curated cards hydrated from GitHub API
 - `blog.html` — Medium posts via RSS
-- `cv.html` — work history + skill heatmap (`cv-section/`), data in `js/i18n.js`
+- `lab.html` / `css/lab.css` / `js/lab/` — AI lab: hybrid semantic search (BM25 + MiniLM in a module worker + RRF + PCA map) and agent trace replay (`js/lab/traces-data.js`)
+- `cv.html` — archived work history (noindex, intentionally not linked; reachable via terminal `cat .resume.txt`)
+- `llms.txt` — site summary for LLMs
 - `404.html` — terminal-styled not-found page
 - `style.css` — global styles + light/dark themes + palette/terminal/aurora
 - `loader.js` — API integrations, sessionStorage caching, theme toggle
@@ -32,6 +34,7 @@ bash tests/run_tests.sh   # CI test suite
 - Theme toggle: `[data-theme="light"]` selector overrides in CSS
 - Respect `prefers-reduced-motion` for every animation
 - CSP: no inline `style=` attributes in HTML (blocked; tests enforce this).
+  `lab.html` additionally allows jsDelivr/Hugging Face + `'wasm-unsafe-eval'` for the embedding model.
   If you edit the JSON-LD block in `index.html`, recompute its sha256 CSP hash
   (`tests/run_tests.sh` verifies it).
 - All `target="_blank"` links need `rel="noopener"` (tests enforce this)
