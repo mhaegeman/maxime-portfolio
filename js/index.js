@@ -64,6 +64,7 @@ function initScrollReveal() {
         '.skills-va-cell',
         '.proj-card',
         '.card',
+        '.lab-teaser',
         '.blog-card',
         '.timeline-item',
         '.page-hero-left',

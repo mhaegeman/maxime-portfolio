@@ -144,8 +144,9 @@ const PROJECT_META = {
 
 // Ordered list of repos to feature on the projects page. Edit to curate.
 const FEATURED_ORDER = [
-    'Python-Object-Clasifier',
     'nextrank',
+    'Verba',
+    'Python-Object-Clasifier',
     'scoring-bank-project',
     'openweather',
     'fruit-classifier-aws',

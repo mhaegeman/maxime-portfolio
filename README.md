@@ -3,7 +3,7 @@
 </p>
 
 <h3 align="center">maximehaegeman.com</h3>
-<p align="center">Personal portfolio — Data Engineer & ML Engineer based in Copenhagen</p>
+<p align="center">Personal portfolio — AI Engineer based in Copenhagen</p>
 
 <p align="center">
   <a href="https://www.maximehaegeman.com">Live Site</a> &middot;
@@ -26,11 +26,13 @@
 ## Pages
 
 ```
-index.html      Hero, skills grid, featured projects, interactive contact terminal
+index.html      Hero, skills grid, lab teaser, featured projects, interactive contact terminal
+lab.html        AI lab: hybrid semantic search, agent trace replay, lab notebook
 projects.html   Curated project cards, hydrated live from the GitHub API
 blog.html       Medium posts via RSS (CORS-proxy fallback chain)
-cv.html         Work history timeline + skill density heatmap
+cv.html         Archived work history (noindex, not linked from nav — `cat .resume.txt` in the terminal)
 404.html        Terminal-styled not-found page
+llms.txt        Machine-readable site summary for LLMs / AI crawlers
 ```
 
 ## Quick Start
@@ -43,28 +45,54 @@ python -m http.server 8000
 ## Structure
 
 ```
-├── index.html / blog.html / cv.html / projects.html / 404.html
+├── index.html / lab.html / blog.html / cv.html / projects.html / 404.html
 ├── style.css                 # Global styles, themes, palette/terminal/aurora
 ├── css/index.css             # Homepage-specific styles
+├── css/lab.css               # AI lab (search app, trace viewer, notebook)
 ├── js/
 │   ├── i18n.js               # Translations + language switcher + typewriter
 │   ├── index.js              # Homepage interactions (reveal, rotation, stagger)
 │   ├── palette.js            # ⌘K command palette
-│   └── terminal.js           # Interactive contact terminal
+│   ├── terminal.js           # Interactive contact terminal (+ hidden files)
+│   └── lab/
+│       ├── lab-search.js     # Ingest → chunk → BM25/TF-IDF → embeddings → RRF → PCA map
+│       ├── embed-worker.js   # Module worker running MiniLM via transformers.js (CDN)
+│       ├── traces-data.js    # Demo agent traces (edit to add runs)
+│       ├── trace-viewer.js   # Span waterfall + inspector + playback
+│       └── lab.js            # Lab page reveal + section index
 ├── theme-init.js             # Blocks FOUC — sets saved theme before paint
 ├── loader.js                 # API integrations, caching, theme toggle, nav
 ├── tests/run_tests.sh        # CI checks: structure, assets, SEO, contrast
 └── content/
     ├── icon.svg              # Favicon
     ├── preview-card.png      # Open Graph / social preview card
-    ├── resume_2026.pdf       # Downloadable resume
-    └── img/scandinavia/      # Hero photos (WebP, 760px)
+    ├── resume_2026.pdf       # Archived resume
+    └── img/
+        ├── scandinavia/      # Hero photos (WebP, 760px)
+        └── cat.webp          # Terminal easter egg (ASCII fallback if missing)
 ```
+
+## AI Lab
+
+Everything runs client-side; there is no backend and no API key.
+
+- **Ask the archive** — the Medium feed, project notes and lab notebook are chunked
+  (~120 words) and indexed with BM25 instantly. "Load embedding model" fetches
+  `Xenova/all-MiniLM-L6-v2` (q8 ONNX, ~23 MB) + transformers.js from jsDelivr into a
+  module Web Worker; passages are embedded once and cached in `localStorage`, the
+  weights in Cache Storage. Hybrid mode fuses BM25 and cosine rankings with
+  Reciprocal Rank Fusion (k = 60). The map is a PCA projection (power iteration)
+  of TF-IDF or embedding space; the query is projected onto the same basis.
+  If the CDN or WASM is unavailable it degrades to BM25 only. `?q=` pre-fills a query.
+- **Agent trace replay** — `js/lab/traces-data.js` holds OpenTelemetry-style spans
+  (`id`, `parent`, `kind`, `start`, `end`, `input`, `output`, `tokens`). The viewer
+  replays them as a waterfall with an inspector and streamed LLM output.
+  Space = play/pause, ← → = step between spans.
 
 ## Features
 
 - **⌘K command palette** — keyboard-first navigation, theme & language switching
-- **Interactive contact terminal** — type `help` on the homepage
+- **Interactive contact terminal** — type `help` on the homepage (and `ls -a`)
 - **View Transitions API** — smooth cross-page navigation (progressive enhancement)
 - **Session caching** — GitHub/Medium responses cached 1h in `sessionStorage`;
   project cards render instantly from curated metadata even if the API is down

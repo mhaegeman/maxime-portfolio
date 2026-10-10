@@ -13,19 +13,13 @@
         return [
             { group: 'GOTO', icon: '~/', label: t('nav.about', 'About'), hint: 'index', run: () => { window.location.href = 'index.html'; } },
             { group: 'GOTO', icon: '~/', label: t('nav.projects', 'Projects'), hint: 'github', run: () => { window.location.href = 'projects.html'; } },
+            { group: 'GOTO', icon: '~/', label: t('nav.lab', 'Lab'), hint: 'ai experiments', run: () => { window.location.href = 'lab.html'; } },
             { group: 'GOTO', icon: '~/', label: t('nav.blog', 'Blog'), hint: 'medium', run: () => { window.location.href = 'blog.html'; } },
-            { group: 'GOTO', icon: '~/', label: t('nav.resume', 'Resume'), hint: 'cv', run: () => { window.location.href = 'cv.html'; } },
+            { group: 'LAB', icon: '⌕', label: 'search_archive --semantic', hint: 'rag', run: () => { window.location.href = 'lab.html#search'; } },
+            { group: 'LAB', icon: '▶', label: 'replay_agent_trace', hint: 'spans', run: () => { window.location.href = 'lab.html#traces'; } },
             { group: 'RUN', icon: '$', label: 'toggle_theme', hint: 'dark/light', keepOpen: false, run: () => {
                 const btn = document.getElementById('theme-toggle');
                 if (btn) btn.click();
-            } },
-            { group: 'RUN', icon: '$', label: 'download_resume --pdf', hint: 'file', run: () => {
-                const a = document.createElement('a');
-                a.href = 'content/resume_2026.pdf';
-                a.download = 'Maxime_Haegeman_2026.pdf';
-                document.body.appendChild(a);
-                a.click();
-                a.remove();
             } },
             { group: 'RUN', icon: '$', label: 'lang --set en', hint: 'English', run: () => window.i18n && window.i18n.setLang('en') },
             { group: 'RUN', icon: '$', label: 'lang --set es', hint: 'Español', run: () => window.i18n && window.i18n.setLang('es') },
@@ -57,7 +51,7 @@
         if (!filtered.length) {
             const empty = document.createElement('li');
             empty.className = 'palette-empty';
-            empty.textContent = 'command not found — try "projects" or "theme"';
+            empty.textContent = 'command not found — try "lab" or "theme"';
             list.appendChild(empty);
             return;
         }
@@ -92,6 +86,13 @@
     function filter() {
         const q = input.value.trim();
         filtered = commands.filter(c => fuzzyMatch(q, c.label + ' ' + c.group + ' ' + (c.hint || '')));
+        // Free-text fallback: any query can be sent to the lab's semantic search.
+        if (q.length > 2) {
+            filtered.push({
+                group: 'ASK', icon: '\u2315', label: `ask_archive "${q}"`, hint: 'semantic',
+                run: () => { window.location.href = 'lab.html?q=' + encodeURIComponent(q) + '#search'; },
+            });
+        }
         selectedIdx = 0;
         render();
     }

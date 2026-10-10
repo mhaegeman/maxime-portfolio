@@ -3,24 +3,24 @@
 
 <head>
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self'; script-src 'self' 'sha256-pTXPKjpL4VCR8kS2AskbLVCkbiFXT/lAu9iNLnOAI3Y='; connect-src 'self' https://api.github.com https://corsproxy.io https://api.allorigins.win https://api.codetabs.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:;">
+        content="default-src 'self'; script-src 'self' 'sha256-Rr7o8Oj+ewqDtwfSWqaxumnhivRTdbFVcRSreE+N9cA='; connect-src 'self' https://api.github.com https://corsproxy.io https://api.allorigins.win https://api.codetabs.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:;">
     <meta name="description"
-        content="Portfolio of Maxime Haegeman — Data Engineer & Python Developer in Copenhagen, specializing in scalable data and ML pipelines.">
-    <meta name="keywords" content="Data Scientist, Python, Machine Learning, Data Engineer, Maxime Haegeman, Haegeman, AI Engineer">
+        content="Maxime Haegeman — AI Engineer in Copenhagen building LLM systems, agents and retrieval on top of solid data pipelines. Live AI experiments included.">
+    <meta name="keywords" content="AI Engineer, LLM, RAG, Agents, Evals, Embeddings, Data Engineer, Python, Maxime Haegeman, Haegeman">
     <link rel="canonical" href="https://www.maximehaegeman.com/">
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.maximehaegeman.com/">
-    <meta property="og:title" content="Maxime Haegeman | Data Engineer">
-    <meta property="og:description" content="Specializing in scalable data and ML pipelines.">
+    <meta property="og:title" content="Maxime Haegeman | AI Engineer">
+    <meta property="og:description" content="LLM systems, agents and retrieval, with live in-browser AI experiments.">
     <meta property="og:image" content="https://www.maximehaegeman.com/content/preview-card.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Maxime Haegeman | Data Engineer">
-    <meta name="twitter:description" content="Specializing in scalable data and ML pipelines.">
+    <meta name="twitter:title" content="Maxime Haegeman | AI Engineer">
+    <meta name="twitter:description" content="LLM systems, agents and retrieval, with live in-browser AI experiments.">
     <meta name="twitter:image" content="https://www.maximehaegeman.com/content/preview-card.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="title.home">Maxime Haegeman | Data Engineer</title>
+    <title data-i18n="title.home">Maxime Haegeman | AI Engineer</title>
     <link rel="icon" type="image/svg+xml" href="content/icon.svg">
     <script src="theme-init.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="css/index.css">
     <link rel="preload" as="image" href="content/img/scandinavia/max01.webp" fetchpriority="high">
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Maxime Haegeman","url":"https://www.maximehaegeman.com/","jobTitle":"Senior Data / ML Engineer","address":{"@type":"PostalAddress","addressLocality":"Copenhagen","addressCountry":"DK"},"email":"mailto:maximehaegeman@gmail.com","sameAs":["https://github.com/mhaegeman","https://linkedin.com/in/maxime-haegeman","https://medium.com/@maximehaegeman"]}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Maxime Haegeman","url":"https://www.maximehaegeman.com/","jobTitle":"AI Engineer","knowsAbout":["Large Language Models","Retrieval-Augmented Generation","AI Agents","Data Engineering","Machine Learning"],"address":{"@type":"PostalAddress","addressLocality":"Copenhagen","addressCountry":"DK"},"email":"mailto:maximehaegeman@gmail.com","sameAs":["https://github.com/mhaegeman","https://linkedin.com/in/maxime-haegeman","https://medium.com/@maximehaegeman"]}</script>
 </head>
 
 <body>
@@ -40,13 +40,13 @@
         <nav>
             <a href="index.html" class="nav-brand">
                 <span class="nav-brand-name">Maxime Haegeman</span>
-                <span class="nav-brand-tagline" data-i18n="nav.tagline">Data Engineer // Copenhagen</span>
+                <span class="nav-brand-tagline" data-i18n="nav.tagline">AI Engineer // Copenhagen</span>
             </a>
             <div class="nav-links">
                 <a href="index.html" data-i18n="nav.about">About</a>
                 <a href="projects.html" data-i18n="nav.projects">Projects</a>
+                <a href="lab.html" data-i18n="nav.lab">Lab</a>
                 <a href="blog.html" data-i18n="nav.blog">Blog</a>
-                <a href="cv.html" data-i18n="nav.resume">Resume</a>
             </div>
             <div class="nav-controls">
                 <button id="menu-toggle" class="menu-toggle" data-i18n-attr="aria-label:nav.menu_aria" aria-label="Toggle navigation">☰</button>
@@ -58,7 +58,7 @@
             <div class="hero-layout">
 
                 <div class="hero-panel-left">
-                    <p class="section-label" data-i18n="hero.label">Maxime Haegeman // Data Engineer // Copenhagen</p>
+                    <p class="section-label" data-i18n="hero.label">Maxime Haegeman // AI Engineer // Copenhagen</p>
                     <h1 class="hero-display-name"><span id="typewriter"></span><span class="cursor">_</span></h1>
 
                     <!-- Unified Python code box -->
@@ -70,30 +70,30 @@
                         <div class="code-box-body">
                             <p><span class="py-kw">from</span> education <span class="py-kw">import</span> ComputerScience</p>
                             <p class="py-blank"></p>
-                            <p><span class="py-kw">class</span> <span class="py-fn">Maxime</span>(DataScientist, DataEngineer):</p>
+                            <p><span class="py-kw">class</span> <span class="py-fn">Maxime</span>(AIEngineer, DataEngineer):</p>
                             <p class="py-l1"><span class="py-str">"""</span></p>
-                            <p class="py-l2"><span class="py-str" data-i18n="code.doc_line1">Developer bridging the gap between</span></p>
-                            <p class="py-l2"><span class="py-str" data-i18n="code.doc_line2">models and production, architecting</span></p>
-                            <p class="py-l2"><span class="py-str" data-i18n="code.doc_line3">scalable data &amp; ML pipelines.</span></p>
+                            <p class="py-l2"><span class="py-str" data-i18n="code.doc_line1">Engineer turning LLMs into reliable</span></p>
+                            <p class="py-l2"><span class="py-str" data-i18n="code.doc_line2">products: agents, retrieval and evals,</span></p>
+                            <p class="py-l2"><span class="py-str" data-i18n="code.doc_line3">on top of solid data pipelines.</span></p>
                             <p class="py-l1"><span class="py-str">"""</span></p>
                             <p class="py-blank"></p>
                             <p class="py-l1"><span class="py-kw">def</span> <span class="py-fn">__init__</span>(<span class="py-self">self</span>):</p>
-                            <p class="py-l2"><span class="py-self">self</span>.role<span class="py-op"> = </span><span class="py-str" data-i18n="code.role">"Senior Data / ML Engineer"</span></p>
+                            <p class="py-l2"><span class="py-self">self</span>.role<span class="py-op"> = </span><span class="py-str" data-i18n="code.role">"AI Engineer"</span></p>
                             <p class="py-l2"><span class="py-self">self</span>.base<span class="py-op"> = </span><span class="py-str" data-i18n="code.base">"Copenhagen, Denmark"</span></p>
                             <p class="py-l2"><span class="py-self">self</span>.exp<span class="py-op"> = </span><span class="py-num">5</span>  <span class="py-comment" data-i18n="code.comment"># years of experience</span></p>
                             <p class="py-blank"></p>
                             <p class="py-l1"><span class="py-kw">def</span> <span class="py-fn">mission</span>(<span class="py-self">self</span>) -&gt; <span class="py-type">str</span>:</p>
-                            <p class="py-l2"><span class="py-kw">return</span> <span class="py-str" data-i18n="code.mission">"From messy data to reliable predictions, at scale."</span></p>
+                            <p class="py-l2"><span class="py-kw">return</span> <span class="py-str" data-i18n="code.mission">"From raw data to AI systems you can trust."</span></p>
                         </div>
                     </div>
 
-                    <h2 class="hero-subtitle"><span data-i18n="hero.subtitle_line1">SENIOR DATA & ML ENGINEER //</span><br><span data-i18n="hero.subtitle_line2">SCALABLE PIPELINES //</span><br><span data-i18n="hero.subtitle_line3">AI PRODUCT DEVELOPMENT</span></h2>
+                    <h2 class="hero-subtitle"><span data-i18n="hero.subtitle_line1">AI ENGINEER //</span><br><span data-i18n="hero.subtitle_line2">LLM SYSTEMS, AGENTS &amp; RAG //</span><br><span data-i18n="hero.subtitle_line3">BUILT ON SOLID DATA FOUNDATIONS</span></h2>
                 </div>
 
                 <!-- Hero Visual: profile photo -->
                 <div class="hero-panel-right">
                     <div class="video-frame-wrapper">
-                        <a href="cv.html" class="profile-link">
+                        <a href="lab.html" class="profile-link" aria-label="Enter the AI lab">
                             <div class="video-frame" id="hero-frame">
                                 <img src="content/img/scandinavia/max01.webp" alt="Maxime Haegeman" class="profile-img active" width="760" height="1351" fetchpriority="high" decoding="async">
                                 <img src="content/img/scandinavia/max02.webp" alt="Maxime Haegeman" class="profile-img" width="675" height="1200" loading="lazy" decoding="async">
@@ -103,7 +103,7 @@
                                 <img src="content/img/scandinavia/max06.webp" alt="Maxime Haegeman" class="profile-img" width="760" height="1351" loading="lazy" decoding="async">
                                 <img src="content/img/scandinavia/max07.webp" alt="Maxime Haegeman" class="profile-img" width="760" height="1351" loading="lazy" decoding="async">
                                 <img src="content/img/scandinavia/max08.webp" alt="Maxime Haegeman" class="profile-img" width="760" height="1351" loading="lazy" decoding="async">
-                                <div class="profile-hover-overlay"><span>View_Profile()</span></div>
+                                <div class="profile-hover-overlay"><span>Enter_Lab()</span></div>
                             </div>
                         </a>
                     </div>
@@ -115,6 +115,18 @@
             <span class="section-label" data-i18n="skills.label">Status: Active // Skills</span>
 
             <div class="skills-va">
+                <div class="skills-va-cell">
+                    <span class="skills-va-label chip-ai" data-i18n="skills.ai">AI Engineering</span>
+                    <div class="skills-va-chips">
+                        <span class="skill-chip chip-ai">LLMs</span>
+                        <span class="skill-chip chip-ai">RAG</span>
+                        <span class="skill-chip chip-ai">Agents</span>
+                        <span class="skill-chip chip-ai">Embeddings</span>
+                        <span class="skill-chip chip-ai">Evals</span>
+                        <span class="skill-chip chip-ai">Vector DBs</span>
+                        <span class="skill-chip chip-ai">Tracing</span>
+                    </div>
+                </div>
                 <div class="skills-va-cell">
                     <span class="skills-va-label chip-lang" data-i18n="skills.langs">Programming Languages</span>
                     <div class="skills-va-chips">
@@ -132,7 +144,6 @@
                         <span class="skill-chip chip-cloud">GCP</span>
                         <span class="skill-chip chip-cloud">AWS</span>
                         <span class="skill-chip chip-cloud">Docker</span>
-                        <span class="skill-chip chip-cloud">RAG</span>
                         <span class="skill-chip chip-cloud">GitHub Actions</span>
                     </div>
                 </div>
@@ -166,18 +177,48 @@
                         <span class="skill-chip chip-mon">PowerBI</span>
                     </div>
                 </div>
-                <div class="skills-va-cell">
-                    <span class="skills-va-label chip-pm" data-i18n="skills.pm">Project Management</span>
-                    <div class="skills-va-chips">
-                        <span class="skill-chip chip-pm">Agile</span>
-                        <span class="skill-chip chip-pm">Scrum</span>
-                        <span class="skill-chip chip-pm">Kanban</span>
-                        <span class="skill-chip chip-pm">JIRA</span>
-                        <span class="skill-chip chip-pm">Confluence</span>
-                        <span class="skill-chip chip-pm">OKRs</span>
-                    </div>
-                </div>
             </div>
+        </section>
+
+        <section class="section" id="lab-teaser">
+            <span class="section-label" data-i18n="home.lab.label">AI Lab // Live Experiments</span>
+            <div class="lab-teaser">
+                <a href="lab.html#search" class="lab-tile">
+                    <div class="lab-tile-tab"><span class="code-box-dots"><span></span><span></span><span></span></span>rag://archive</div>
+                    <svg class="lab-tile-viz" viewBox="0 0 560 132" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
+                        <g class="ltv-dots ltv-c1"><circle cx="101" cy="54" r="3"/><circle cx="102" cy="41" r="3"/><circle cx="78" cy="43" r="3"/><circle cx="148" cy="53" r="3"/><circle cx="123" cy="49" r="3"/><circle cx="53" cy="60" r="3"/><circle cx="52" cy="18" r="3"/><circle cx="128" cy="36" r="3"/><circle cx="88" cy="73" r="3"/></g>
+                        <g class="ltv-dots ltv-c2"><circle cx="450" cy="57" r="3"/><circle cx="408" cy="30" r="3"/><circle cx="418" cy="39" r="3"/><circle cx="453" cy="43" r="3"/><circle cx="411" cy="57" r="3"/><circle cx="401" cy="43" r="3"/><circle cx="445" cy="19" r="3"/><circle cx="432" cy="58" r="3"/></g>
+                        <g class="ltv-dots ltv-c3"><circle cx="189" cy="92" r="3"/><circle cx="266" cy="86" r="3"/><circle cx="290" cy="95" r="3"/><circle cx="211" cy="106" r="3"/><circle cx="297" cy="107" r="3"/><circle cx="328" cy="100" r="3"/><circle cx="252" cy="81" r="3"/><circle cx="231" cy="90" r="3"/></g>
+                        <g class="ltv-links"><line x1="318" y1="62" x2="328" y2="100"/><line x1="318" y1="62" x2="290" y2="95"/><line x1="318" y1="62" x2="297" y2="107"/></g>
+                        <circle class="ltv-query-ring" cx="318" cy="62" r="10"/>
+                        <rect class="ltv-query" x="313" y="57" width="10" height="10" transform="rotate(45 318 62)"/>
+                    </svg>
+                    <div class="lab-tile-body">
+                        <h3 class="lab-tile-title" data-i18n="home.lab.search_title">Ask the archive</h3>
+                        <p class="lab-tile-desc" data-i18n="home.lab.search_desc">Hybrid semantic search over my writing. BM25 + embeddings, running entirely in your browser.</p>
+                        <span class="lab-tile-meta">BM25 · MiniLM-L6 · RRF · WASM</span>
+                    </div>
+                </a>
+                <a href="lab.html#traces" class="lab-tile">
+                    <div class="lab-tile-tab"><span class="code-box-dots"><span></span><span></span><span></span></span>trace://run_7f3a</div>
+                    <div class="lab-tile-viz lab-wf" aria-hidden="true">
+                        <div class="lab-wf-row"><span class="lab-wf-name">agent.run</span><span class="lab-wf-track"><span class="lab-wf-bar k-agent w1"></span></span></div>
+                        <div class="lab-wf-row"><span class="lab-wf-name">llm.plan</span><span class="lab-wf-track"><span class="lab-wf-bar k-llm w2"></span></span></div>
+                        <div class="lab-wf-row"><span class="lab-wf-name">retrieve</span><span class="lab-wf-track"><span class="lab-wf-bar k-ret w3"></span></span></div>
+                        <div class="lab-wf-row"><span class="lab-wf-name">sql.query</span><span class="lab-wf-track"><span class="lab-wf-bar k-err w4"></span></span></div>
+                        <div class="lab-wf-row"><span class="lab-wf-name">llm.answer</span><span class="lab-wf-track"><span class="lab-wf-bar k-llm w5"></span></span></div>
+                        <div class="lab-wf-row"><span class="lab-wf-name">eval</span><span class="lab-wf-track"><span class="lab-wf-bar k-eval w6"></span></span></div>
+                    </div>
+                    <div class="lab-tile-body">
+                        <h3 class="lab-tile-title" data-i18n="home.lab.trace_title">Agent trace replay</h3>
+                        <p class="lab-tile-desc" data-i18n="home.lab.trace_desc">Step through agent runs: plans, tool calls, retries and evals on a live span waterfall.</p>
+                        <span class="lab-tile-meta">spans · tools · retries · evals</span>
+                    </div>
+                </a>
+            </div>
+            <a href="lab.html" class="proj-card-ghost">
+                <span class="proj-prompt">~/</span><span data-i18n="home.lab.enter">enter_lab</span>&nbsp;&nbsp;→
+            </a>
         </section>
 
         <section class="section" id="projects">
@@ -198,14 +239,14 @@
 
                 <article class="card proj-card">
                     <div class="proj-header">
-                        <h3 class="card-header"><span class="proj-prompt">~/</span>openweather</h3>
-                        <a href="https://github.com/mhaegeman/openweather" target="_blank" rel="noopener" class="btn-link">view_source&nbsp;→</a>
+                        <h3 class="card-header"><span class="proj-prompt">~/</span>Verba</h3>
+                        <a href="https://github.com/mhaegeman/Verba" target="_blank" rel="noopener" class="btn-link">view_source&nbsp;→</a>
                     </div>
                     <div class="card-tags">
-                        <span class="tag">API</span>
-                        <span class="tag">Data Integration</span>
+                        <span class="tag">RAG</span>
+                        <span class="tag">Vector DB</span>
                     </div>
-                    <p class="card-desc" data-i18n="home.projects.openweather_desc">Integration with OpenWeather API for real-time meteorological data analysis.</p>
+                    <p class="card-desc" data-i18n="home.projects.verba_desc">Retrieval-augmented chatbot on Weaviate that answers questions over any document corpus, with citations.</p>
                 </article>
 
                 <article class="card proj-card">
@@ -230,7 +271,7 @@
             <span class="section-label" data-i18n="contact.label">Status: Online // Contact</span>
             <div class="contact-body">
                 <p class="contact-prompt" data-i18n="contact.prompt">
-                    // Interested in collaboration? Execute the command below.
+                    // Building something interesting with AI? Execute the command below.
                 </p>
 
                 <div class="contact-terminal" id="contact-terminal" hidden>

@@ -13,7 +13,7 @@ pass() { echo "  OK:   $1"; }
 echo ""
 echo "=== HTML Structure Checks ==="
 
-HTML_FILES=("index.html" "blog.html" "cv.html" "projects.html")
+HTML_FILES=("index.html" "blog.html" "cv.html" "projects.html" "lab.html")
 
 for f in "${HTML_FILES[@]}"; do
     path="$REPO_ROOT/$f"
@@ -70,7 +70,7 @@ done
 echo ""
 echo "=== CSS Validation ==="
 
-CSS_FILES=("style.css" "css/index.css")
+CSS_FILES=("style.css" "css/index.css" "css/lab.css")
 
 for f in "${CSS_FILES[@]}"; do
     path="$REPO_ROOT/$f"
