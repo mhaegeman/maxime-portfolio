@@ -353,6 +353,13 @@
     transition: box-shadow var(--dur-fast) ease, filter var(--dur-fast) ease;
 }
 .rag-stage-btn:hover { box-shadow: 0 0 16px var(--accent-glow); filter: brightness(1.05); }
+.rag-stage-btn--warn {
+    color: #febc2e;
+    background: transparent;
+    border-color: rgba(254, 188, 46, 0.5);
+}
+.rag-stage-btn--warn:hover { box-shadow: 0 0 12px rgba(254, 188, 46, 0.35); }
+[data-theme="light"] .rag-stage-btn.rag-stage-btn--warn { color: #92400e; border-color: rgba(146, 64, 14, 0.45); background: transparent; }
 
 /* query row */
 .rag-query {
