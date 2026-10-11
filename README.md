@@ -94,8 +94,11 @@ Everything runs client-side; there is no backend and no API key.
 - **⌘K command palette** — keyboard-first navigation, theme & language switching
 - **Interactive contact terminal** — type `help` on the homepage (and `ls -a`)
 - **View Transitions API** — smooth cross-page navigation (progressive enhancement)
-- **Session caching** — GitHub/Medium responses cached 1h in `sessionStorage`;
-  project cards render instantly from curated metadata even if the API is down
+- **Caching** — GitHub responses cached 1h in `sessionStorage`; project cards render
+  instantly from curated metadata even if the API is down. The Medium feed is shared
+  by the blog and the lab (`loadMediumFeed()` in `loader.js`): the three CORS proxies
+  are raced in parallel, the result is kept in `localStorage` and served instantly
+  on any later visit while a refresh runs in the background after 6h
 - **Dark / light themes** — WCAG-checked contrast, `prefers-reduced-motion` respected
 
 ## Theming

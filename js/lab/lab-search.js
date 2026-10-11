@@ -149,13 +149,8 @@
     }
 
     // ─── corpus ────────────────────────────────────────────────────
-    async function loadBlogDocs() {
-        if (typeof fetchRssXml !== 'function' || typeof CONFIG === 'undefined') throw new Error('rss loader unavailable');
-        let xml = typeof cacheGet === 'function' ? cacheGet('medium-rss-v1') : null;
-        if (!xml) {
-            xml = await fetchRssXml(`https://medium.com/feed/@${CONFIG.mediumUser}`);
-            if (typeof cacheSet === 'function') cacheSet('medium-rss-v1', xml);
-        }
+    // The feed itself is fetched and cached by loader.js (shared with the blog page).
+    function parseBlogDocs(xml) {
         const doc = new DOMParser().parseFromString(xml, 'text/xml');
         const items = Array.from(doc.getElementsByTagName('item')).slice(0, 12);
         return items.map(item => {
@@ -923,7 +918,7 @@
             cta.appendChild(el('span', 'rag-cta-text rag-cta-text--busy', S.semantic === 'loading' ? 'loading model…' : 'embedding passages…'));
         }
 
-        function updateSpace(animate) {
+        function updateSpace(animate, force) {
             const semantic = effectiveMode() !== 'bm25' && S.semPca;
             const pca = semantic ? S.semPca : S.lexPca;
             if (!pca) return;
@@ -934,7 +929,7 @@
                 const d = S.docs[c.doc];
                 return { x: pca.coords[i][0], y: pca.coords[i][1], type: d.type, title: d.title, text: c.text, url: d.url, chunk: i };
             });
-            if (S.space !== (semantic ? 'semantic' : 'lexical') || !map.state.points.length) {
+            if (force || S.space !== (semantic ? 'semantic' : 'lexical') || !map.state.points.length) {
                 S.space = semantic ? 'semantic' : 'lexical';
                 map.setPoints(points, animate);
                 stage('map', 'done', `${S.space === 'semantic' ? '384' : fmtK(S.lex.vocab.length)}→2d · ${Math.round(pca.explained * 100)}%`);
@@ -1207,13 +1202,14 @@
         }
 
         async function embedCorpus() {
+            const chunks = S.chunks;
             const cache = readEmbCache();
             const todo = [];
-            S.chunks.forEach(c => {
+            chunks.forEach(c => {
                 if (cache[c.key]) c.emb = vecFromB64(cache[c.key]);
                 else todo.push(c);
             });
-            const total = S.chunks.length;
+            const total = chunks.length;
             let done = total - todo.length;
             const t0 = performance.now();
             stage('embed', 'active', `${done}/${total} passages`, done / total);
@@ -1226,10 +1222,13 @@
                 }));
                 batch.forEach((c, k) => { c.emb = vecs[k]; });
                 done += batch.length;
-                stage('embed', 'active', `${done}/${total} passages`, done / total);
+                if (chunks === S.chunks) stage('embed', 'active', `${done}/${total} passages`, done / total);
             }
-            if (todo.length) writeEmbCache(S.chunks);
+            if (todo.length) writeEmbCache(chunks);
             const ms = performance.now() - t0;
+            // The blog feed landed while we were embedding: embed the new corpus
+            // (passages already done are reused from the cache).
+            if (chunks !== S.chunks) return embedCorpus();
 
             const sem = pca2(S.chunks.map(c => c.emb), S.chunks[0].emb.length);
             // Align axes with the lexical map so the morph reads as a reorganisation, not a mirror.
@@ -1251,27 +1250,8 @@
         }
 
         // ─── boot ─────────────────────────────────────────────────
-        async function boot() {
-            status('busy', 'indexing');
-            stage('fetch', 'active', 'rss + notes…');
-            renderIdle();
-            renderFooter();
-            syncModes();
-
-            const local = [...labDocs(), ...projectDocs()];
-            let blog = [];
-            let blogFailed = false;
-            try {
-                blog = await loadBlogDocs();
-            } catch (_) {
-                blogFailed = true;
-            }
-            S.docs = [...blog, ...local];
-            const nLab = local.filter(d => d.type === 'lab').length;
-            stage('fetch', blogFailed ? 'warn' : 'done',
-                blogFailed ? `rss offline · ${local.length} notes` : `${blog.length} posts · ${local.length} notes`);
-            stageEls.fetch.root.title = `${blog.length} blog posts, ${local.length - nLab} project notes, ${nLab} lab notes`;
-
+        // (Re)build the lexical index + map for the current S.docs.
+        function indexCorpus() {
             stage('chunk', 'active', '…');
             let t0 = performance.now();
             S.chunks = buildChunks(S.docs);
@@ -1284,8 +1264,69 @@
 
             stage('map', 'active', '…');
             S.lexPca = pca2(S.chunks.map(c => tfidfVector(S.lex, c.tf)), S.lex.vocab.length);
+            S.semPca = null;
+            S.qCache.clear();
+        }
+
+        function fetchStage(state, blogCount) {
+            const local = S.docs.filter(d => d.type !== 'blog');
+            const nLab = local.filter(d => d.type === 'lab').length;
+            let value;
+            if (state === 'active') {
+                value = `rss… · ${local.length} notes`;
+            } else if (state === 'warn') {
+                value = el('button', 'rag-stage-btn rag-stage-btn--warn', 'rss offline · retry');
+                value.type = 'button';
+                value.title = 'The Medium feed could not be reached through the CORS proxies. Retry.';
+                value.addEventListener('click', loadBlog);
+            } else {
+                value = `${blogCount} posts · ${local.length} notes`;
+            }
+            stage('fetch', state, value);
+            stageEls.fetch.root.title = `${blogCount || 0} blog posts, ${local.length - nLab} project notes, ${nLab} lab notes`;
+        }
+
+        // Swap the blog documents in and re-index (and re-embed if the model is up).
+        function setBlogDocs(blog) {
+            S.docs = [...blog, ...S.docs.filter(d => d.type !== 'blog')];
+            fetchStage('done', blog.length);
+            indexCorpus();
+            if (S.semantic === 'ready') {
+                S.semantic = 'embedding';
+                status('busy', 'embedding');
+                renderCta();
+                embedCorpus().catch(() => {});
+            }
+            updateSpace(true, true);
+            run(input.value);
+            if (!input.value.trim()) renderIdle();
+        }
+
+        async function loadBlog() {
+            fetchStage('active');
+            try {
+                if (typeof loadMediumFeed !== 'function') throw new Error('feed loader unavailable');
+                const blog = parseBlogDocs(await loadMediumFeed());
+                if (!blog.length) throw new Error('empty feed');
+                setBlogDocs(blog);
+            } catch (_) {
+                fetchStage('warn', 0);
+            }
+        }
+
+        // ─── boot ─────────────────────────────────────────────────
+        function boot() {
+            status('busy', 'indexing');
+            renderFooter();
+            syncModes();
+
+            // Local notes are indexed straight away; the blog joins when the feed arrives,
+            // so search is usable even while the CORS proxies are slow.
+            S.docs = [...labDocs(), ...projectDocs()];
+            fetchStage('active');
+            indexCorpus();
             S.ready = true;
-            updateSpace(false);
+            updateSpace(false, true);
 
             status('ok', 'ready · bm25');
             const btn = el('button', 'rag-stage-btn', t('lab.search.load', 'Load embedding model'));
@@ -1300,6 +1341,12 @@
             const q = params.get('q');
             if (q) input.value = q;
             run(input.value || S.lastQuery);
+
+            loadBlog();
+            window.addEventListener('mediumfeed:update', (ev) => {
+                const blog = parseBlogDocs(ev.detail.xml);
+                if (blog.length) setBlogDocs(blog);
+            });
 
             // Returning visitors already have the weights cached: load straight away.
             if (storageGet(STORE_MODEL_OK) === '1') {

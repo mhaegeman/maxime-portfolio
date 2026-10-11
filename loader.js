@@ -419,32 +419,97 @@ async function fetchRssXml(rssUrl) {
         }
     ];
 
-    for (const proxy of proxies) {
-        try {
-            const response = await fetch(proxy.url, { signal: AbortSignal.timeout(8000) });
-            if (!response.ok) continue;
+    // Free proxies are individually flaky: race them and keep the first valid feed.
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 15000);
+    try {
+        return await Promise.any(proxies.map(async (proxy) => {
+            const response = await fetch(proxy.url, { signal: ctrl.signal });
+            if (!response.ok) throw new Error(`proxy ${response.status}`);
             const xml = await proxy.extractXml(response);
-            if (xml && xml.includes('<item>')) return xml;
-        } catch (_) {
-            // try next proxy
-        }
+            if (!xml || !xml.includes('<item')) throw new Error('not a feed');
+            return xml;
+        }));
+    } catch (_) {
+        throw new Error('All proxies failed to reach the Medium RSS feed');
+    } finally {
+        clearTimeout(timer);
+        ctrl.abort(); // cancel the slower proxies
     }
-    throw new Error('All proxies failed to reach the Medium RSS feed');
+}
+
+// --- MEDIUM FEED (shared by the blog and the lab) ---
+// Persisted in localStorage, so a feed fetched on either page is reused on the
+// other one and on later visits. A stale copy is served instantly while a fresh
+// one is fetched in the background; listeners get a 'mediumfeed:update' event.
+const FEED_KEY = 'medium-feed-v2';
+const FEED_FRESH_MS = 6 * 60 * 60 * 1000;       // refresh after 6 h
+const FEED_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000; // never serve older than 30 days
+let _feedFetch = null;
+
+function readFeedCache() {
+    try {
+        const raw = JSON.parse(localStorage.getItem(FEED_KEY) || 'null');
+        if (!raw || !raw.xml || Date.now() - raw.ts > FEED_MAX_AGE_MS) return null;
+        return raw;
+    } catch (_) {
+        return null;
+    }
+}
+
+function fetchMediumFeed() {
+    if (!_feedFetch) {
+        _feedFetch = fetchRssXml(`https://medium.com/feed/@${CONFIG.mediumUser}`)
+            .then(xml => {
+                try {
+                    localStorage.setItem(FEED_KEY, JSON.stringify({ ts: Date.now(), xml }));
+                } catch (_) { /* storage full/blocked — not fatal */ }
+                return xml;
+            })
+            .catch(err => {
+                _feedFetch = null; // allow a retry
+                throw err;
+            });
+    }
+    return _feedFetch;
+}
+
+// Resolves with the feed XML (cached or fetched); rejects if nothing is available.
+async function loadMediumFeed() {
+    const cached = readFeedCache();
+    if (!cached) return fetchMediumFeed();
+    if (Date.now() - cached.ts > FEED_FRESH_MS) {
+        fetchMediumFeed()
+            .then(xml => {
+                if (xml !== cached.xml) window.dispatchEvent(new CustomEvent('mediumfeed:update', { detail: { xml } }));
+            })
+            .catch(() => { /* keep serving the cached copy */ });
+    }
+    return cached.xml;
 }
 
 async function loadMedium() {
     const container = document.getElementById('blog-list');
     if (!container) return; // Stop if we aren't on the blog page
 
-    const rssUrl = `https://medium.com/feed/@${CONFIG.mediumUser}`;
-
+    window.addEventListener('mediumfeed:update', (ev) => renderMedium(container, ev.detail.xml));
     try {
-        let xmlText = cacheGet('medium-rss-v1');
-        if (!xmlText) {
-            xmlText = await fetchRssXml(rssUrl);
-            cacheSet('medium-rss-v1', xmlText);
-        }
+        renderMedium(container, await loadMediumFeed());
+    } catch (_) {
+        renderMediumError(container);
+    }
+}
 
+function renderMediumError(container) {
+    container.innerHTML = '';
+    const msg = document.createElement('p');
+    msg.className = 'error-msg';
+    msg.innerHTML = `[ERROR] Could not reach the Medium feed right now.<br>Read everything directly on <a href="https://medium.com/@${CONFIG.mediumUser}" target="_blank" rel="noopener">medium.com/@${CONFIG.mediumUser} ↗</a>`;
+    container.appendChild(msg);
+}
+
+function renderMedium(container, xmlText) {
+    try {
         // Parse the RSS XML directly in the browser
         const parser = new DOMParser();
         const xml = parser.parseFromString(xmlText, 'text/xml');
@@ -516,12 +581,8 @@ async function loadMedium() {
             window.observeRevealItems(container);
         }
 
-    } catch (error) {
-        container.innerHTML = '';
-        const msg = document.createElement('p');
-        msg.className = 'error-msg';
-        msg.innerHTML = `[ERROR] Could not reach the Medium feed right now.<br>Read everything directly on <a href="https://medium.com/@${CONFIG.mediumUser}" target="_blank" rel="noopener">medium.com/@${CONFIG.mediumUser} ↗</a>`;
-        container.appendChild(msg);
+    } catch (_) {
+        renderMediumError(container);
     }
 }
 
